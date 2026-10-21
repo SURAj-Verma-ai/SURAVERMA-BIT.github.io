@@ -75,15 +75,15 @@
 /* The real map, under everything. */
 .jy-mapwrap { position: absolute; inset: 0; }
 .fm, .fm-map { position: absolute; inset: 0; }
-.fm-map .maplibregl-canvas { outline: none; }
+.fm-map { width: 100%; height: 100%; background: #cdd8d4; }
+.fm-world { transform-origin: 0 0; will-change: transform; }
+.fm-place-names { fill: #777160; font-family: var(--xp-sans); font-size: 12px; }
+.fm-place-names text { paint-order: stroke; stroke: #ede7dc; stroke-width: 2px; stroke-linejoin: round; }
 .fm-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
 .fm-ghost { fill: none; stroke: #3d362e; stroke-opacity: .35; stroke-width: 1.2; stroke-dasharray: 3 6; }
 .fm-trail { fill: none; stroke: #a9683c; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1; }
 .fm-pin { position: absolute; left: 0; top: 0; display: grid; justify-items: center; gap: 2px; pointer-events: none; will-change: transform; opacity: 0; }
 .fm.is-ready .fm-pin { opacity: 1; }
-.fm:not(.is-ready) .fm-lines, .fm:not(.is-ready) .fm-plane, .fm:not(.is-ready) .fm-shadow { visibility: hidden; }
-.fm-message { position: absolute; left: 50%; bottom: 22%; translate: -50% 0; display: flex; align-items: center; gap: 12px; padding: 12px 18px; border-radius: 18px; background: var(--paper); color: var(--text); font-size: .9rem; }
-.fm-message button { padding: 5px 8px; color: #a9683c; font: inherit; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 .fm-pin i { width: 12px; height: 12px; margin: -6px 0 6px; border-radius: 50%; background: #a9683c; box-shadow: 0 0 0 5px rgba(169, 104, 60, .18), 0 0 0 1px #fff; }
 .fm-pin b { font: 600 1rem var(--xp-sans); letter-spacing: -.02em; color: var(--ink); text-shadow: 0 0 6px #efeae1, 0 0 2px #efeae1; }
 .fm-pin span { font-size: .85rem; color: #a9683c; font-variant-numeric: tabular-nums; text-shadow: 0 0 6px #efeae1; }

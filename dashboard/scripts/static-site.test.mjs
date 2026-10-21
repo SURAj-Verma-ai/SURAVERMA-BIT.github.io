@@ -1,12 +1,27 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, readdirSync } from "node:fs";
+import { gzipSync } from "node:zlib";
 import { resolve, join } from "node:path";
 import { routes, origin } from "./routes.mjs";
 import { canonicalUrl, canonicalLink, resolvePageSeo, serializeSchema } from "../src/site/pageSeo.js";
 
 const root = resolve(import.meta.dirname,".."), dist = join(root,"dist");
 const htmlFor = page => readFileSync(page.path === "/" ? join(dist,"index.html") : join(dist,page.path.slice(1),"index.html"),"utf8");
+
+test("flight ships one compact regional map without the tile engine or worker",() => {
+  const assets=readdirSync(join(dist,"assets"));
+  assert.ok(!assets.some(name=>/maplibre|maplibre-gl-worker/i.test(name)));
+  const maps=assets.filter(name=>/^india-flight-map-.*\.svg$/.test(name));
+  assert.equal(maps.length,1);
+  const svg=readFileSync(join(dist,"assets",maps[0]));
+  assert.ok(svg.length<65000);
+  assert.ok(gzipSync(svg).length<26000);
+  const html=htmlFor(routes.find(page=>page.path==="/"));
+  assert.ok(html.includes(`/assets/${maps[0]}`));
+  const js=assets.filter(name=>name.endsWith(".js")).map(name=>readFileSync(join(dist,"assets",name),"utf8")).join("");
+  assert.ok(!/tiles\.openfreemap\.org|maplibre-gl/.test(js));
+});
 
 test("all retained pages have directly loadable HTML, content and main-domain metadata",() => {
   assert.equal(new Set(routes.map(page => page.path)).size,routes.length);
