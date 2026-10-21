@@ -12,6 +12,7 @@ test("all retained pages have directly loadable HTML, content and main-domain me
   for(const page of routes) {
     const html = htmlFor(page);
     assert.match(html,/<h1[\s>]/,page.path);
+    assert.match(html,/<link rel="modulepreload"/);
     assert.ok(!html.includes('href="https://xtec.xiteai.com/legal'),page.path);
     if(page.kind !== "not-found") assert.ok(html.includes(`<link rel="canonical" href="${origin}${page.path}"`),page.path);
     if(page.noindex) assert.match(html,/<meta name="robots" content="noindex, follow"/);
@@ -36,6 +37,7 @@ test("sitemap advertises only main-domain static pages and excludes previews",()
 
 test("homepage preserves the footer and routes working service actions to Terminal",() => {
   const home = htmlFor(routes[0]);
+  assert.ok(home.includes('history.scrollRestoration = "manual"'));
   assert.match(home,/Say it\./);
   for(const text of ["Building the intelligence every computer will run on.","Contact XiteAI","Download XOS1","Help desk","Company policy","Community","Privacy choices","All policies"]) assert.ok(home.includes(text),text);
   for(const path of ["download","contact","community","#help"]) assert.ok(home.includes(`https://xtec.xiteai.com/${path}`),path);

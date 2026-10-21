@@ -1,5 +1,8 @@
 /* The night after the day (Night.jsx). */
-.nt { position: relative; background: #030303; color: #f5f5f5; --nt-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; --nt-serif: "Newsreader", Georgia, serif; font-family: var(--nt-sans); }
+/* The backdrop has a negative bottom margin so it takes no extra space.
+   Clip its paint here: otherwise its sticky box can extend a full viewport
+   beyond the night and cover the footer. Clip preserves viewport scrolling. */
+.nt { position: relative; overflow: clip; isolation: isolate; background: #030303; color: #f5f5f5; --nt-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; --nt-serif: "Newsreader", Georgia, serif; font-family: var(--nt-sans); }
 
 /* Begin on the same paper as memory. Once it fills the screen, the entire
    night changes tone with scroll; stars arrive after the paper darkens. */

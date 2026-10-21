@@ -27,29 +27,44 @@ function HomeAlias() {
   return <Navigate replace to={`/${location.search}${location.hash}`} />;
 }
 
-export default function App() {
+export default function App({ initialPages = {} }) {
+  const Home = initialPages.home || XosPage;
+  const About = initialPages.about || AboutPage;
+  const Faq = initialPages.faq || FaqPage;
+  const Pricing = initialPages.pricing || PricingPage;
+  const Plan = initialPages.plan || PlanPage;
+  const Editorial = initialPages.editorial || EditorialPage;
+  const Careers = initialPages.careers || CareersPage;
+  const Press = initialPages.press || PressPage;
+  const Sitemap = initialPages.sitemap || SitemapPage;
+  const Legal = initialPages.legal || LegalHub;
+  const PrivacyPolicy = initialPages.privacy || Privacy;
+  const TermsPolicy = initialPages.terms || Terms;
+  const CompanyPolicy = initialPages.company || CompanyPolicyPage;
+  const Policy = initialPages.policy || PolicyPage;
+  const NotFound = initialPages.notFound || NotFoundPage;
   return <>
     <ScrollRail /><SmoothScroll /><PrivacyChoices />
     <Suspense fallback={<div style={{height:"100vh",display:"grid",placeItems:"center"}}><Spinner size={20} delay={300} /></div>}>
       <Routes>
-        <Route path="/" element={<XosPage />} />
+        <Route path="/" element={<Home />} />
         <Route path="/xos1" element={<HomeAlias />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/faq" element={<FaqPage />} />
-        <Route path="/pricing" element={<PricingPage />} />
-        {["premium","ultra","max"].map(planId => <Route key={planId} path={`/pricing/${planId}`} element={<PlanPage planId={planId} />} />)}
-        <Route path="/news" element={<EditorialPage kind="news" />} />
-        <Route path="/news/:slug" element={<EditorialPage kind="news" />} />
-        <Route path="/blog" element={<EditorialPage kind="blog" />} />
-        <Route path="/blog/:slug" element={<EditorialPage kind="blog" />} />
-        <Route path="/careers" element={<CareersPage />} />
-        <Route path="/press" element={<PressPage />} />
-        <Route path="/sitemap" element={<SitemapPage />} />
-        <Route path="/legal" element={<LegalHub />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/faq" element={<Faq />} />
+        <Route path="/pricing" element={<Pricing />} />
+        {["premium","ultra","max"].map(planId => <Route key={planId} path={`/pricing/${planId}`} element={<Plan planId={planId} />} />)}
+        <Route path="/news" element={<Editorial kind="news" />} />
+        <Route path="/news/:slug" element={<Editorial kind="news" />} />
+        <Route path="/blog" element={<Editorial kind="blog" />} />
+        <Route path="/blog/:slug" element={<Editorial kind="blog" />} />
+        <Route path="/careers" element={<Careers />} />
+        <Route path="/press" element={<Press />} />
+        <Route path="/sitemap" element={<Sitemap />} />
+        <Route path="/legal" element={<Legal />} />
         {published.map(doc => <Route key={doc.slug} path={`/legal/${doc.slug}`} element={
-          doc.slug === "privacy" ? <Privacy /> : doc.slug === "terms" ? <Terms /> : doc.slug === "company-policy" ? <CompanyPolicyPage /> : <PolicyPage slug={doc.slug} />
+          doc.slug === "privacy" ? <PrivacyPolicy /> : doc.slug === "terms" ? <TermsPolicy /> : doc.slug === "company-policy" ? <CompanyPolicy /> : <Policy slug={doc.slug} />
         } />)}
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
   </>;
