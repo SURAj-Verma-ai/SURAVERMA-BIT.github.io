@@ -7,7 +7,8 @@
 html, body, #root { min-height: 100%; }
 /* The page's own scrollbar is hidden; components/ScrollRail draws ours. A
    hidden bar takes no width, so a short page and a long one sit identically. */
-html { -webkit-text-size-adjust: 100%; scrollbar-width: none; }
+/* Suppress the browser's touch overlay; :focus-visible below keeps keyboard focus. */
+html { -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; scrollbar-width: none; }
 html::-webkit-scrollbar { display: none; }
 body {
   background: var(--surface);
