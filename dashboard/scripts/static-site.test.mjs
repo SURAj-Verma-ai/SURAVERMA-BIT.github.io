@@ -38,6 +38,8 @@ test("sitemap advertises only main-domain static pages and excludes previews",()
 test("homepage preserves the footer and routes working service actions to Terminal",() => {
   const home = htmlFor(routes[0]);
   assert.ok(home.includes('history.scrollRestoration = "manual"'));
+  assert.match(home,/<link rel="stylesheet"[^>]+href="\/assets\/XosPage-[^"]+\.css"/);
+  assert.match(home,/<link rel="modulepreload"[^>]+href="\/assets\/XosPage-[^"]+\.js"/);
   assert.match(home,/Say it\./);
   for(const text of ["Building the intelligence every computer will run on.","Contact XiteAI","Download XOS1","Help desk","Company policy","Community","Privacy choices","All policies"]) assert.ok(home.includes(text),text);
   for(const path of ["download","contact","community","#help"]) assert.ok(home.includes(`https://xtec.xiteai.com/${path}`),path);

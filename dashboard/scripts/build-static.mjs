@@ -27,10 +27,11 @@ try {
     html = html.replace(/<link rel="canonical"[^>]*>/,page.kind === "not-found" ? "" : `<link rel="canonical" href="${canonical}" />`);
     html = html.replace(/<meta name="robots"[^>]*>/,`<meta name="robots" content="${page.noindex ? "noindex" : "index"}, follow" />`);
     const seen = new Set(),styles = new Set(),modules = new Set();
-    const collect = key => {if(seen.has(key)) return; seen.add(key); const chunk=manifest[key]; if(!chunk) return; chunk.imports?.forEach(collect); chunk.css?.forEach(file => styles.add(file)); if(chunk.file?.endsWith(".js")) modules.add(chunk.file);};
-    collect("src/main.jsx");
+    const entryKey = sourcePath => manifest[sourcePath] ? sourcePath : Object.keys(manifest).find(key => manifest[key].name === sourcePath?.split("/").pop().replace(/\.[^.]+$/,""));
+    const collect = key => {if(!key || seen.has(key)) return; seen.add(key); const chunk=manifest[key]; if(!chunk) return; chunk.imports?.forEach(collect); chunk.css?.forEach(file => styles.add(file)); if(chunk.file?.endsWith(".js")) modules.add(chunk.file);};
+    collect("index.html");
     const policyEntry = page.slug === "privacy" ? "Privacy" : page.slug === "terms" ? "Terms" : page.slug === "company-policy" ? "CompanyPolicyPage" : "PolicyPage";
-    collect(page.kind === "policy" ? `src/site/legal/${policyEntry}.jsx` : entryFor[page.kind]);
+    collect(entryKey(page.kind === "policy" ? `src/site/legal/${policyEntry}.jsx` : entryFor[page.kind]));
     const preloads = [...modules].filter(file => !html.includes(`href="/${file}"`) && !html.includes(`src="/${file}"`)).map(file => `<link rel="modulepreload" crossorigin href="/${file}" />`).join("\n");
     html = html.replace("</head>",preloads+"\n"+[...styles].filter(file => css.includes(file) && !html.includes(`href="/${file}"`)).map(file => `<link rel="stylesheet" href="/${file}" />`).join("\n") + (page.kind === "faq" ? `\n<script id="faq-schema" type="application/ld+json">${serializeFaqSchema(faqStructuredData)}</script>` : "") + "\n</head>");
     html = html.replace('<div id="root"></div>',`<div id="root" data-prerender="${page.kind}">${renderPage(page)}</div>`);
