@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "../../site/CanonicalLink.jsx";
 import { usePageMeta } from "../../lib/seo.jsx";
 import SiteFooter from "../../site/SiteFooter.jsx";
 import SiteNav from "../../site/SiteNav.jsx";

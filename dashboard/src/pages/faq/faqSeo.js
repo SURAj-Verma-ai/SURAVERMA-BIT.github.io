@@ -1,18 +1,19 @@
 import { faqTopics } from "./faqContent.js";
+import { canonicalUrl, pageSeo } from "../../site/pageSeo.js";
 
 export const faqMeta = {
   title:"XOS1 FAQ: Memory, Privacy, Computer Use & Pricing | XiteAI",
   description:"Answers about XOS1’s infinite memory, computer access, privacy, data collection, planned pricing, age safeguards and Windows compatibility.",
   path:"/faq",
 };
-export const faqCanonical = "https://xiteai.com/faq";
+export const faqCanonical = canonicalUrl("/faq");
 export const faqStructuredData = {
   "@context":"https://schema.org",
   "@type":"FAQPage",
   "@id":`${faqCanonical}#faq`,
   url:faqCanonical,
-  name:faqMeta.title,
-  description:faqMeta.description,
+  name:pageSeo["/faq"].title,
+  description:pageSeo["/faq"].description,
   inLanguage:"en",
   mainEntity:faqTopics.flatMap(topic => topic.questions.map(item => ({
     "@type":"Question",

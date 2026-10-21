@@ -17,6 +17,7 @@ import PolicyPage from "../src/site/legal/PolicyPage.jsx";
 import CompanyPolicyPage from "../src/site/legal/CompanyPolicyPage.jsx";
 import NotFoundPage from "../src/pages/not-found/NotFoundPage.jsx";
 export { faqStructuredData, serializeFaqSchema } from "../src/pages/faq/faqSeo.js";
+const articleBodies = import.meta.glob("../src/pages/editorial/posts/*/*.jsx",{eager:true,import:"default"});
 
 export function renderPage(page) {
   const components = {home:XosPage,about:AboutPage,pricing:PricingPage,plan:PlanPage,faq:FaqPage,careers:CareersPage,press:PressPage,sitemap:SitemapPage,legal:LegalHub,"not-found":NotFoundPage};
@@ -26,7 +27,7 @@ export function renderPage(page) {
     element = createElement(Component);
     routePath = "/legal/:slug";
   } else if (page.kind === "news" || page.kind === "blog") {
-    element = createElement(EditorialPage,{kind:page.kind});
+    element = createElement(EditorialPage,{kind:page.kind,prerenderBody:articleBodies[`../src/pages/editorial/posts/${page.kind}/${page.slug}.jsx`]});
     routePath = `/${page.kind}${page.slug ? "/:slug" : ""}`;
   } else {
     element = createElement(components[page.kind], {planId:page.planId,prerender:page.kind === "faq"});

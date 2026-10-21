@@ -1,4 +1,5 @@
 import { readFileSync, readdirSync } from "node:fs";
+import { resolvePageSeo } from "../src/site/pageSeo.js";
 
 export const origin = "https://xiteai.com";
 const source = new URL("../src/", import.meta.url);
@@ -10,7 +11,7 @@ const legalTitles = {
   "minors-policy":"Minors Policy","cookie-policy":"Cookie Policy",
   "ai-disclaimer":"AI Disclaimer",security:"Security","support-policy":"Support Policy",
 };
-const page = (path,title,kind,extra={}) => ({path,title:`${title} · XiteAI`,description:`${title}. Explore XiteAI and XOS1.`,kind,...extra});
+const page = (path,title,kind,extra={}) => ({kind,...resolvePageSeo(path,{title:`${title} · XiteAI`,description:`${title}. Explore XiteAI and XOS1.`,...extra})});
 export const routes = [
   page("/","XOS1","home",{description:"Say it. It's done. An AI that lives on your PC: you say what you need, and it happens."}),
   page("/about","About XiteAI","about"),
@@ -25,6 +26,6 @@ export const routes = [
     .filter(file => file.endsWith(".json"))
     .map(file => readJSON(`pages/editorial/posts/${kind}/${file}`))
     .filter(post => post.status !== "draft" && Number.isFinite(Date.parse(post.publishedAt)))
-    .map(post => page(`/${kind}/${post.id}`,post.title,kind,{description:post.summary,slug:post.id,noindex:post.status !== "published"}))),
+    .map(post => page(`/${kind}/${post.id}`,`${post.title}${post.status === "preview" ? " — Preview" : ""}`,kind,{description:post.summary,slug:post.id,noindex:post.status !== "published",image:post.image,article:post}))),
   page("/404","Page not found","not-found",{noindex:true}),
 ];

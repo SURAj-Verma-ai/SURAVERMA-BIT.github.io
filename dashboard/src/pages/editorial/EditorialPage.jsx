@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { Link } from "../../site/CanonicalLink.jsx";
 import { useReducedMotion } from "framer-motion";
 import { motion, EASE } from "../../lib/motion.js";
 import { usePageMeta } from "../../lib/seo.jsx";
@@ -14,19 +15,20 @@ import "./EditorialPage.css";
 
 const customBodies = import.meta.glob("./posts/*/*.jsx");
 
-export default function EditorialPage({kind}) {
+export default function EditorialPage({kind,prerenderBody}) {
   const {slug} = useParams();
   const [category,setCategory] = useState("All");
   const still = useReducedMotion();
   const posts = getPosts(kind);
   const CustomBody = useMemo(() => {
+    if (prerenderBody) return prerenderBody;
     const load = customBodies[`./posts/${kind}/${slug}.jsx`];
     return load ? lazy(load) : null;
-  },[kind,slug]);
+  },[kind,slug,prerenderBody]);
   const title = kind === "news" ? "News" : "Blog";
   const description = kind === "news" ? "Company and product announcements from XiteAI." : "Engineering, design and ideas from the people building XiteAI.";
   const post = slug ? posts.find(p => p.id === slug) : null;
-  usePageMeta({title:`${post ? post.title : title} · XiteAI`,description:post?.summary || description,path:`/${kind}${slug ? `/${slug}` : ""}`});
+  usePageMeta({title:`${post ? post.title + (post.status === "preview" ? " — Preview" : "") : title} · XiteAI`,description:post?.summary || description,path:`/${kind}${slug ? `/${slug}` : ""}`,image:post?.image,noindex:Boolean(slug && (!post || post.status !== "published")),article:post});
   useEffect(() => { window.scrollTo(0,0); setCategory("All"); },[kind,slug]);
   const visible = category === "All" ? posts : posts.filter(p => p.category === category);
   const arrival = {initial:still ? false : {opacity:0,y:20},animate:{opacity:1,y:0},transition:{duration:.7,ease:EASE}};

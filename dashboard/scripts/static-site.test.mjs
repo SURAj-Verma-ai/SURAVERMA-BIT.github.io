@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync, existsSync } from "node:fs";
 import { resolve, join } from "node:path";
 import { routes, origin } from "./routes.mjs";
+import { canonicalUrl, canonicalLink, resolvePageSeo, serializeSchema } from "../src/site/pageSeo.js";
 
 const root = resolve(import.meta.dirname,".."), dist = join(root,"dist");
 const htmlFor = page => readFileSync(page.path === "/" ? join(dist,"index.html") : join(dist,page.path.slice(1),"index.html"),"utf8");
@@ -14,8 +15,8 @@ test("all retained pages have directly loadable HTML, content and main-domain me
     assert.match(html,/<h1[\s>]/,page.path);
     assert.match(html,/<link rel="modulepreload"/);
     assert.ok(!html.includes('href="https://xtec.xiteai.com/legal'),page.path);
-    if(page.kind !== "not-found") assert.ok(html.includes(`<link rel="canonical" href="${origin}${page.path}"`),page.path);
-    if(page.noindex) assert.match(html,/<meta name="robots" content="noindex, follow"/);
+    if(page.kind !== "not-found") assert.ok(html.includes(`<link rel="canonical" href="${canonicalUrl(page.path)}"`),page.path);
+    if(page.noindex) assert.match(html,/<meta name="robots" content="noindex, follow,/);
     for(const match of html.matchAll(/(?:href|src)="(\/[^"?#]*)[^"\s]*"/g)) {
       const local = decodeURIComponent(match[1]);
       if(local.startsWith("//")) continue;
@@ -28,11 +29,70 @@ test("all retained pages have directly loadable HTML, content and main-domain me
 test("sitemap advertises only main-domain static pages and excludes previews",() => {
   const xml = readFileSync(join(dist,"sitemap.xml"),"utf8");
   const actual = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(match => match[1]);
-  assert.deepEqual(actual,routes.filter(page => !page.noindex).map(page => origin+page.path));
+  assert.deepEqual(actual,routes.filter(page => !page.noindex).map(page => canonicalUrl(page.path)));
   assert.ok(!xml.includes("xtec."));
   assert.ok(!actual.some(url => /\/(contact|community|join|login|console|download)(?:\/|$)/.test(new URL(url).pathname)));
   assert.equal(readFileSync(join(dist,"CNAME"),"utf8").trim(),"xiteai.com");
   assert.ok(readFileSync(join(dist,"robots.txt"),"utf8").includes(`${origin}/sitemap.xml`));
+});
+
+test("every page has unique authored metadata and consistent social previews",() => {
+  assert.equal(new Set(routes.map(page=>page.title)).size,routes.length);
+  assert.equal(new Set(routes.map(page=>page.description)).size,routes.length);
+  for(const page of routes) {
+    const html=htmlFor(page);
+    assert.equal((html.match(/<title>/g)||[]).length,1,page.path);
+    assert.equal((html.match(/<meta name="description"/g)||[]).length,1,page.path);
+    assert.ok(!page.description.includes("Explore XiteAI and XOS1."),page.path);
+    if(!page.noindex) {
+      assert.ok(page.description.length>=90 && page.description.length<=200,page.path);
+      assert.ok(page.title.length<=80,page.path);
+    }
+    assert.match(html,/<meta property="og:image:alt"/);
+    assert.match(html,/<meta name="twitter:image:alt"/);
+    assert.match(html,/max-image-preview:large/);
+  }
+});
+
+test("structured data is parseable, truthful and matches the canonical page",() => {
+  for(const page of routes.filter(page=>page.kind!=="not-found")) {
+    const html=htmlFor(page);
+    const match=html.match(/<script id="site-schema" type="application\/ld\+json">(.*?)<\/script>/s);
+    assert.ok(match,page.path);
+    const graph=JSON.parse(match[1])["@graph"];
+    const web=graph.find(node=>["WebPage","AboutPage","CollectionPage"].includes(node["@type"]));
+    assert.equal(web.url,canonicalUrl(page.path));
+    assert.equal(web.name,page.title);
+    assert.equal(web.description,page.description);
+    assert.ok(!match[1].includes("aggregateRating"));
+    assert.ok(!graph.some(node=>node["@type"]==="JobPosting"));
+    if(page.article?.status==="preview") assert.ok(!graph.some(node=>["NewsArticle","BlogPosting"].includes(node["@type"])));
+    if(page.path!=="/") assert.ok(graph.some(node=>node["@type"]==="BreadcrumbList"));
+  }
+  assert.ok(!serializeSchema({text:"</script>"}).includes("</script>"));
+});
+
+test("preview content and missing pages stay noindex; published pages do not inherit it",() => {
+  for(const page of routes) {
+    const robots=htmlFor(page).match(/<meta name="robots" content="([^"]+)"/)[1];
+    assert.equal(robots.startsWith("noindex"),Boolean(page.noindex),page.path);
+    assert.equal(Boolean(resolvePageSeo(page.path,{noindex:page.noindex}).noindex),Boolean(page.noindex));
+  }
+  const custom=htmlFor(routes.find(page=>page.path==="/blog/designing-for-conversation"));
+  assert.ok(custom.includes("Keep context visible."));
+  assert.ok(!custom.includes("Loading article"));
+});
+
+test("legacy URLs redirect to canonical pages and query parameters do not fragment identity",() => {
+  for(const [from,to] of [["privacy-policy","/legal/privacy"],["terms-of-service","/legal/terms"],["company","/about"]]) {
+    const html=readFileSync(join(dist,from,"index.html"),"utf8");
+    assert.ok(html.includes(canonicalUrl(to)));
+    assert.match(html,/http-equiv="refresh" content="0;/);
+  }
+  assert.equal(canonicalUrl("/pricing/?currency=INR#plans"),canonicalUrl("/pricing"));
+  assert.equal(canonicalUrl("/xos1"),origin+"/");
+  assert.equal(canonicalLink("/faq#memory"),"/faq/#memory");
+  assert.equal(canonicalLink("https://xtec.xiteai.com/contact"),"https://xtec.xiteai.com/contact");
 });
 
 test("homepage preserves the footer and routes working service actions to Terminal",() => {

@@ -1,4 +1,5 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { Link } from "../CanonicalLink.jsx";
 import LegalLayout from "./LegalLayout.jsx";
 import { Clause, DocTable } from "./prose.jsx";
 import { policies } from "./policies.js";

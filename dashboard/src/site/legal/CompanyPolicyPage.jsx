@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "../CanonicalLink.jsx";
 import SiteNav from "../SiteNav.jsx";
 import SiteFooter from "../SiteFooter.jsx";
 import { legalGroups, published } from "../content.js";

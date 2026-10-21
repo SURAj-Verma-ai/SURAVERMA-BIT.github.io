@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { canonicalUrl, resolvePageSeo, pageGraph, serializeSchema, SEO_ORIGIN } from "../site/pageSeo.js";
 
 // Lightweight head management. Updates the document's meta tags so each
 // public page carries its own title, description and Open Graph card —
@@ -6,37 +7,45 @@ import { useEffect } from "react";
 //
 // We avoid a full helmet library: the server already sets the base meta in
 // index.html, so only public pages that need distinct cards call this.
-export function usePageMeta({ title, description, path, type }) {
+export function usePageMeta({ title, description, path, type, image, noindex = false, article }) {
   useEffect(() => {
-    if (title) document.title = title;
+    const meta = resolvePageSeo(path,{title,description,image,noindex,article});
+    const url = canonicalUrl(meta.path);
+    document.title = meta.title;
+    const picture = meta.image.startsWith("/") ? SEO_ORIGIN+meta.image : meta.image;
     const tags = {
-      "description": description,
-      "og:title": title,
-      "og:description": description,
-      "og:type": type || "website",
-      "og:url": path ? `https://xiteai.com${path}` : undefined,
-      "twitter:title": title,
-      "twitter:description": description,
+      description:meta.description,"og:title":meta.title,"og:description":meta.description,
+      "og:type":article?.status === "published" ? "article" : type || "website",
+      "og:url":url,"og:image":picture,"og:image:alt":meta.title,
+      ...(!article ? {"og:image:width":"1200","og:image:height":"630"} : {}),
+      "twitter:title":meta.title,"twitter:description":meta.description,
+      "twitter:image":picture,"twitter:image:alt":meta.title,
+      robots:`${meta.noindex ? "noindex" : "index"}, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1`,
     };
-    const restored = [];
+    if (article) document.querySelectorAll('meta[property="og:image:width"],meta[property="og:image:height"]').forEach(el=>el.remove());
     Object.entries(tags).forEach(([key, value]) => {
       if (!value) return;
-      const isOg = key.startsWith("og:");
-      const attr = isOg ? "property" : "name";
-      const el = document.querySelector(`meta[${attr}="${key}"]`);
-      if (el) {
-        restored.push([el, attr, el.getAttribute("content")]);
-        el.setAttribute("content", value);
-      }
+      const attr = key.startsWith("og:") ? "property" : "name";
+      let el = document.querySelector(`meta[${attr}="${key}"]`);
+      if (!el) {el=document.createElement("meta");el.setAttribute(attr,key);document.head.appendChild(el);}
+      el.setAttribute("content",value);
     });
-    const canonical = path && document.querySelector('link[rel="canonical"]');
-    const previousCanonical = canonical?.getAttribute("href");
-    if (canonical) canonical.setAttribute("href",`https://xiteai.com${path}`);
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (meta.path === "/404") canonical?.remove();
+    else {
+      if (!canonical) {canonical=document.createElement("link");canonical.rel="canonical";document.head.appendChild(canonical);}
+      canonical.href=url;
+    }
+    const graph = pageGraph(meta);
+    let schema = document.getElementById("site-schema");
+    if (graph) {
+      if (!schema) {schema=document.createElement("script");schema.id="site-schema";schema.type="application/ld+json";document.head.appendChild(schema);}
+      schema.textContent=serializeSchema(graph);
+    } else schema?.remove();
     return () => {
-      restored.forEach(([el, , prev]) => el.setAttribute("content", prev));
-      if (canonical && previousCanonical !== null) canonical.setAttribute("href",previousCanonical);
+      document.getElementById("site-schema")?.remove();
     };
-  }, [title, description, path, type]);
+  }, [title, description, path, type, image, noindex, article]);
 }
 
 // Structured data for Google Jobs and rich results.

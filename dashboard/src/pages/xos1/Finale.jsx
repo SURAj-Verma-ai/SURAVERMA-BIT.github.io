@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "../../site/CanonicalLink.jsx";
 import IntentSculpture from "../../components/IntentSculpture.jsx";
 import "./Finale.css";
 

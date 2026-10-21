@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "../../site/CanonicalLink.jsx";
 import SiteNav from "../../site/SiteNav.jsx";
 import SiteFooter from "../../site/SiteFooter.jsx";
 import { LineScene, Ink } from "../../site/LineScene.jsx";
@@ -24,24 +24,7 @@ function MissingPath() {
 
 export default function NotFoundPage() {
   usePageMeta(notFoundMeta);
-  useEffect(() => {
-    window.scrollTo(0,0);
-    let robots = document.querySelector('meta[name="robots"]');
-    const fromErrorDocument = document.getElementById("root")?.dataset.prerender === "not-found";
-    const previous = fromErrorDocument ? "index, follow" : robots?.getAttribute("content");
-    if (!robots) { robots = document.createElement("meta"); robots.name = "robots"; document.head.appendChild(robots); }
-    robots.content = "noindex, follow";
-    const canonical = document.querySelector('link[rel="canonical"]');
-    const canonicalParent = canonical?.parentNode;
-    canonical?.remove();
-    return () => {
-      if (previous !== undefined) robots.content = previous; else robots.remove();
-      if (canonical && canonicalParent) canonicalParent.appendChild(canonical);
-      else if (!document.querySelector('link[rel="canonical"]')) {
-        const restored = document.createElement("link"); restored.rel = "canonical"; restored.href = "https://xiteai.com/"; document.head.appendChild(restored);
-      }
-    };
-  },[]);
+  useEffect(() => { window.scrollTo(0,0); },[]);
   return <div className="site nf-page"><SiteNav /><main className="site-top nf-main"><div className="nf-frame">
     <section className="nf-hero" aria-labelledby="nf-title"><div className="nf-copy"><p className="nf-label">404 / Page not found</p><h1 id="nf-title">This page<br />isn’t here.</h1><p className="nf-description">The link may have changed, or the address may be incomplete. You can start again from here.</p><div className="nf-actions"><Link to="/" className="nf-home">Go home <span aria-hidden="true">→</span></Link><Link to="/" className="nf-text-link">Explore XOS1 <span aria-hidden="true">↗</span></Link></div></div><MissingPath /></section>
     <nav className="nf-recovery" aria-label="Find another page"><p>Looking for something?</p><div><Link to="/about">About XiteAI <span aria-hidden="true">↗</span></Link><Link to="/pricing">Pricing <span aria-hidden="true">↗</span></Link><Link to="/careers">Careers <span aria-hidden="true">↗</span></Link><Link to="/faq">Questions & help <span aria-hidden="true">↗</span></Link></div></nav>

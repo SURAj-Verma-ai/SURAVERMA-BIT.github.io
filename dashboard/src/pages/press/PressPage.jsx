@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "../../site/CanonicalLink.jsx";
 import { useReducedMotion } from "framer-motion";
 import { motion, rise, stagger, whenSeen } from "../../lib/motion.js";
 import { usePageMeta } from "../../lib/seo.jsx";

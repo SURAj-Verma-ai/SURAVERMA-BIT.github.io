@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "../../site/CanonicalLink.jsx";
 import { useReducedMotion } from "framer-motion";
 import { getLatestPosts } from "./catalog.js";
 import { postDate } from "./feed.js";

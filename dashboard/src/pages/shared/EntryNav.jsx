@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "../../site/CanonicalLink.jsx";
 import Wordmark from "../../components/Wordmark.jsx";
 import "./Entry.css";
 

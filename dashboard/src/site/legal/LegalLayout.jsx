@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "../CanonicalLink.jsx";
 import SiteNav from "../SiteNav.jsx";
 import SiteFooter from "../SiteFooter.jsx";
 import RailNav from "./RailNav.jsx";
@@ -26,9 +25,6 @@ export default function LegalLayout({ slug, rail, children, contact = site.conta
   const prev = i > 0 ? published[i - 1] : null;
   const next = i >= 0 && i < published.length - 1 ? published[i + 1] : null;
 
-  useEffect(() => {
-    document.title = `${doc?.title ?? slug} · ${site.company}`;
-  }, [doc, slug]);
 
   return (
     <div className="site">

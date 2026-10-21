@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "./CanonicalLink.jsx";
 import Icon from "../components/Icon.jsx";
 import Logo from "./Logo.jsx";
 import { site } from "./content.js";

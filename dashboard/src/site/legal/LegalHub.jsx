@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "../CanonicalLink.jsx";
 import { motion } from "../../lib/motion.js";
 import SiteNav from "../SiteNav.jsx";
 import SiteFooter from "../SiteFooter.jsx";
@@ -26,7 +25,6 @@ const rise = {
 
 export default function LegalHub() {
   usePageMeta({title:`Legal · ${site.company}`,description:"Company working principles, terms, privacy and service policies for XOS1 and the XiteAI Terminal.",path:"/legal"});
-  useEffect(() => { document.title = `Legal · ${site.company}`; }, []);
 
   return (
     <div className="site">
