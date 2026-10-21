@@ -1,9 +1,9 @@
 // Company copy lives here so editorial previews can be replaced without
 // changing the layout. Work began in 2024; no incorporation date is claimed.
 export const principles = [
-  { title: "Prove the constraint.", text: "Difficulty and a lack of precedent are not proof that something cannot be done. When a limit is real, demonstrate it with evidence." },
-  { title: "Find a way forward.", text: "A proven constraint is the start of the next approach. Bring alternatives, rank them on merit, and work within the law." },
-  { title: "Own the outcome.", text: "The person who raises a constraint owns the path forward until the objective is met. The work is finished when the problem is solved." },
+  { title: "Raise concerns early.", text: "Report problems and mistakes before you have a complete explanation or solution. Good-faith reporting and disagreement must be safe, including when a concern is about leadership." },
+  { title: "Test assumptions with evidence.", text: "Use measurements, logs, documented limits and engineering judgement. State uncertainty and agree a time limit for investigation. Everyday constraints do not require mathematical proof." },
+  { title: "Share responsibility and support.", text: "Managers agree an owner, provide people and resources, and reprioritise other work. Reporting a problem does not make you responsible for solving it alone." },
 ];
 
 export const milestones = [

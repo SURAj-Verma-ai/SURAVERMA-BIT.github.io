@@ -1,8 +1,8 @@
 {
   "id": "work",
   "category": "Culture",
-  "title": "What a constraint needs to prove.",
-  "summary": "Evidence, alternatives and ownership in the XiteAI Code.",
+  "title": "Raise concerns early. Solve together.",
+  "summary": "Practical evidence, supported ownership and safe reporting in the XiteAI Code.",
   "image": "/media/editorial/notebook-1200.webp",
   "imageSmall": "/media/editorial/notebook-480.webp",
   "alt": "An open notebook with a pen on a wooden desk",
@@ -10,7 +10,9 @@
   "publishedAt": "2026-10-01",
   "status": "preview",
   "paragraphs": [
-    "Difficulty and a lack of precedent are not proof that something cannot be done. At XiteAI, a constraint needs to be supported by evidence.",
-    "When a constraint is real, we ask for alternatives ranked on merit. The person who raised it owns the path forward until the objective is met."
+    "Report risks, blockers and mistakes early. Urgent concerns must be raised immediately, without waiting for a solution, ranked alternatives or complete proof.",
+    "Use measurements, logs, documented limits and engineering judgement to assess constraints. State uncertainty and agree a time limit for investigation rather than demanding mathematical proof for everyday decisions.",
+    "Reporting does not make someone the sole recovery owner. Managers agree ownership, supply people and resources, and reprioritise other work. Keep status and changes visible instead of hiding failures.",
+    "The CEO and every manager must welcome good-faith concerns, including criticism of leadership. Thank the reporter even when the suggested solution is weak, prohibit retaliation and share the recovery burden."
   ]
 }

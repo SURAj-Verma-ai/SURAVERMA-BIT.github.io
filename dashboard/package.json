@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "vite build && node scripts/build-static.mjs",
     "preview": "vite preview",
-    "test": "node --test scripts/static-site.test.mjs src/pages/xos1/sections/flightMath.test.js"
+    "test": "node --test scripts/static-site.test.mjs src/pages/xos1/sections/flightMath.test.js src/site/touchSceneScroll.test.js"
   },
   "dependencies": {
     "@fontsource/inter": "^5.3.0",

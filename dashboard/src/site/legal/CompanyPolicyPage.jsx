@@ -19,7 +19,7 @@ export default function CompanyPolicyPage() {
     <main className="site-top">
       <header className="cpl-hero cpl-frame">
         <nav className="cpl-crumb" aria-label="Breadcrumb"><Link to="/legal">Legal</Link><span aria-hidden="true">/</span><span>Company policy</span></nav>
-        <div className="cpl-hero-grid"><div><p className="cpl-label">XiteAI</p><h1>XiteAI Company Policy.</h1><p className="cpl-lede">The XiteAI Code, our working practices and published company policies.</p><p className="cpl-date">Updated 13 October 2026</p></div><CompanyPolicyScene /></div>
+        <div className="cpl-hero-grid"><div><p className="cpl-label">XiteAI</p><h1>XiteAI Company Policy.</h1><p className="cpl-lede">The XiteAI Code, our working practices and published company policies.</p><p className="cpl-date">Updated 21 October 2026</p></div><CompanyPolicyScene /></div>
         <nav className="cpl-index" aria-label="On this page"><a href="#code">The XiteAI Code <span aria-hidden="true">↓</span></a><a href="#practices">Working practices <span aria-hidden="true">↓</span></a><a href="#documents">Policy documents <span aria-hidden="true">↓</span></a></nav>
       </header>
       <section className="cpl-scope cpl-frame cpl-section" aria-labelledby="cpl-scope-title"><h2 id="cpl-scope-title">About this document</h2><div>{section("scope").paragraphs.map(text => <p key={text}>{text}</p>)}</div></section>

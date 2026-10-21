@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import Lenis from "lenis";
 import { scrollMotion } from "./scrollMotion.js";
+import { createSceneTouch } from "./touchSceneScroll.js";
 import "lenis/dist/lenis.css";
 
 let active = null;
@@ -21,6 +22,7 @@ export default function SmoothScroll() {
     let l = null;
     let frame = 0;
     let userMotion = null, motionElapsed = 0;
+    let sceneTouch = null;
     const advanceScroll = (time) => {
       frame = 0;
       // Track the same elapsed time Lenis uses, so a new wheel event can pick
@@ -36,12 +38,30 @@ export default function SmoothScroll() {
       userMotion = null; motionElapsed = 0;
       l?.destroy(); l = null; lenis.current = null; active = null;
       if (reduced.matches) return;
+      sceneTouch = createSceneTouch({
+        position: () => l.actualScroll,
+        height: () => window.innerHeight,
+        limit: () => l.limit,
+        scrollTo: (target, options) => l.scrollTo(target, options),
+        eligible: target => {
+          if (!(target instanceof Element) || !window.matchMedia("(pointer: coarse)").matches) return false;
+          if (target.closest("a,button,input,textarea,select,summary,[contenteditable],[role='slider'],[data-lenis-prevent]")) return false;
+          if (window.getSelection()?.isCollapsed === false) return false;
+          const scene = target.closest(".xp .wl-scene,.xp .ap,.xp .jy,.xp .im-sequence,.xp .mu,.xp .nt-yours");
+          if (!scene || scene.getBoundingClientRect().height <= window.innerHeight * 1.2) return false;
+          for (let el = target; el && el !== scene; el = el.parentElement) {
+            if (/(auto|scroll)/.test(getComputedStyle(el).overflowY) && el.scrollHeight > el.clientHeight + 1) return false;
+          }
+          return true;
+        },
+      });
       l = new Lenis({
         duration: .65,
         smoothWheel: true,
-        // Preserve the browser's compositor-driven touch scrolling and inertia.
-        // A second touch glide makes pinned scenes trail the finger on phones.
+        // Normal pages retain native touch. The story handler keeps dragging
+        // direct and only shortens the post-release glide in pinned scenes.
         syncTouch: false,
+        virtualScroll: data => sceneTouch.handle(data),
         allowNestedScroll: true,
         anchors: true,
         autoRaf: false,
@@ -69,6 +89,7 @@ export default function SmoothScroll() {
       lenis.current = l; active = l;
     };
     const stopGlide = () => {
+      sceneTouch?.cancel();
       if (l?.isScrolling !== "smooth") return;
       l.stop(); l.start();
       cancelAnimationFrame(frame); frame = 0;
@@ -95,10 +116,12 @@ export default function SmoothScroll() {
     reduced.addEventListener("change", setup);
     window.addEventListener("keydown", keyboard);
     window.addEventListener("pointerdown", stopGlide, { passive: true });
+    window.addEventListener("touchcancel", stopGlide, { passive: true });
     document.addEventListener("visibilitychange", visibility);
     return () => {
       window.removeEventListener("keydown", keyboard);
       window.removeEventListener("pointerdown", stopGlide);
+      window.removeEventListener("touchcancel", stopGlide);
       document.removeEventListener("visibilitychange", visibility);
       reduced.removeEventListener("change", setup);
       cancelAnimationFrame(frame); frame = 0;

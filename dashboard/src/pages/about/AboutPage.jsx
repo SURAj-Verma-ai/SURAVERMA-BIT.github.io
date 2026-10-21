@@ -46,9 +46,9 @@ export default function AboutPage() {
       </section>
 
       <section id="values" className="ab-values ab-frame ab-section" aria-labelledby="ab-values-title">
-        <Reveal className="ab-values-head"><p className="ab-label ab-section-label">Our values</p><h2 id="ab-values-title">Difficulty is not<br />a constraint.</h2><p>We expect evidence when a limit is raised, alternatives when a path is blocked, and responsibility for finishing the work.</p></Reveal>
+        <Reveal className="ab-values-head"><p className="ab-label ab-section-label">Our values</p><h2 id="ab-values-title">Speak openly.<br />Solve together.</h2><p>Raise concerns early, use practical evidence and share the work with the people and support it needs.</p></Reveal>
         <ol className="ab-principles">{principles.map(p => <li key={p.title}><Reveal className="ab-principle"><h3>{p.title}</h3><p>{p.text}</p></Reveal></li>)}</ol>
-        <details className="ab-code"><summary>Read the XiteAI Code <span aria-hidden="true">+</span></summary><p>{XITEAI_CODE[0].text}</p></details>
+        <details className="ab-code"><summary>Read the XiteAI Code <span aria-hidden="true">+</span></summary>{XITEAI_CODE.map(rule => <section key={rule.id}><h3>{rule.title}</h3><p>{rule.text}</p></section>)}</details>
         <div className="ab-policy-reference"><p>Our working practices explain how we make decisions, hand over work and raise concerns.</p><Link className="ab-text-link" to="/legal/company-policy">XiteAI Company Policy <span aria-hidden="true">↗</span></Link></div>
       </section>
 

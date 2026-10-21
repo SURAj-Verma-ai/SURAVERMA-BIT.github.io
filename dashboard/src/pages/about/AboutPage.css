@@ -96,3 +96,7 @@
 }
 @media(max-width:360px) { .ab-actions { align-items:start; flex-direction:column; gap:12px; }.ab-side-note { display:none; }.ab-page .ab-hero h1 { font-size:35px; } }
 @media(prefers-reduced-motion:reduce) { .ab-story-image img,.ab-text-link>span,.ab-button { transition:none; } }
+
+.ab-code>section { max-width:85ch; margin:24px 0 32px; }
+.ab-code>section h3 { font-size:16px; margin-bottom:8px; }
+.ab-code>section p { font-size:15px; line-height:1.9; color:var(--muted); }
