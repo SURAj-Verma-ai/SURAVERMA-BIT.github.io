@@ -1,0 +1,16 @@
+{
+  "id": "memory",
+  "category": "Engineering",
+  "title": "How memory keeps its context.",
+  "summary": "Dates, changing facts and the connections between conversations.",
+  "image": "/media/editorial/servers-1200.webp",
+  "imageSmall": "/media/editorial/servers-480.webp",
+  "alt": "A rack of servers and connecting cables",
+  "imageCredit": {"name":"Kevin Ache","url":"https://unsplash.com/photos/a-rack-of-servers-in-a-server-room-2JJ3wBHu4_0"},
+  "publishedAt": "2026-10-11",
+  "status": "preview",
+  "paragraphs": [
+    "Memory is more useful when it keeps the context around a fact. A date, a person and a change in circumstances can all affect what that fact means.",
+    "This engineering article preview introduces how we think about continuity across conversations. The finished piece will document the architecture and its trade-offs."
+  ]
+}

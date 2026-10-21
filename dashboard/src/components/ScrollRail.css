@@ -1,0 +1,15 @@
+/* The page scrollbar. A strip down the right edge that wakes the thumb when
+   the pointer reaches it; the thumb is ink at low strength, so it reads on
+   paper and on the console alike, slimmer than any system bar. */
+.srail { position: fixed; top: 0; right: 0; bottom: 0; z-index: 40; width: 14px; color: var(--ink, #1a1714); }
+.srail[hidden] { display: none; }
+.srail-thumb {
+  position: absolute; top: 6px; right: 3px; width: 4px;
+  border-radius: 999px; background: currentColor; opacity: 0;
+  will-change: transform;
+  transition: opacity .7s var(--ease, ease), width .2s var(--ease, ease);
+}
+.srail[data-live] .srail-thumb { opacity: .24; transition-duration: .2s, .2s; }
+.srail:hover .srail-thumb, .srail[data-drag] .srail-thumb { opacity: .42; width: 6px; }
+/* Touch: the finger scrolls the page; the thumb is only a sign of where you are. */
+@media (pointer: coarse) { .srail { pointer-events: none; } }

@@ -1,0 +1,16 @@
+{
+  "id": "xos1-development",
+  "category": "Product",
+  "title": "XOS1 beta: a first look.",
+  "summary": "A preview of the operating system we are building.",
+  "image": "/media/editorial/workstation-1200.webp",
+  "imageSmall": "/media/editorial/workstation-480.webp",
+  "alt": "A minimal computer workspace with a keyboard and mouse",
+  "imageCredit": {"name":"Adrian Regeci","url":"https://unsplash.com/photos/a-computer-keyboard-and-a-mouse-on-a-desk-SLvOPQDNqfM"},
+  "publishedAt": "2026-10-12",
+  "status": "preview",
+  "paragraphs": [
+    "This is a sample News announcement for the website design. Release dates, availability and product details will be confirmed before publication.",
+    "XOS1 is being developed around voice, memory and action. This announcement layout will be used to share product releases and beta information."
+  ]
+}

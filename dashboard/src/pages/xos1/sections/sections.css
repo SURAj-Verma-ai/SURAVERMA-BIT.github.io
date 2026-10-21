@@ -1,0 +1,136 @@
+/* The sections after "Say it. It's done." (Apps, Lumen, Everything).
+   One palette: paper, ink, grey, and copper for a single thing at a time. */
+
+/* Sections out of sight are skipped by the browser entirely: no layout, no
+   paint, no animation. */
+.ap, .ls, .ev { content-visibility: auto; contain-intrinsic-size: auto 100svh; }
+
+/* ── Since the 1980s ────────────────────────────────────────────────────── */
+.ap { position: relative; height: 560svh; background: var(--paper); }
+.ap-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+.ap.is-still { height: auto; }
+.ap.is-still .ap-stage { position: relative; height: auto; padding: 140px 0; }
+.xp .ap-first, .xp .ap-line { position: absolute; left: 0; right: 0; top: 13svh; margin: 0 auto; padding: 0 var(--gutter-site); text-align: center; pointer-events: none;
+  font-family: var(--xp-sans); font-weight: 600; font-size: clamp(2.2rem, 4.8vw, 4.8rem); letter-spacing: -.05em; line-height: 1.04; color: var(--ink); text-wrap: balance; max-width: 20ch; }
+.ap-kicker { display: block; margin-bottom: 20px; font-size: .8rem; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+.ap-serif { font-family: var(--xp-serif); font-style: italic; font-weight: 400; letter-spacing: -.035em; }
+.ap-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+/* The paper deepens behind the words, so they read over the wall. */
+.ap-shade { position: absolute; inset: 0 0 auto; height: 44svh; background: linear-gradient(180deg, var(--paper) 0%, var(--paper) 46%, rgba(239, 234, 225, 0) 100%); pointer-events: none; }
+/* --tile: the AI tile's size on screen once the camera is on it (one unit at
+   sixteen units away, through a 32° lens). */
+.ap-bar { --tile: calc(100svh / 9.175); --barh: 66px; position: absolute; left: 50%; top: 50%; width: min(760px, 86vw); height: 66px; transform: translate(-50%, -50%); display: grid; place-items: center; }
+.ap-bar-track { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); border-radius: 999px; background: #f8f4ed;
+  box-shadow: inset 0 1px 0 #fff, 0 0 0 1px rgba(122, 98, 70, .14), 0 24px 50px -30px rgba(77, 58, 40, .5); }
+.ap-bar-in { position: relative; display: flex; align-items: center; gap: 16px; padding: 0 28px; white-space: nowrap; }
+.ap-said { font: italic 400 clamp(1rem, 1.7vw, 1.3rem) var(--xp-serif); letter-spacing: -.01em; color: var(--ink); }
+.ap-said span { opacity: .12; transition: opacity .3s; }
+.ap-said span.on { opacity: 1; }
+.ap-wave, .lm-wave { display: inline-flex; align-items: center; gap: 3px; height: 18px; }
+.ap-wave i, .lm-wave i { width: 2.5px; height: 100%; border-radius: 2px; background: var(--ember-lit); transform: scaleY(.3); }
+.ap-wave i { animation: xp-eq 1s ease-in-out infinite; }
+.ap.is-offscreen .ap-wave i, .ap:not(.is-speaking) .ap-wave i { animation-play-state: paused; }
+.ap-wave i:nth-child(2n), .lm-wave i:nth-child(2n) { animation-duration: .8s; animation-delay: .15s; }
+.ap-wave i:nth-child(3n), .lm-wave i:nth-child(3n) { animation-duration: 1.2s; animation-delay: .3s; }
+@keyframes xp-eq { 0%, 100% { transform: scaleY(.3); } 50% { transform: scaleY(1); } }
+
+/* ── Lumen: one sentence, everything it touches ─────────────────────────── */
+.ls { position: relative; height: 520svh; background: var(--paper); }
+.ls-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+.ls.is-still { height: auto; }
+.ls.is-still .ls-stage { position: relative; }
+.ls-space { position: absolute; inset: 0; perspective: 1700px; perspective-origin: 50% 46%; }
+.ls-world { position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform-style: preserve-3d; scale: var(--ls-scale, 1); will-change: transform; }
+@media (max-width: 1500px) { .ls-world { --ls-scale: .92; } }
+@media (max-width: 1100px) { .ls-world { --ls-scale: .66; } }
+@media (max-width: 760px) { .ls-world { --ls-scale: .46; } }
+.ls-panel { position: absolute; left: 0; top: 0; padding: 28px 30px 30px; border-radius: 26px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .94), rgba(248, 244, 237, .9));
+  box-shadow: inset 0 1px 0 #fff, 0 0 0 1px rgba(122, 98, 70, .12), 0 60px 90px -50px rgba(77, 58, 40, .5);
+  will-change: transform, opacity; }
+.ls-fill { min-height: 120px; }
+.ls-k { font-size: .7rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+.ls-flight { display: grid; grid-template-columns: 220px 1fr; gap: 28px; align-items: center; }
+.ls-flight svg { width: 100%; }
+.ls-flight svg text { font: 500 10px var(--xp-sans); letter-spacing: .14em; fill: var(--muted); }
+.ls-flight svg circle { fill: #a9683c; }
+.ls-faint { fill: none; stroke: #3d362e; stroke-opacity: .16; stroke-dasharray: 2 5; }
+.ls-ink { fill: none; stroke: #a9683c; stroke-width: 1.6; stroke-linecap: round; stroke-dasharray: 1; }
+.ls-flight ol { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--rule); }
+.ls-flight li { padding: 13px 0; font-size: 1.2rem !important; border-bottom: 1px solid var(--rule); font: 500 1.05rem var(--xp-sans); letter-spacing: -.02em; color: var(--ink); }
+.ls-flight li i { margin: 0 .3em; font-style: normal; color: var(--muted); }
+.ls-flight li.is-pick { color: #a9683c; }
+.ls-big { font: 500 1.8rem/1.2 var(--xp-sans); letter-spacing: -.03em; color: var(--ink); }
+.ls-big em { font-style: normal; color: #a9683c; }
+.ls-bars { display: flex; align-items: flex-end; gap: 9px; height: 96px; margin-top: 18px; }
+.ls-bars i { flex: 1; height: 100%; border-radius: 6px; background: #d8cfc2; transform-origin: bottom; }
+.ls-bars i.is-wet { background: #a9683c; }
+.ls-cal { margin: 0; padding: 0; list-style: none; }
+.ls-cal li { display: grid; grid-template-columns: 56px 1fr; gap: 10px; padding: 10px 0; border-top: 1px solid var(--rule); font-size: .95rem; color: var(--text); }
+.ls-cal b { font-weight: 500; color: var(--muted); font-variant-numeric: tabular-nums; }
+.ls-cal li.is-pick { color: var(--ink); box-shadow: inset 3px 0 0 #a9683c; padding-left: 10px; }
+.ls-list { margin: 0; padding: 0; list-style: none; }
+.ls-list li { display: flex; align-items: center; gap: 12px; padding: 9px 0; font-size: .98rem; color: var(--text); }
+.ls-list span { width: 14px; height: 14px; border-radius: 4px; box-shadow: inset 0 0 0 1.2px #b5a996; }
+.ls-list li.is-new { color: var(--ink); }
+.ls-list li.is-new span { background: #a9683c; box-shadow: none; }
+.ls-time { font: 600 4.4rem/1 var(--xp-sans); letter-spacing: -.05em; color: var(--ink); }
+.ls-sub { margin-top: 10px; font-size: .9rem; color: var(--muted); }
+
+.ls-title { position: absolute; left: 0; right: 0; top: 50%; translate: 0 -54%; display: grid; justify-items: center; text-align: center; pointer-events: none; }
+.ls-kicker { font-size: .8rem; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+.xp .ls-title h2 { margin-top: 12px; font-family: var(--xp-sans); font-size: clamp(5rem, 15vw, 14rem); font-weight: 600; line-height: .86; letter-spacing: -.075em; color: var(--ink); }
+.ls-tag { margin-top: 18px; font: italic 400 clamp(1.4rem, 2.6vw, 2.3rem) var(--xp-serif); letter-spacing: -.02em; color: var(--ink); }
+.ls-you { position: absolute; left: 50%; top: 11svh; translate: -50% 0; display: inline-flex; align-items: center; gap: 14px; padding: 13px 24px 13px 18px; border-radius: 999px; background: #f8f4ed;
+  box-shadow: inset 0 1px 0 #fff, 0 0 0 1px rgba(122, 98, 70, .12), 0 18px 40px -28px rgba(77, 58, 40, .45);
+  font: italic 400 clamp(1.05rem, 1.7vw, 1.4rem) var(--xp-serif); letter-spacing: -.01em; color: var(--ink); white-space: nowrap; }
+.ls-you.is-speaking .lm-wave i { animation: xp-eq 1s ease-in-out infinite; }
+.ls-reply { position: absolute; left: 50%; bottom: 8svh; translate: -50% 0; width: min(780px, 88vw); text-align: center; font: 500 clamp(1.15rem, 1.9vw, 1.6rem) / 1.4 var(--xp-sans); letter-spacing: -.02em; color: var(--ink); }
+.xp .ls-end { position: absolute; left: 0; right: 0; top: 50%; translate: 0 -50%; text-align: center; font-family: var(--xp-sans); font-size: clamp(2.6rem, 6vw, 6rem); font-weight: 600; letter-spacing: -.055em; line-height: 1.02; color: var(--ink); }
+.ls-end span { display: block; font-family: var(--xp-serif); font-style: italic; font-weight: 400; letter-spacing: -.035em; }
+.lm-w { opacity: .12; filter: blur(2px); transition: opacity .35s, filter .45s; }
+.lm-w.on { opacity: 1; filter: none; }
+
+/* ── Everything else ────────────────────────────────────────────────────── */
+.ev { padding: 170px var(--gutter-site) 190px; background: var(--paper); }
+.xp .ev-title { display: grid; justify-items: center; margin: 0 auto 120px; text-align: center; font-family: var(--xp-sans); font-size: clamp(2.6rem, 6vw, 6rem); font-weight: 600; line-height: 1; letter-spacing: -.055em; color: var(--ink); }
+.ev-serif { font-family: var(--xp-serif); font-style: italic; font-weight: 400; letter-spacing: -.035em; }
+.ev-list { max-width: var(--page-content-width); margin: 0 auto; padding: 0; list-style: none; }
+.ev-row { display: flex; align-items: baseline; justify-content: space-between; gap: 32px; padding: 6px 0; }
+.ev-what { font: 600 clamp(2.8rem, 8vw, 7.6rem) / 1.02 var(--xp-sans); letter-spacing: -.06em; color: var(--ink); }
+.ev-said { flex: none; max-width: 22ch; text-align: right; font: italic 400 clamp(1rem, 1.6vw, 1.35rem) / 1.35 var(--xp-serif); color: var(--muted); }
+@supports (animation-timeline: view()) {
+  .ev-row { animation: ev-lit linear both; animation-timeline: view(); animation-range: cover 18% cover 82%; }
+  @keyframes ev-lit { 0% { opacity: .14; } 35%, 65% { opacity: 1; } 100% { opacity: .14; } }
+}
+
+@media (max-width: 760px) {
+  .ap-bar { --barh: 96px; }
+  .ap-bar-in { white-space: normal; padding: 16px 22px; }
+  .ls-you { white-space: normal; width: 86vw; border-radius: 22px; }
+  .ev-row { display: grid; gap: 4px; padding: 14px 0; }
+  .ev-said { text-align: left; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ap-wave i, .lm-wave i { animation: none; }
+}
+
+/* On a tall screen the camera stands further back, so the tile is smaller. */
+@media (orientation: portrait) { .ap-bar { --tile: calc(100svh / 14.68); } }
+
+@media (max-width:760px) {
+ .ap { height:440svh; }
+ .xp .ap-first,.xp .ap-line { top:clamp(90px,14svh,150px); font-size:clamp(29px,7.8vw,44px); max-width:23ch; padding:0 22px; }
+ .ap-bar { width:calc(100% - 40px); --barh:104px; }
+ .ap-bar-in { width:100%; padding:16px 20px; gap:12px; }
+ .ap-said { font-size:17px; line-height:1.35; }
+ .ap-wave { flex-shrink:0; }
+ .ev { padding:85px 24px 95px; }
+ .xp .ev-title { font-size:clamp(32px,8vw,50px); margin-bottom:55px; }
+ .ev-what { font-size:clamp(34px,9vw,58px); }
+ .ev-said { max-width:30ch; font-size:17px; }
+}
+@media(max-height:500px) and (orientation:landscape) {
+ .xp .ap-first,.xp .ap-line { top:78px; font-size:30px; max-width:28ch; }
+ .ap-bar { top:73%; }
+}

@@ -1,0 +1,236 @@
+/* The Lumen journey (Journey.jsx). */
+.jy { position: relative; height: 820svh; background: var(--paper); }
+.jy.is-still { height: 100svh; }
+.jy-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+.jy-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
+.jy-veil { position: absolute; inset: 0; background: var(--paper); pointer-events: none; }
+
+.jy-beat { position: absolute; pointer-events: none; will-change: transform, opacity; }
+.jy-title, .jy-center { inset: 0; display: grid; place-content: center; justify-items: center; text-align: center; padding: 0 var(--gutter-site); }
+.jy-kicker { font-size: .8rem; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+.xp .jy-title h2 { margin-top: 14px; font-family: var(--xp-sans); font-size: clamp(3.6rem, 11vw, 10.5rem); font-weight: 600; line-height: .86; letter-spacing: -.075em; color: var(--ink); }
+.jy-tag { margin-top: 22px; font: italic 400 clamp(1.3rem, 2.4vw, 2.1rem) var(--xp-serif); letter-spacing: -.02em; color: var(--ink); }
+
+.jy-say { left: 0; right: 0; top: 0; bottom: 0; display: grid; place-items: center; }
+.jy-voice { display: inline-flex; align-items: center; gap: 18px; padding: 16px 30px 16px 24px; border-radius: 999px; background: rgba(250, 247, 241, .9);
+  box-shadow: inset 0 1px 0 #fff, 0 0 0 1px rgba(122, 98, 70, .12), 0 30px 60px -40px rgba(77, 58, 40, .5);
+  font: italic 400 clamp(1.3rem, 2.6vw, 2.2rem) var(--xp-serif); letter-spacing: -.015em; color: var(--ink); }
+.jy-w { opacity: .12; filter: blur(2px); transition: opacity .35s, filter .45s; }
+.jy-w.on { opacity: 1; filter: none; }
+.jy-wave { display: inline-flex; align-items: center; gap: 3px; height: 22px; }
+.jy-wave i { width: 3px; height: 100%; border-radius: 2px; background: var(--ember-lit); transform: scaleY(.3); }
+.is-speaking .jy-wave i { animation: jy-eq 1s ease-in-out infinite; }
+.jy-wave i:nth-child(2n) { animation-duration: .8s; animation-delay: .15s; }
+.jy-wave i:nth-child(3n) { animation-duration: 1.2s; animation-delay: .3s; }
+@keyframes jy-eq { 0%, 100% { transform: scaleY(.3); } 50% { transform: scaleY(1); } }
+
+/* Captions sit low and left, like a film's. */
+.jy-caption { left: max(var(--gutter-site), calc((100vw - var(--measure-site)) / 2 + var(--gutter-site))); bottom: 9svh; }
+.xp .jy-caption h3 { max-width: 12em; font-family: var(--xp-sans); font-size: clamp(2.2rem, 4.6vw, 4.4rem); font-weight: 600; line-height: 1.02; letter-spacing: -.05em; color: var(--ink); }
+.jy-caption h3 em, .jy-end em { font-family: var(--xp-serif); font-style: italic; font-weight: 400; letter-spacing: -.035em; }
+.jy-caption p { max-width: 30ch; margin-top: 14px; font-size: clamp(1rem, 1.4vw, 1.2rem); color: var(--text); }
+
+/* Labels pinned in the space. */
+.jy-pin-unused { position: absolute; left: 0; top: 0; display: grid; gap: 3px; translate: -50% -100%; padding-bottom: 14px; text-align: center; white-space: nowrap; pointer-events: none; opacity: 0; will-change: transform, opacity; }
+.jy-pin::after { content: ""; position: absolute; left: 50%; bottom: 0; width: 1px; height: 10px; background: #a9683c; }
+.jy-pin b { font: 600 1rem var(--xp-sans); letter-spacing: -.02em; color: var(--ink); }
+.jy-pin span { font-size: .82rem; color: var(--muted); }
+.jy-city b { font-size: 1.15rem; }
+.jy-city span { color: #a9683c; font-variant-numeric: tabular-nums; }
+
+/* Before you go. */
+.jy-tasks { display: grid; gap: 4px; margin: 26px 0 0; padding: 0; list-style: none; text-align: left; }
+.jy-tasks li { display: grid; grid-template-columns: 44px auto auto; align-items: baseline; gap: 18px; padding: 10px 0; }
+.jy-check { align-self: center; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px #c3b8a7; transition: background .4s, box-shadow .4s; }
+.jy-check svg { width: 18px; height: 18px; fill: none; stroke: #fff8ef; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 24; stroke-dashoffset: 24; transition: stroke-dashoffset .5s .1s var(--ease); }
+.xp .jy-task { font: 600 clamp(1.6rem, 3.4vw, 3.2rem) / 1.1 var(--xp-sans); letter-spacing: -.045em; color: var(--ink); transition: color .5s; }
+.jy-state { font: italic 400 clamp(1rem, 1.5vw, 1.3rem) var(--xp-serif); color: #a9683c; opacity: 0; transform: translateX(-8px); transition: opacity .5s, transform .6s var(--ease); }
+.jy-tasks li.is-done .jy-check { background: #a9683c; box-shadow: none; }
+.jy-tasks li.is-done .jy-check svg { stroke-dashoffset: 0; }
+.jy-tasks li.is-done .jy-task { color: #b5a996; }
+.jy-tasks li.is-done .jy-state { opacity: 1; transform: none; }
+
+/* The alarm. */
+.jy-alarm { position: relative; display: grid; place-items: center; width: min(46vh, 70vw); aspect-ratio: 1; }
+.jy-ring { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+.jy-ring-track { fill: none; stroke: #3d362e; stroke-opacity: .1; stroke-width: .6; }
+.jy-ring-ink { fill: none; stroke: #a9683c; stroke-width: 1; stroke-linecap: round; }
+.xp .jy-time { font: 600 clamp(5rem, 15vh, 10rem) / 1 var(--xp-sans); letter-spacing: -.07em; color: var(--ink); font-variant-numeric: tabular-nums; }
+.jy-under { margin-top: 28px; font: italic 400 clamp(1.2rem, 2vw, 1.7rem) var(--xp-serif); color: var(--ink); }
+
+.xp .jy-end h3 { font-family: var(--xp-sans); font-size: clamp(2.8rem, 6.4vw, 6.4rem); font-weight: 600; line-height: 1.02; letter-spacing: -.055em; color: var(--ink); }
+
+@media (max-width: 760px) {
+  .jy-voice { margin: 0 16px; border-radius: 28px; }
+  .jy-caption { bottom: 7svh; }
+  .jy-tasks li { grid-template-columns: 34px 1fr; }
+  .jy-state { grid-column: 2; }
+  .jy-check { width: 28px; height: 28px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .jy-wave i { animation: none !important; }
+}
+
+
+/* The real map, under everything. */
+.jy-mapwrap { position: absolute; inset: 0; }
+.fm, .fm-map { position: absolute; inset: 0; }
+.fm-map .maplibregl-canvas { outline: none; }
+.fm-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.fm-ghost { fill: none; stroke: #3d362e; stroke-opacity: .35; stroke-width: 1.2; stroke-dasharray: 3 6; }
+.fm-trail { fill: none; stroke: #a9683c; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1; }
+.fm-pin { position: absolute; left: 0; top: 0; display: grid; justify-items: center; gap: 2px; pointer-events: none; will-change: transform; opacity: 0; }
+.fm.is-ready .fm-pin { opacity: 1; }
+.fm:not(.is-ready) .fm-lines, .fm:not(.is-ready) .fm-plane, .fm:not(.is-ready) .fm-shadow { visibility: hidden; }
+.fm-message { position: absolute; left: 50%; bottom: 22%; translate: -50% 0; display: flex; align-items: center; gap: 12px; padding: 12px 18px; border-radius: 18px; background: var(--paper); color: var(--text); font-size: .9rem; }
+.fm-message button { padding: 5px 8px; color: #a9683c; font: inherit; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.fm-pin i { width: 12px; height: 12px; margin: -6px 0 6px; border-radius: 50%; background: #a9683c; box-shadow: 0 0 0 5px rgba(169, 104, 60, .18), 0 0 0 1px #fff; }
+.fm-pin b { font: 600 1rem var(--xp-sans); letter-spacing: -.02em; color: var(--ink); text-shadow: 0 0 6px #efeae1, 0 0 2px #efeae1; }
+.fm-pin span { font-size: .85rem; color: #a9683c; font-variant-numeric: tabular-nums; text-shadow: 0 0 6px #efeae1; }
+.fm-plane, .fm-shadow { position: absolute; left: 0; top: 0; width: 360px; height: 380px; pointer-events: none; transform-origin: 0 0; will-change: transform, opacity; opacity: 0; }
+.fm-plane-svg { width: 100%; height: 100%; display: block; }
+.fm-plane { filter: drop-shadow(0 2px 3px rgba(60, 40, 20, .25)); }
+.fm-shadow .fm-plane-svg * { fill: #2a2018 !important; stroke: none !important; }
+.fm-shadow { filter: blur(3px); }
+.fm-credit { position: absolute; right: 14px; bottom: 10px; font-size: .68rem; color: #8a8478; }
+
+/* The rain's umbrella: above the forecast, never on it. */
+.jy-umbrella { position: absolute; top: 25svh; right: max(var(--gutter-site), calc((100vw - var(--measure-site)) / 2 + var(--gutter-site) + 60px));
+  width: min(22vw, 28svh); pointer-events: none; will-change: transform, opacity;
+  filter: drop-shadow(0 34px 34px rgba(60, 40, 20, .16)); }
+.jy-umbrella { animation: jy-sway 6s ease-in-out infinite; transform-origin: 50% 0; }
+.jy.is-offscreen *, .jy.is-offscreen *::before, .jy.is-offscreen *::after { animation-play-state: paused !important; }
+@keyframes jy-sway { 0%, 100% { rotate: -2deg; } 50% { rotate: 2deg; } }
+
+/* The forecast: one clean column of type. */
+.jy-forecast { right: max(var(--gutter-site), calc((100vw - var(--measure-site)) / 2 + var(--gutter-site))); bottom: 9svh; width: min(440px, 40vw); }
+.jf-now { display: flex; align-items: center; gap: 18px; padding-bottom: 18px; border-bottom: 1px solid var(--rule); }
+.xp .jf-temp { font: 600 4.2rem / .9 var(--xp-sans); letter-spacing: -.06em; color: var(--ink); }
+.jf-cond { font: 600 1.15rem var(--xp-sans); letter-spacing: -.02em; color: var(--ink); }
+.jf-feels { margin-top: 4px; font-size: .85rem; color: var(--muted); }
+.jf-hours { display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; margin: 18px 0 0; padding: 0; list-style: none; }
+.jf-hours li { display: grid; justify-items: center; gap: 7px; }
+.jf-pc { font-size: .72rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.jf-bar { position: relative; width: 4px; height: 62px; border-radius: 4px; background: rgba(61, 54, 46, .08); overflow: hidden; }
+.jf-bar i { position: absolute; inset: 0; border-radius: inherit; background: #c3b8a7; transform-origin: bottom; transform: scaleY(0); transition: transform .9s cubic-bezier(.2, .8, .2, 1); transition-delay: calc(var(--i) * 60ms); }
+.jy-forecast.is-on .jf-bar i { transform: scaleY(var(--mm)); }
+.jf-hours li.is-wet .jf-bar i { background: #a9683c; }
+.jf-hours li.is-wet .jf-pc { color: var(--ink); }
+.jf-t { font: 500 .95rem var(--xp-sans); color: var(--ink); font-variant-numeric: tabular-nums; }
+.jf-h { font-size: .72rem; color: var(--muted); }
+.jf-more { display: flex; justify-content: space-between; gap: 16px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--rule); }
+.jf-more dt { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.jf-more dd { margin-top: 4px; font: 500 .98rem var(--xp-sans); color: var(--ink); }
+
+/* Memory: what it remembers, in the space in front of you. */
+.jy-space { position: absolute; inset: 0; perspective: 1600px; perspective-origin: 50% 44%; pointer-events: none; }
+.jy-mem { position: absolute; left: 50%; top: 46%; width: min(560px, 42vw); margin: 0; will-change: transform, opacity; }
+.jy-mem blockquote { margin: 0; font: italic 400 clamp(1.5rem, 2.6vw, 2.4rem) / 1.2 var(--xp-serif); letter-spacing: -.02em; color: var(--ink); }
+.jy-mem figcaption { display: flex; align-items: center; gap: 10px; margin-top: 14px; font-size: .78rem; letter-spacing: .04em; color: var(--muted); }
+.jy-mem figcaption::before { content: ""; width: 22px; height: 1px; background: #a9683c; }
+.jy-kicker-l { margin-bottom: 14px; }
+.jf-hours li.is-clear .jf-t { color: #a9683c; }
+
+@media (max-width: 760px) {
+  .jy-forecast { left: var(--gutter-site); right: var(--gutter-site); width: auto; bottom: 4svh; }
+  .jy-caption { bottom: auto; top: 14svh; }
+  .jy-umbrella { right: 50%; translate: 50% 0; top: 39svh; width: 46vw; }
+  .jy-weather-caption { top: 25svh; }
+  .xp .jy-weather-caption h3 { font-size: 1.65rem; }
+  .jy-weather-caption p { font-size: .85rem; margin-top: 10px; }
+  .jy-mem { width: 78vw; }
+  .jy-mem blockquote { font-size: 1.3rem; }
+}
+
+@media (prefers-reduced-motion: reduce) { .jy-umbrella { animation: none; } }
+
+/* The thread: the request in hand, and the plan XOS1 made from it. */
+.jy-center:not(.jy-end) { padding-top: 16svh; }
+.jy-thread { position: absolute; left: 50%; top: 11svh; translate: -50% 0; display: grid; justify-items: center; gap: 14px; width: min(860px, 92vw); pointer-events: none; z-index: 2; }
+.jy-voice-sm { padding: 10px 22px 10px 18px; gap: 14px; font-size: clamp(1rem, 1.5vw, 1.25rem); }
+.jy-voice-sm .jy-wave { height: 16px; }
+.jy-plan { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 22px; margin: 0; padding: 0; list-style: none; }
+.jy-plan li { display: flex; align-items: center; gap: 8px; font-size: .82rem; font-weight: 500; letter-spacing: .02em; color: #a59b8c; transition: color .4s; }
+.jy-dot { display: grid; place-items: center; width: 16px; height: 16px; border-radius: 50%; box-shadow: inset 0 0 0 1.2px #c9bfaf; transition: background .4s, box-shadow .4s; }
+.jy-dot svg { width: 11px; height: 11px; fill: none; stroke: #fff8ef; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; opacity: 0; transition: opacity .3s; }
+.jy-plan li.is-now { color: var(--ink); }
+.jy-plan li.is-now .jy-dot { box-shadow: inset 0 0 0 1.5px #a9683c, 0 0 0 4px rgba(169, 104, 60, .14); animation: jy-ping 1.4s ease-in-out infinite; }
+.jy-plan li.is-done { color: var(--text); }
+.jy-plan li.is-done .jy-dot { background: #a9683c; box-shadow: none; }
+.jy-plan li.is-done .jy-dot svg { opacity: 1; }
+@keyframes jy-ping { 0%, 100% { box-shadow: inset 0 0 0 1.5px #a9683c, 0 0 0 3px rgba(169, 104, 60, .16); } 50% { box-shadow: inset 0 0 0 1.5px #a9683c, 0 0 0 7px rgba(169, 104, 60, 0); } }
+.jy-status { display: flex; align-items: center; gap: 10px; min-height: 1.4em; font: italic 400 1.02rem var(--xp-serif); color: var(--text); animation: jy-in .45s var(--ease) both; }
+.jy-status b { font-style: normal; font-weight: 600; font-family: var(--xp-sans); font-size: .9rem; color: #a9683c; }
+.jy-spin { width: 12px; height: 12px; border-radius: 50%; border: 1.5px solid rgba(169, 104, 60, .25); border-top-color: #a9683c; animation: jy-rot .8s linear infinite; }
+@keyframes jy-rot { to { transform: rotate(360deg); } }
+@keyframes jy-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@media (max-width: 760px) {
+  .jy-thread { top: 7svh; gap: 8px; }
+  .jy-status { font-size: .85rem; }
+  .jy-voice-sm { font-size: .92rem; }
+  .jy-plan { gap: 4px 12px; }
+  .jy-plan li { font-size: .72rem; }
+}
+@media (prefers-reduced-motion: reduce) { .jy-spin, .jy-plan li.is-now .jy-dot { animation: none; } }
+.jy-title .jy-kicker { font-size: clamp(1.2rem, 2vw, 1.75rem); font-weight: 500; letter-spacing: -.02em; text-transform: none; color: var(--text); }
+.jy-title .jy-kicker + h2 { margin-top: 6px; }
+
+/* Each active mobile scene fits below navigation with room for its visual. */
+@media(max-width:760px) {
+ .jy { height:690svh; }
+ .jy-thread { top:76px; width:calc(100% - 40px); gap:10px; }
+ .jy-voice-sm { margin:0; padding:12px 15px; gap:10px; width:100%; font-size:15px; line-height:1.25; border-radius:20px; }
+ .jy-wave { flex-shrink:0; }
+ .jy-plan { display:grid; grid-template-columns:repeat(3,auto); justify-content:space-between; width:100%; gap:9px 10px; }
+ .jy-plan li { font-size:12px; gap:6px; }
+ .jy-status { font-size:13px; text-align:center; min-height:32px; margin:0; line-height:1.25; }
+ .jy-caption { left:22px; right:22px; top:auto; bottom:30px; }
+ .xp .jy-caption h3 { font-size:clamp(26px,7.2vw,36px); }
+ .jy-weather-caption { top:clamp(240px,31svh,300px); bottom:auto; right:40%; }
+ .xp .jy-weather-caption h3 { font-size:clamp(22px,6vw,28px); line-height:1.08; }
+ .jy-weather-caption p { font-size:12px; line-height:1.4; }
+ .jy-umbrella { top:clamp(238px,31svh,300px); right:16px; translate:0; width:34vw; max-width:155px; }
+ .jy-forecast { left:22px; right:22px; bottom:26px; }
+ .jf-now { gap:12px; padding-bottom:12px; }
+ .xp .jf-temp { font-size:52px; }.jf-cond { font-size:15px; }.jf-feels { font-size:11px; line-height:1.4; }
+ .jf-hours { gap:4px; margin-top:12px; }.jf-hours li { gap:6px; }.jf-bar { height:44px; }.jf-t { font-size:13px; }.jf-pc,.jf-h { font-size:11px; }
+ .jf-more { gap:8px; margin-top:12px; padding-top:12px; }.jf-more dt { font-size:9px; letter-spacing:.08em; }.jf-more dd { font-size:12px; }
+ .jy-center:not(.jy-end) { padding:240px 22px 35px; }
+ .jy-tasks { margin:0; width:100%; gap:22px; }.jy-tasks li { gap:8px 12px; padding:0; }.xp .jy-task { font-size:clamp(23px,6vw,32px); }.jy-state { font-size:16px; }
+ .jy-alarm { width:min(55vw,30svh); }.xp .jy-time { font-size:clamp(56px,15vw,88px); }.jy-under { font-size:18px; margin-top:20px; }
+ .xp .jy-title h2 { font-size:clamp(46px,12vw,82px); line-height:1; }.jy-title .jy-kicker { font-size:18px; }.jy-tag { font-size:22px; max-width:26ch; line-height:1.3; }
+ .xp .jy-end h3 { font-size:clamp(31px,8.5vw,48px); }
+}
+@media(max-width:760px) and (max-height:680px) {
+ .jy-thread { top:70px; gap:7px; }.jy-voice-sm { font-size:13px; padding:10px 12px; }.jy-status { min-height:24px; font-size:12px; }
+ .jy-plan { gap:7px; }.jy-plan li { font-size:11px; }
+ .jy-weather-caption { top:215px; }.jy-umbrella { top:212px; width:29vw; }
+ .xp .jy-weather-caption h3 { font-size:21px; }.jy-weather-caption p { margin-top:7px; font-size:11px; }
+ .jy-forecast { bottom:18px; }.jf-bar { height:28px; }.jf-now { padding-bottom:9px; }.jf-hours { margin-top:10px; }.jf-more { margin-top:10px; padding-top:9px; }
+ .jy-center:not(.jy-end) { padding-top:218px; }.jy-tasks { gap:16px; }.xp .jy-task { font-size:21px; }
+}
+@media(max-height:500px) and (orientation:landscape) {
+ .jy-thread { top:74px; left:22px; translate:0; width:43%; gap:8px; }
+ .jy-voice-sm { font-size:13px; padding:10px 12px; margin:0; }.jy-plan { gap:6px 12px; }.jy-plan li { font-size:11px; }.jy-status { font-size:12px; }
+ .jy-forecast { left:auto; right:24px; bottom:20px; width:43%; }.jf-bar { height:24px; }.jf-now { padding-bottom:8px; }.jf-hours { margin-top:8px; }.jf-more { margin-top:10px; padding-top:8px; }
+ .xp .jf-temp { font-size:40px; }.jf-cond { font-size:13px; }.jf-feels { font-size:11px; }.jf-more dt { font-size:9px; }.jf-more dd { font-size:12px; }
+ .jy-caption,.jy-weather-caption { top:auto; left:24px; right:auto; bottom:25px; max-width:40%; }.xp .jy-caption h3 { font-size:25px; }.jy-caption p { font-size:12px; }
+ .jy-umbrella { top:75px; right:21%; translate:50% 0; width:65px; }
+ .jy-center:not(.jy-end) { padding:80px 22px 20px 50%; }.jy-tasks { gap:12px; margin:0; }.jy-tasks li { grid-template-columns:28px 1fr; gap:6px 10px; }.jy-state { grid-column:2; font-size:13px; }.xp .jy-task { font-size:21px; }
+ .jy-alarm { width:150px; }.xp .jy-time { font-size:58px; }.jy-under { font-size:16px; margin-top:12px; }
+ .xp .jy-title h2 { font-size:58px; }.jy-tag { font-size:20px; max-width:42ch; }.xp .jy-end h3 { font-size:38px; }
+}
+@media(max-width:760px) and (min-height:741px) {
+ .jy-weather-caption { top:clamp(240px,29svh,285px); right:22px; }
+ .jy-umbrella { top:40svh; right:50%; translate:50% 0; width:44vw; max-width:200px; }
+}
+@media(min-width:761px) and (max-width:1100px) and (min-height:501px) {
+ .jy-thread { top:86px; }
+ .jy-weather-caption { max-width:42%; }
+ .xp .jy-weather-caption h3 { font-size:30px; }
+ .jy-weather-caption p { font-size:15px; }
+ .jf-cond { font-size:16px; }.jf-feels { font-size:12px; }
+}
+@media(max-width:760px) {
+ .jy-mapwrap::after { content:""; position:absolute; inset:55% 0 0; background:linear-gradient(transparent 25%,rgba(239,234,225,.92)); pointer-events:none; }
+}

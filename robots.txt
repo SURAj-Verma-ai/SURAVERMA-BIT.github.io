@@ -1,6 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /thankyou/
-Disallow: /temp template/
-
-Sitemap: https://xiteai.com/sitemap.xml

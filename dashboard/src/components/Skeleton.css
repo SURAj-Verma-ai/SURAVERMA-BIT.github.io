@@ -1,0 +1,17 @@
+/* Skeleton loading shimmer. Matches the design system's surface palette:
+   the base is --surface-2 (#fafafa), the wave is a gentle sweep of white.
+   Reduced motion disables the sweep; the solid fill is still visible. */
+.skel { display: block; background: var(--surface-2); border-radius: var(--r-sm); position: relative; overflow: hidden; flex-shrink: 0; }
+.skel::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.55) 40%, rgba(255,255,255,.55) 60%, transparent 100%);
+  animation: skel-shimmer 1.6s ease-in-out infinite;
+}
+.skel-line { border-radius: 4px; }
+.skel-circle { border-radius: 50%; }
+.skel-block { border-radius: var(--r-card); }
+.skel-rows { display: flex; flex-direction: column; }
+.skel-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 18px 0; border-bottom: 1px solid var(--divider); }
+.skel-row:last-child { border-bottom: none; }
+@keyframes skel-shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+@media (prefers-reduced-motion: reduce) { .skel::after { animation: none; } }

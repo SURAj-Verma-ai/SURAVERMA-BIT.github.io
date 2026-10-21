@@ -1,0 +1,112 @@
+/* The night after the day (Night.jsx). */
+.nt { position: relative; background: #030303; color: #f5f5f5; --nt-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; --nt-serif: "Newsreader", Georgia, serif; font-family: var(--nt-sans); }
+
+/* Begin on the same paper as memory. Once it fills the screen, the entire
+   night changes tone with scroll; stars arrive after the paper darkens. */
+.nt-entry { position:relative; z-index:1; height:65svh; pointer-events:none; }
+.nt.is-still .nt-entry { height:80px; background:linear-gradient(var(--paper,#efeae1),#030303); }
+
+/* One sky behind the whole night: sticky, one screen tall, taking no room. */
+/* Paint the changing colour on one viewport, not the entire multi-screen
+   section. The same colours and scroll curve sit behind the same content. */
+.nt-backdrop { position: sticky; top: 0; height: 100svh; margin-bottom: -100svh; overflow: hidden; pointer-events: none; z-index: 0; contain: paint; }
+.nt-sky { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.nt-stars { position: absolute; top: 0; left: 0; width: 1px; height: 1px; border-radius: 50%; background: transparent; will-change: transform; }
+.nt-stars-near { animation: nt-twinkle 4.5s ease-in-out infinite alternate; }
+.nt-sky[data-running="false"] .nt-stars-near, .nt-sky[data-running="false"] .nt-shoot { animation-play-state: paused; }
+.nt-shoot { position: absolute; top: 14%; left: 62%; width: 160px; height: 1px; background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, .85)); transform: rotate(-16deg); opacity: 0; animation: nt-shoot 11s ease-out 3s infinite; }
+.nt > section { position: relative; z-index: 1; }
+.nt-stick { position: sticky; top: 0; height: 100svh; display: grid; place-items: center; align-content: center; padding: 0 var(--gutter-site); text-align: center; }
+.nt-label { font-size: .78rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: #6a6a6a; }
+
+/* The memory universe: pulled back from one moment to all of them. */
+.mu { height: 340svh; }
+.mu-stick { overflow: hidden; }
+.mu-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.mu-one { position: relative; margin-top: 22svh; display: grid; gap: 8px; padding: 18px 24px; border: 1px solid rgba(255, 255, 255, .14); border-radius: 18px; background: rgba(10, 10, 10, .55); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.mu-one span { font-size: .8rem; font-weight: 500; color: #8a8a8a; }
+.mu-one p { font-family: var(--nt-serif); font-style: italic; font-size: 1.5rem; }
+.mu-mid { position: relative; margin-top: 52svh; font-family: var(--nt-serif); font-style: italic; font-size: clamp(1.4rem, 2.4vw, 2rem); color: #cfcfcf; }
+.mu-all { position: relative; display: grid; justify-items: center; gap: 18px; padding: 34px 40px; border-radius: 28px; background: radial-gradient(closest-side, rgba(3, 3, 3, .85), rgba(3, 3, 3, 0)); }
+.nt .mu-all h2 { font-family: var(--nt-sans); font-size: clamp(2.6rem, 6.4vw, 6rem); font-weight: 600; line-height: 1; letter-spacing: -.055em; color: #f5f5f5; }
+.mu-all p { max-width: 40ch; font-size: clamp(1.05rem, 1.5vw, 1.25rem); line-height: 1.5; color: #a3a3a3; }
+.mu-all ul { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 8px; list-style: none; padding: 0; }
+.mu-all li { padding: 7px 14px; border: 1px solid rgba(255, 220, 180, .22); border-radius: 99px; font-size: .82rem; color: #f3dcc1; }
+
+/* Tomorrow: the line, out of the dark. */
+.nt-tomorrow { height: 200svh; }
+.nt .nt-line { position: relative; display: grid; gap: 2px; font-family: var(--nt-sans); font-size: clamp(2.6rem, 7.2vw, 6.6rem); font-weight: 600; line-height: 1.02; letter-spacing: -.055em; color: #f5f5f5; }
+.nt-line-b { font-family: var(--nt-serif); font-style: italic; font-weight: 400; letter-spacing: -.035em; }
+.nt-w { color: #1f1f1f; transition: color .5s ease, text-shadow .8s ease; }
+.nt-w.is-lit { color: #f5f5f5; text-shadow: 0 0 40px rgba(255, 255, 255, .12); }
+.nt-line-b .nt-w.is-lit { color: #cfcfcf; }
+.nt-sub { position: relative; margin-top: 34px; font-size: clamp(1.05rem, 1.5vw, 1.25rem); color: #8a8a8a; opacity: 0; transform: translateY(10px); transition: opacity .8s ease, transform .8s var(--ease); }
+.nt-sub.is-on { opacity: 1; transform: none; }
+
+/* The atlas: chapters travelling past, every feature in its place. */
+.at-stick { position: sticky; top: 0; height: 100svh; display: grid; grid-template-columns: minmax(0, 1fr); align-content: center; overflow: hidden; }
+.at-track { justify-self: start; display: flex; align-items: flex-start; gap: clamp(80px, 9vw, 150px); width: max-content; padding: 0 max(var(--gutter-site), calc((100vw - var(--measure-site)) / 2 + var(--gutter-site))); will-change: transform; }
+.at-intro { width: min(520px, 80vw); padding-top: 4px; }
+.at-label { margin-bottom: 22px; }
+.nt .at-intro h2 { font-family: var(--nt-sans); font-size: clamp(3rem, 6.6vw, 6.4rem); font-weight: 600; line-height: .98; letter-spacing: -.06em; color: #f5f5f5; }
+.at-intro h2 em { font-family: var(--nt-serif); font-weight: 400; letter-spacing: -.035em; color: #cfcfcf; }
+.at-ch { display: grid; gap: 34px; }
+.at-ch header { display: grid; gap: 10px; }
+.nt .at-ch h3 { font-family: var(--nt-serif); font-style: italic; font-weight: 400; font-size: clamp(2.6rem, 4.6vw, 4.4rem); line-height: 1; letter-spacing: -.035em; color: #f5f5f5; }
+.at-ch header p { max-width: 34ch; font-size: 1rem; color: #8a8a8a; }
+.at-ch ul { display: grid; grid-auto-flow: column; grid-template-rows: repeat(var(--rows), auto); grid-auto-columns: 260px; gap: 26px 44px; list-style: none; padding: 0; }
+.at-ch li { display: grid; gap: 6px; }
+.at-ch li b { font-size: 1.02rem; font-weight: 600; letter-spacing: -.015em; color: #f5f5f5; }
+.at-ch li span { font-size: .9rem; line-height: 1.45; color: #8f8f8f; }
+.at-ch.is-next h3 { color: #f3dcc1; }
+.at-ch.is-next li b { color: #e9d5bf; }
+
+/* Promises: one at a time; on the last, the sky empties. */
+.nt-yours { height: 300svh; }
+.nt-label-top { position: absolute; top: 22svh; left: 50%; transform: translateX(-50%); white-space: nowrap; }
+.nt-promise-box { display: grid; place-items: center; min-height: 3.2em; font-size: clamp(2.4rem, 6.4vw, 6rem); }
+.nt-promise { max-width: 15ch; font-weight: 600; line-height: 1.02; letter-spacing: -.055em; color: #f5f5f5; text-wrap: balance; }
+.nt-ticks { position: absolute; bottom: 12svh; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; }
+.nt-ticks i { width: 26px; height: 2px; border-radius: 2px; background: rgba(255, 255, 255, .16); transition: background .5s; }
+.nt-ticks i.is-on { background: rgba(255, 255, 255, .85); }
+
+.nt.is-still .nt-stars-near, .nt.is-still .nt-shoot { animation: none; }
+/* Far from the night, its sky holds still and its sections are skipped. */
+.nt.is-far .nt-stars-near, .nt.is-far .nt-shoot { animation-play-state: paused; }
+.nt > section { content-visibility: auto; contain-intrinsic-size: auto 100svh; }
+.nt.is-still .nt-shoot { display: none; }
+
+@keyframes nt-twinkle { from { opacity: .6; } to { opacity: 1; } }
+@keyframes nt-shoot { 0%, 92% { opacity: 0; transform: rotate(-16deg) translateX(0); } 93% { opacity: 1; } 100% { opacity: 0; transform: rotate(-16deg) translateX(-420px); } }
+
+@media (max-width: 760px) {
+  .mu-all { padding: 24px 8px; }
+  .at-ch ul { grid-auto-columns: 210px; gap: 20px 28px; }
+
+}
+@media (prefers-reduced-motion: reduce) {
+  .nt-stars-near, .nt-shoot { animation: none; }
+  .nt-w { color: #f5f5f5; }
+  .nt-sub { opacity: 1; transform: none; }
+}
+
+/* Native disclosures keep the catalogue readable without sideways scrubbing. */
+.at-compact { padding:85px max(24px,var(--gutter-site)) 70px; }
+.at-compact .at-intro { width:auto; margin-bottom:42px; }
+.at-disclosures { max-width:var(--page-content-width); margin:auto; }
+.at-disclosures .at-ch { display:block; border-top:1px solid #292929; }
+.at-disclosures .at-ch:last-child { border-bottom:1px solid #292929; }
+.at-disclosures summary { list-style:none; display:flex; align-items:center; justify-content:space-between; gap:24px; min-height:76px; padding:20px 0; cursor:pointer; font:400 30px/1.15 var(--nt-serif); letter-spacing:-.025em; }
+.at-disclosures summary::-webkit-details-marker { display:none; }.at-disclosures summary i { font:300 24px var(--nt-sans); color:#a59b8b; transition:transform .25s; }.at-disclosures details[open] summary i { transform:rotate(45deg); }
+.at-disclosures summary:focus-visible { outline:2px solid #c9743f; outline-offset:4px; }
+.at-description { margin:0 0 26px; font-size:15px; line-height:1.6; color:#aaa; max-width:44ch; }
+.at-disclosures .at-ch ul { grid-auto-flow:row; grid-template-rows:none; grid-auto-columns:auto; grid-template-columns:1fr; gap:24px; margin:0 0 32px; }
+.at-disclosures .at-ch li { gap:7px; }.at-disclosures .at-ch li b { font-size:16px; }.at-disclosures .at-ch li span { font-size:14px; line-height:1.55; color:#aaa; max-width:46ch; }
+@media(min-width:600px) { .at-disclosures .at-ch ul { grid-template-columns:1fr 1fr; gap:26px 32px; } }
+@media(max-width:760px) {
+ .nt-tomorrow { height:150svh; }.nt-yours { height:220svh; }
+ .nt .nt-line { font-size:clamp(32px,8.6vw,52px); }.nt-sub { font-size:16px; line-height:1.6; max-width:28ch; }
+ .nt .at-intro h2 { font-size:clamp(40px,11vw,60px); }
+ .nt-promise-box { font-size:clamp(32px,8.6vw,50px); }
+}
+@media(max-height:500px) { .nt-stick { padding-top:70px; }.nt-label-top { top:80px; }.nt-promise-box { font-size:34px; }.nt-ticks { bottom:30px; } }

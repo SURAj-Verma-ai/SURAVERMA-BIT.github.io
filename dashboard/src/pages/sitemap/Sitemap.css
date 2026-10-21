@@ -1,0 +1,21 @@
+/* Sitemap (pages/sitemap). An index: groups flow down in columns the way a
+   printed one does, each with its name, a hairline and its pages. On the site
+   measure like every public page. */
+.sm-page .sm-hero { padding-bottom: 88px; }
+
+.sm-index { max-width: var(--measure-site); margin: 0 auto; padding: 0 var(--gutter-site) 64px; columns: 3; column-gap: 56px; }
+.sm-group { break-inside: avoid; padding: 28px 0 44px; border-top: 1px solid var(--border); }
+.site .sm-group h2 { margin: 0 0 18px; font-family: var(--serif); font-size: 1.6rem; font-weight: 400; letter-spacing: -.02em; color: var(--ink); }
+.sm-note { font-size: .9rem; color: var(--muted); }
+.sm-group ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.sm-link { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 7px 0; font-size: .95rem; color: var(--muted); transition: color .2s; }
+.sm-link:hover { color: var(--ink); }
+.sm-arrow { font-size: .85rem; color: var(--subtle); opacity: 0; transform: translateX(-4px); transition: opacity .25s, transform .3s var(--ease), color .2s; }
+.sm-link:hover .sm-arrow, .sm-link:focus-visible .sm-arrow { opacity: 1; transform: none; color: var(--ink); }
+
+@media (max-width: 1000px) { .sm-index { columns: 2; } }
+@media (max-width: 640px) {
+  .sm-index { columns: 1; padding: 0 var(--gutter-site) 48px; }
+  .sm-page .sm-hero { padding-bottom: 56px; }
+}
+@media (prefers-reduced-motion: reduce) { .sm-arrow { transition: none; } }

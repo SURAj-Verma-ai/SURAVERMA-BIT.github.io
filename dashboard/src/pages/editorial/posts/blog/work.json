@@ -1,0 +1,16 @@
+{
+  "id": "work",
+  "category": "Culture",
+  "title": "What a constraint needs to prove.",
+  "summary": "Evidence, alternatives and ownership in the XiteAI Code.",
+  "image": "/media/editorial/notebook-1200.webp",
+  "imageSmall": "/media/editorial/notebook-480.webp",
+  "alt": "An open notebook with a pen on a wooden desk",
+  "imageCredit": {"name":"Clay Banks","url":"https://unsplash.com/photos/open-notebook-with-pen-and-pencils-on-desk-n9AaeihA9HI"},
+  "publishedAt": "2026-10-01",
+  "status": "preview",
+  "paragraphs": [
+    "Difficulty and a lack of precedent are not proof that something cannot be done. At XiteAI, a constraint needs to be supported by evidence.",
+    "When a constraint is real, we ask for alternatives ranked on merit. The person who raised it owns the path forward until the objective is met."
+  ]
+}

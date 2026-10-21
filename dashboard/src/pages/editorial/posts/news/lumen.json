@@ -1,0 +1,16 @@
+{
+  "id": "lumen",
+  "category": "Product",
+  "title": "Introducing Lumen Visuals.",
+  "summary": "A visual feature of XOS1, shown in the product experience.",
+  "image": "/media/editorial/light-1200.webp",
+  "imageSmall": "/media/editorial/light-480.webp",
+  "alt": "Light refracted through glass prisms into coloured arcs",
+  "imageCredit": {"name":"David Clode","url":"https://unsplash.com/photos/a-rainbow-colored-object-in-the-middle-of-a-black-background-l16rjVtp11g"},
+  "publishedAt": "2026-10-03",
+  "status": "preview",
+  "paragraphs": [
+    "This is a sample feature announcement for the News page. Lumen Visuals is a feature of XOS1.",
+    "The final announcement will describe the feature's availability and include examples from the release."
+  ]
+}

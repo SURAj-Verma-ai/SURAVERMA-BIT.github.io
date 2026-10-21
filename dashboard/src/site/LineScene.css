@@ -1,0 +1,11 @@
+.line-scene { width:100%; color:#796e60; }
+.line-scene svg { display:block; width:100%; height:auto; overflow:visible; }
+.ls-ink { stroke:currentColor; stroke-width:1.35; stroke-linecap:round; stroke-linejoin:round; vector-effect:non-scaling-stroke; stroke-dasharray:1; stroke-dashoffset:1; animation:ls-draw 1.65s cubic-bezier(.22,.65,.3,1) var(--ls-delay,0s) both; }
+.ls-ink.ls-accent { color:#a46839; stroke-width:1.8; }
+.ls-ink.ls-soft { color:#c8beaf; stroke-width:1; }
+.ls-wash { opacity:0; animation:ls-wash 1.2s ease .3s both; }
+.ls-paper { fill:#f7f3eb; }.ls-warm { fill:#e8d4b4; }.ls-light { fill:#f2e5ce; }.ls-shadow { fill:#e4ded2; }
+.line-scene[data-running="false"] :is(.ls-ink,.ls-wash) { animation-play-state:paused; }
+@keyframes ls-draw { to { stroke-dashoffset:0; } }
+@keyframes ls-wash { to { opacity:1; } }
+@media(prefers-reduced-motion:reduce) { .line-scene .ls-ink { animation:none; stroke-dashoffset:0; }.line-scene .ls-wash { animation:none; opacity:1; } }

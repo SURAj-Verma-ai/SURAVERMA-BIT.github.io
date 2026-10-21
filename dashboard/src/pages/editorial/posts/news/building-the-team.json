@@ -1,0 +1,16 @@
+{
+  "id": "building-the-team",
+  "category": "Careers",
+  "title": "Opportunities at XiteAI.",
+  "summary": "The roles behind the next stage of our work.",
+  "image": "/media/editorial/meeting-room-1200.webp",
+  "imageSmall": "/media/editorial/meeting-room-480.webp",
+  "alt": "An empty meeting room with desks and chairs, an illustrative photograph",
+  "imageCredit": {"name":"Craig Lovelidge","url":"https://unsplash.com/photos/an-empty-conference-room-with-desks-and-chairs-bV5dFLEYecM"},
+  "publishedAt": "2026-10-06",
+  "status": "preview",
+  "paragraphs": [
+    "This is a sample hiring announcement for the News page design. It introduces the careers section rather than describing an unconfirmed hiring milestone.",
+    "The live careers page lists available roles and explains the application process. Each published hiring update can link directly to the relevant role."
+  ]
+}

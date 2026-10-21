@@ -1,0 +1,31 @@
+.brand-panel {
+  position: relative;
+  min-width: 0;
+  min-height: 100%;
+  overflow: hidden;
+  background: #17120e;
+  border-right: 1px solid rgba(17, 17, 19, 0.12);
+}
+
+.brand-panel picture,
+.brand-panel img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.brand-panel img {
+  object-fit: cover;
+  object-position: center;
+}
+
+@media (max-width: 1100px) {
+  .brand-panel { display: block; }
+}
+
+/* Portrait is deliberately form-only on phones, tablets and rotated monitors. */
+@media (orientation: portrait) {
+  .brand-panel { display: none; }
+  .auth-layout.auth-layout,
+  .lg.lg { grid-template-columns: minmax(0, 1fr); }
+}

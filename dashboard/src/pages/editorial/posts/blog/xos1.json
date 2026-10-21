@@ -1,0 +1,16 @@
+{
+  "id": "xos1",
+  "category": "Engineering",
+  "title": "Why the operating system is the interface.",
+  "summary": "What changes when understanding and action are designed together.",
+  "image": "/media/editorial/keyboard-1200.webp",
+  "imageSmall": "/media/editorial/keyboard-480.webp",
+  "alt": "A close-up of a mechanical computer keyboard",
+  "imageCredit": {"name":"Chris J. Davis","url":"https://unsplash.com/photos/a-close-up-of-a-computer-keyboard-on-a-desk-PT_9ux0j-x4"},
+  "publishedAt": "2026-10-08",
+  "status": "preview",
+  "paragraphs": [
+    "An operating system connects the work a person wants to do with the applications and resources needed to do it.",
+    "This essay explores the design question behind XOS1: how can conversation become part of that connection, rather than one more application to operate?"
+  ]
+}

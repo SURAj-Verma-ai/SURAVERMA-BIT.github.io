@@ -1,0 +1,268 @@
+/* Contact (pages/contact). The site's warm paper, the serif for anything said
+   aloud, the mono for anything that is an address. Every section sits on the
+   site measure so its edges line up with the nav. */
+.ct-page { background: var(--paper); }
+.ct-page .ft { margin-top: 48px; }
+.ct-sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+.ct-page :is(a, button):focus-visible { outline: 2px solid #776854; outline-offset: 3px; }
+
+/* ── The opening ───────────────────────────────────────────────────────── */
+.ct-hero { max-width: var(--measure-site); margin: 0 auto; padding: 64px var(--gutter-site) 0; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.ct-kicker { margin-bottom: 26px; font-family: var(--site-mono); font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+.site .ct-hero h1 { font-family: var(--serif); font-size: clamp(3.1rem, 6.6vw, 5.8rem); font-weight: 400; line-height: 1; letter-spacing: -.035em; }
+.ct-lede { margin-top: 28px; max-width: 47ch; font-size: 1.06rem; line-height: 1.75; color: var(--muted); }
+
+/* Who it is to: a line of names, the chosen one underlined, the groups held
+   apart by a hairline. */
+.ct-to-wrap { margin-top: 50px; }
+.ct-to { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 0; }
+.ct-to-label { margin-right: 16px; font-family: var(--site-mono); font-size: .66rem; letter-spacing: .2em; text-transform: uppercase; color: var(--subtle); }
+.ct-to-item { position: relative; padding: 9px 11px 12px; border-radius: 8px; font-size: .9rem; color: var(--muted); transition: color .25s; }
+.ct-to-item:hover, .ct-to-item[aria-checked="true"] { color: var(--ink); }
+.ct-to-mark { position: absolute; left: 11px; right: 11px; bottom: 6px; height: 1px; background: var(--ink); }
+.ct-to-sep { width: 1px; height: 14px; margin: 0 12px; background: var(--rule); }
+
+/* ── The letter ────────────────────────────────────────────────────────── */
+.ct-letter { max-width: var(--measure-site); margin: 0 auto; padding: 18px var(--gutter-site) 128px; display: flex; flex-direction: column; align-items: center; }
+.ct-stage { --mx: 50%; --my: 30%; width: min(100%, 760px); padding: 26px 0 24px; }
+.ct-lean { position: relative; }
+.ct-env-in { position: relative; }
+.ct-env-back { position: absolute; inset: 0; border: 1px solid var(--rule); border-radius: 6px; }
+.ct-env-back-a { background: #e8e1d5; transform: rotate(-3.4deg); }
+.ct-env-back-b { background: #f1ebe1; transform: rotate(2.2deg); }
+
+.ct-env {
+  position: relative; aspect-ratio: 2 / 1; container-type: inline-size; overflow: hidden;
+  border: 1px solid #dcd3c3; border-radius: 6px; background: #faf6ef;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .75),
+    0 1px 2px rgba(26, 23, 20, .06),
+    0 26px 50px -30px rgba(26, 23, 20, .34),
+    0 70px 100px -70px rgba(26, 23, 20, .3);
+}
+/* Paper: a little grain, multiplied in so it darkens and never greys. */
+.ct-env::before {
+  content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none; opacity: .45;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .36 0 0 0 0 .28 0 0 0 .1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+/* Light under the pointer, only while it is there. */
+.ct-env::after {
+  content: ""; position: absolute; inset: 0; z-index: 4; pointer-events: none; opacity: 0;
+  background: radial-gradient(480px circle at var(--mx) var(--my), rgba(255, 255, 255, .5), transparent 62%);
+  transition: opacity .5s var(--ease);
+}
+.ct-stage:hover .ct-env::after { opacity: 1; }
+/* The flap on the back, just showing through. */
+.ct-env-flap { position: absolute; inset: 0; width: 100%; height: 100%; }
+.ct-env-flap path { fill: none; stroke: #ebe3d6; stroke-width: 1; }
+
+.ct-env-from { position: absolute; left: 5.5%; top: 9%; width: 25cqw; display: grid; gap: 2.2cqw; }
+.ct-env-from span { font-family: var(--site-mono); font-size: clamp(7px, 1.2cqw, 10px); letter-spacing: .2em; text-transform: uppercase; color: var(--subtle); }
+.ct-env-from i { display: block; border-bottom: 1px dashed #d8cfbf; }
+
+/* Blind debossed: the mark is paper a shade darker, with a shadow on its upper
+   edge and light on its lower one, which is how an impression reads. */
+.ct-seal { position: absolute; top: 9%; right: 5.5%; display: flex; flex-direction: column; align-items: flex-end; transform-origin: 100% 0; }
+.ct-seal-press { width: 6.6cqw; aspect-ratio: 128 / 143; filter: drop-shadow(-.6px -.7px 0 rgba(26, 23, 20, .2)) drop-shadow(.7px .9px 0 rgba(255, 255, 255, .95)); }
+.ct-seal-press i { display: block; width: 100%; height: 100%; background: #ece4d7; -webkit-mask: url(/logo/xiteai.png) center / contain no-repeat; mask: url(/logo/xiteai.png) center / contain no-repeat; }
+.ct-seal-rule { width: 6.6cqw; height: 1px; margin: 1.8cqw 0 1.3cqw; background: #dcd2c2; }
+.ct-seal-line { font-family: var(--site-mono); font-size: clamp(6.5px, 1.05cqw, 9px); line-height: 1.9; letter-spacing: .2em; text-transform: uppercase; color: var(--subtle); white-space: nowrap; }
+
+/* Set flush with the return address, so the letter reads down one left edge. */
+.ct-env-to { position: absolute; z-index: 1; left: 5.5%; right: 42%; top: 46%; }
+.ct-env-lines { display: grid; }
+.ct-env-lines > span { border-bottom: 1px solid #e2d9ca; }
+.ct-env-desk { padding-bottom: .9cqw; font-family: var(--serif); font-size: clamp(20px, 5.2cqw, 42px); line-height: 1.15; letter-spacing: -.02em; color: var(--ink); }
+.ct-env-co { padding: 1.4cqw 0 1cqw; font-family: var(--serif); font-size: clamp(11px, 2.25cqw, 18px); color: var(--muted); }
+.ct-env-mail { display: flex; align-items: center; padding: 1.4cqw 0 1cqw; font-family: var(--site-mono); font-size: clamp(10px, 2.05cqw, 16px); color: var(--ink); }
+/* The address writes itself, a character at a time. */
+.ct-type { display: inline-block; overflow: hidden; white-space: nowrap; width: calc(var(--n) * 1ch); animation: ct-type calc(var(--n) * 30ms) steps(var(--n)) var(--d) both; }
+.ct-caret { display: inline-block; width: 1px; height: 1.15em; margin-left: 2px; background: var(--ink); animation: ct-caret .9s steps(1) var(--d) 4 both; }
+@keyframes ct-type { from { width: 0; } }
+@keyframes ct-caret { 0% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
+.ct-bars { position: absolute; left: 5.5%; bottom: 8%; width: 30cqw; height: 2.6cqw; }
+/* The bars sweep in left to right as one wipe, not forty-six separate animations. */
+.ct-bars rect { fill: #3d3d3d; opacity: .36; }
+.ct-bars { animation: ct-bar .7s var(--ease) var(--d) both; }
+@keyframes ct-bar { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+
+/* What the desk is for, and the two ways to reach it. */
+.ct-act { margin-top: 44px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.ct-about { min-height: 1.75em; max-width: 52ch; font-size: 1.04rem; line-height: 1.75; color: var(--muted); }
+.ct-btns { margin-top: 26px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 14px 26px; }
+.ct-write {
+  display: inline-flex; align-items: center; gap: 14px; min-height: 52px; padding: 0 26px; border-radius: 999px;
+  background: var(--ink); color: var(--paper); font-size: .9rem; font-weight: 500;
+  transition: transform .25s var(--ease), background-color .2s, color .2s, box-shadow .25s var(--ease);
+}
+.ct-write span, .ct-more span, .ct-link span { display: inline-block; transition: transform .25s var(--ease); }
+.ct-write:hover { transform: translateY(-2px); background: var(--hover); color: var(--hover-ink); box-shadow: 0 10px 24px rgba(26, 23, 20, .14); }
+.ct-write:hover span, .ct-more:hover span { transform: translateX(3px); }
+.ct-copy, .ct-more { display: inline-flex; align-items: center; gap: 8px; min-height: 52px; padding: 0 4px; font-size: .9rem; color: var(--ink); }
+.ct-copy span, .ct-more { text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 6px; transition: text-decoration-color .2s; }
+.ct-copy:hover span, .ct-more:hover { text-decoration-color: var(--ink); }
+.ct-copy svg { width: 0; height: 16px; fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; transition: width .3s var(--ease); }
+.ct-copy svg path { stroke-dasharray: 16; stroke-dashoffset: 16; }
+.ct-copy.is-done svg { width: 16px; }
+.ct-copy.is-done svg path { animation: ct-tick .4s var(--ease) .05s forwards; }
+@keyframes ct-tick { to { stroke-dashoffset: 0; } }
+
+/* ── Headquarters ──────────────────────────────────────────────────────── */
+.ct-hq, .ct-trust { max-width: var(--measure-site); margin: 0 auto; padding: 88px var(--gutter-site) 104px; border-top: 1px solid var(--border); }
+.site :is(.ct-hq, .ct-trust) h2 { margin: 0 0 48px; font-family: "TT Ramillas", var(--serif); font-size: clamp(2.6rem, 4.4vw, 4.3rem); font-weight: 400; line-height: 1; letter-spacing: -.035em; }
+.ct-hq-art { margin-bottom: 64px; }
+.ct-hq-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 44px 48px; }
+.site .ct-fact h3 { margin: 0 0 18px; font-family: var(--site-mono); font-size: .66rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--subtle); }
+.ct-fact address { display: grid; gap: 2px; font-style: normal; font-family: var(--serif); font-size: 1.24rem; line-height: 1.45; color: var(--ink); }
+.ct-fact p { max-width: 34ch; font-size: .95rem; line-height: 1.8; color: var(--muted); }
+.ct-fact p a, .ct-sign p a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 4px; transition: text-decoration-color .2s; }
+.ct-fact p a:hover, .ct-sign p a:hover { text-decoration-color: var(--ink); }
+.ct-link { margin-top: 22px; display: inline-flex; gap: 8px; font-size: .88rem; color: var(--ink); }
+.ct-link:hover span { transform: translate(2px, -2px); }
+.ct-fact .ct-clock { font-family: var(--serif); font-size: clamp(2.6rem, 4vw, 3.4rem); line-height: 1; letter-spacing: -.02em; color: var(--ink); font-variant-numeric: tabular-nums; }
+.ct-colon { animation: ct-blink 2s ease-in-out infinite; }
+.ct-hq.is-idle .ct-colon { animation-play-state: paused; }
+@keyframes ct-blink { 50% { opacity: .2; } }
+.ct-fact .ct-zone { margin-top: 16px; font-family: var(--site-mono); font-size: .74rem; color: var(--muted); }
+
+/* ── Messages from XiteAI ──────────────────────────────────────────────── */
+.ct-trust { padding-bottom: 56px; }
+.ct-trust-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 48px; align-items: end; margin-bottom: 56px; }
+.site .ct-trust-head h2 { margin: 0; }
+.ct-trust-head p { max-width: 40ch; padding-bottom: 6px; font-size: 1.04rem; line-height: 1.75; color: var(--muted); }
+.ct-signs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 48px; }
+.ct-sign { padding: 32px 0 40px; border-top: 1px solid var(--border); }
+.site .ct-sign h3 { margin: 0 0 12px; font-family: var(--sans); font-size: 1.08rem; font-weight: 500; letter-spacing: -.015em; color: var(--ink); }
+.ct-sign p { max-width: 46ch; font-size: .94rem; line-height: 1.8; color: var(--muted); }
+
+/* ── Smaller screens ───────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .ct-hq-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 700px) {
+  .ct-hero { padding: 56px var(--gutter-site) 0; }
+  .ct-lede { font-size: 1rem; }
+  .ct-to-wrap { margin-top: 44px; }
+  .ct-to-label { flex-basis: 100%; margin: 0 0 6px; }
+  .ct-to-item { padding: 8px 9px 11px; font-size: .86rem; }
+  .ct-to-mark { left: 9px; right: 9px; }
+  .ct-to-sep { display: none; }
+  .ct-letter { padding: 24px var(--gutter-site) 88px; }
+  .ct-env { aspect-ratio: 1.5 / 1; }
+  .ct-env-to { left: 5.5%; right: 8%; top: 44%; }
+  .ct-bars { left: 5.5%; bottom: 7%; }
+  .ct-act { margin-top: 32px; }
+  .ct-write { padding: 0 22px; font-size: .86rem; }
+  .ct-hq, .ct-trust { padding: 64px var(--gutter-site) 72px; }
+  .site :is(.ct-hq, .ct-trust) h2 { font-size: clamp(32px,9.3vw,44px); line-height:1.15; margin-bottom: 36px; }
+  .ct-hq-art { margin-bottom: 40px; }
+  .ct-hq-facts { gap:36px; }
+  .ct-hq-facts, .ct-signs, .ct-trust-head { grid-template-columns: 1fr; }
+  .ct-trust-head { row-gap: 18px; margin-bottom: 36px; }
+  .ct-trust { padding-bottom: 32px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ct-type, .ct-bars, .ct-colon { animation: none; }
+  .ct-caret { display: none; }
+  .ct-copy svg path { stroke-dashoffset: 0; }
+}
+
+/* ── The letter, drawn out under the envelope ──────────────────────────── */
+.ct-plain { display: inline-flex; align-items: center; min-height: 52px; padding: 0 4px; font-size: .9rem; color: var(--ink); text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 6px; transition: text-decoration-color .2s; }
+.ct-plain:hover { text-decoration-color: var(--ink); }
+.ct-write:disabled { opacity: .6; cursor: default; transform: none; }
+.ct-reply { margin-top: 18px; font-family: var(--site-mono); font-size: .72rem; letter-spacing: .02em; color: var(--subtle); }
+.ct-reply a { color: var(--muted); text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 4px; }
+.ct-reply a:hover { color: var(--ink); }
+
+.ct-sheet-wrap { width: min(100%, 760px); overflow: hidden; }
+.ct-sheet {
+  margin: 40px 0 12px; padding: 34px 48px 40px; text-align: left;
+  border: 1px solid #dcd3c3; border-radius: 6px; background: #fbf8f2;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .8), 0 1px 2px rgba(26, 23, 20, .05), 0 30px 60px -40px rgba(26, 23, 20, .3);
+}
+.ct-sheet-head { display: flex; align-items: baseline; gap: 14px; padding-bottom: 18px; border-bottom: 1px solid #e2d9ca; font-family: var(--site-mono); font-size: .74rem; color: var(--muted); }
+.ct-sheet-head > span { font-size: .66rem; letter-spacing: .2em; text-transform: uppercase; color: var(--subtle); }
+.ct-sheet-head b { font-weight: 400; color: var(--ink); overflow-wrap: anywhere; }
+.ct-sheet-close { margin-left: auto; font-family: var(--sans); font-size: .8rem; color: var(--muted); }
+.ct-sheet-close:hover { color: var(--ink); }
+
+.ct-sheet-form { display: grid; gap: 28px; padding-top: 28px; }
+.ct-sheet-row { display: grid; grid-template-columns: 1fr 1fr; gap: 28px 36px; }
+.ct-in { display: grid; gap: 8px; }
+.ct-in > span { font-family: var(--site-mono); font-size: .64rem; letter-spacing: .2em; text-transform: uppercase; color: var(--subtle); }
+.ct-in :is(input, textarea) {
+  width: 100%; padding: 6px 0 9px; border: 0; border-bottom: 1px solid #ddd3c3; border-radius: 0; background: transparent;
+  font-family: var(--serif); font-size: 1.12rem; color: var(--ink); outline: none; transition: border-color .25s;
+}
+.ct-in :is(input, textarea):focus { border-bottom-color: var(--ink); }
+.ct-in input::placeholder { color: var(--subtle); opacity: 1; }
+/* The message is written on ruled paper: one rule per line of text. */
+.ct-in-letter textarea {
+  --lh: 2.1rem;
+  resize: vertical; min-height: calc(var(--lh) * 5); padding: 0; line-height: var(--lh); border-bottom: 0;
+  background-image: linear-gradient(to bottom, transparent calc(var(--lh) - 1px), #e2d9ca calc(var(--lh) - 1px));
+  background-size: 100% var(--lh); background-attachment: local;
+}
+.ct-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.ct-sheet-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; padding-top: 6px; }
+.ct-sheet-note { max-width: 40ch; font-size: .84rem; line-height: 1.6; color: var(--muted); }
+.ct-sheet-error { font-size: .86rem; line-height: 1.6; color: var(--bad, #b3261e); }
+.ct-sheet-done { padding-top: 30px; }
+.site .ct-sheet-done h3 { margin: 0 0 12px; font-family: var(--serif); font-size: 1.9rem; font-weight: 400; letter-spacing: -.02em; color: var(--ink); }
+.ct-sheet-done p { max-width: 52ch; font-size: .96rem; line-height: 1.8; color: var(--muted); }
+.ct-sheet-done b { font-weight: 500; color: var(--ink); }
+.ct-sheet-again { margin-top: 20px; font-size: .88rem; color: var(--ink); text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 6px; }
+
+/* ── Elsewhere ─────────────────────────────────────────────────────────── */
+.ct-else { max-width: var(--measure-site); margin: 0 auto; padding: 88px var(--gutter-site) 72px; border-top: 1px solid var(--border); }
+.site .ct-else h2 { margin: 0 0 40px; font-family: "TT Ramillas", var(--serif); font-size: clamp(2.6rem, 4.4vw, 4.3rem); font-weight: 400; line-height: 1; letter-spacing: -.035em; }
+.ct-else-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 48px; }
+.ct-else-list a { display: flex; align-items: center; gap: 18px; padding: 20px 0; border-top: 1px solid var(--border); }
+/* Each network's mark on its own small tile; the tile takes the ink on hover. */
+/* A raised paper tile, lit from above like the footer's impression is; the
+   mark is ink. On hover the tile becomes ink and lifts. */
+.ct-else-mark {
+  width: 52px; height: 52px; flex: none; display: grid; place-items: center; border-radius: 14px;
+  color: var(--ink); background: linear-gradient(180deg, #fbf8f2, #f1ebe1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), 0 0 0 1px rgba(26, 23, 20, .07), 0 1px 2px rgba(26, 23, 20, .06), 0 10px 22px -14px rgba(26, 23, 20, .3);
+  transition: transform .45s var(--ease), background .35s var(--ease), color .35s var(--ease), box-shadow .45s var(--ease);
+}
+.ct-else-list a:hover .ct-else-mark {
+  transform: translateY(-2px); color: var(--paper); background: linear-gradient(180deg, #2a2420, #1a1714);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 0 0 1px #1a1714, 0 16px 28px -14px rgba(26, 23, 20, .5);
+}
+.ct-else-name { font-family: var(--serif); font-size: 1.45rem; letter-spacing: -.015em; color: var(--ink); }
+.ct-else-handle { font-family: var(--site-mono); font-size: .74rem; color: var(--subtle); }
+.ct-else-arrow { margin-left: auto; color: var(--subtle); transition: transform .3s var(--ease), color .3s; }
+.ct-else-list a:hover .ct-else-arrow { transform: translate(3px, -3px); color: var(--ink); }
+
+/* ── Company information ───────────────────────────────────────────────── */
+.ct-legal { max-width: var(--measure-site); margin: 0 auto; padding: 56px var(--gutter-site) 24px; border-top: 1px solid var(--border); }
+.site .ct-legal h2 { margin: 0 0 28px; font-family: var(--site-mono); font-size: .68rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--subtle); }
+.ct-legal-flag { margin-bottom: 18px; display: inline-block; padding: 6px 10px; border: 1px dashed var(--ember-line); border-radius: 6px; font-family: var(--site-mono); font-size: .7rem; color: var(--ember); }
+.ct-legal-grid { margin: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px 40px; }
+.ct-legal-grid dt { margin-bottom: 8px; font-size: .76rem; color: var(--subtle); }
+.ct-legal-grid dd { margin: 0; font-size: .88rem; line-height: 1.65; color: var(--text); }
+.ct-legal-grid a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 4px; }
+.ct-mono { font-family: var(--site-mono); font-size: .8rem !important; letter-spacing: .02em; }
+
+/* ── The confirm page ──────────────────────────────────────────────────── */
+.ct-confirm { max-width: var(--measure-site); min-height: 62vh; margin: 0 auto; padding: 96px var(--gutter-site) 40px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.site .ct-confirm h1 { font-family: var(--serif); font-size: clamp(2.8rem, 5.4vw, 4.6rem); font-weight: 400; line-height: 1.02; letter-spacing: -.035em; }
+.ct-confirm .ct-lede { margin-top: 22px; }
+.ct-confirm .ct-btns { margin-top: 34px; }
+.ct-confirm-letter { width: 100%; margin-top: 40px; }
+.ct-confirm-body { padding-top: 22px; white-space: pre-wrap; overflow-wrap: anywhere; font-family: var(--serif); font-size: 1.12rem; line-height: 1.85; color: var(--ink); }
+
+@media (max-width: 900px) { .ct-legal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 700px) {
+  .ct-sheet { padding: 26px 22px 30px; margin-top: 32px; }
+  .ct-sheet-row, .ct-else-list, .ct-legal-grid { grid-template-columns: 1fr; }
+  .ct-else, .ct-legal { padding-left: var(--gutter-site); padding-right: var(--gutter-site); }
+  .ct-else { padding-top: 56px; padding-bottom: 48px; }
+  .site .ct-else h2 { font-size: clamp(2.5rem, 12vw, 3.4rem); margin-bottom: 28px; }
+  .ct-confirm { padding: 64px var(--gutter-site) 32px; }
+}

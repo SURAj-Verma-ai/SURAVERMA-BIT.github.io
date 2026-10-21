@@ -1,0 +1,28 @@
+.nt > .xf { position:relative; color:#211d18; content-visibility:visible; min-height:100svh; display:grid; align-items:center; overflow:clip; padding:clamp(76px,10svh,130px) var(--page-edge) 70px; }
+.xf-content { position:relative; }
+.xf-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:40px; position:relative; z-index:2; }
+.xf-eyebrow { font:600 17px/1 var(--nt-sans); letter-spacing:-.06em; margin-bottom:35px; }
+.nt .xf h2 { font:550 clamp(52px,7.2vw,112px)/.96 var(--nt-sans); letter-spacing:-.065em; color:#211d18; }
+.nt .xf h2 em { font-family:var(--nt-serif); font-weight:400; letter-spacing:-.05em; }
+.xf-note { padding-bottom:8px; font-size:18px; line-height:1.5; color:#75685b; }
+.xf-sculpture { height:clamp(240px,min(34vw,38svh),480px); margin:-25px -5% -20px; }
+.xf-bottom { position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between; gap:40px; }
+.xf-download { display:flex; flex-direction:column; gap:12px; align-items:center; }
+.xf-download>a { display:inline-flex; align-items:center; justify-content:space-between; gap:52px; min-height:60px; padding:0 27px; border-radius:6px; background:#211d18; color:#f7f1e8; font-size:15px; transition:background .25s,transform .3s; }
+.xf-download>a:hover { background:#5c3e2a; transform:translateY(-3px); }
+.xf-download>span { font-size:12px; color:#716659; }
+.xf-build { display:flex; align-items:center; gap:25px; font-size:15px; color:#433b32; }
+.xf-build-circle { display:grid; place-items:center; width:48px; height:48px; border:1px solid #bfb3a2; border-radius:50%; transition:background .3s,transform .3s; }
+.xf-build:hover .xf-build-circle { background:#e2d7c7; transform:rotate(45deg); }
+.nt-return { height:65svh; pointer-events:none; }
+.nt.is-still .nt-return { height:80px; background:#efeae1; }
+.nt.is-still .xf { background:#efeae1; }
+@media(max-width:700px) {
+ .nt>.xf { min-height:auto; padding:72px var(--page-gutter) 64px; }
+ .xf-heading { align-items:start; }.xf-note { display:none; }
+ .xf-eyebrow { margin-bottom:28px; }.nt .xf h2 { font-size:clamp(43px,10.5vw,70px); }
+ .xf-sculpture { height:clamp(200px,60vw,290px); margin:24px 0 32px; }
+ .xf-bottom { flex-direction:column; align-items:stretch; gap:38px; }
+ .xf-download>a { width:100%; }.xf-build { justify-content:space-between; font-size:14px; }
+}
+@media(prefers-reduced-motion:reduce) { .xf-download>a,.xf-build-circle { transition:none; } }

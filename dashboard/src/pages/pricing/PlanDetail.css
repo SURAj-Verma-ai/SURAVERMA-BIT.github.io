@@ -1,0 +1,89 @@
+/* One quiet reading structure for every subscription. The pricing overview
+   owns the visual spectacle; detail pages present the decision clearly. */
+.tier-page { background:#f7f5f1; }
+.tier-frame { width:100%; max-width:var(--page-width); margin-inline:auto; padding-inline:var(--page-gutter); }
+.tier-page .site-top { padding-top:78px; }
+.tier-page h1,.tier-page h2,.tier-page p { margin:0; }
+.tier-page h1,.tier-page h2 { font-family:var(--sans); font-weight:400; letter-spacing:-.04em; }
+.tier-nav { display:flex; align-items:center; justify-content:space-between; gap:28px; border-bottom:1px solid var(--rule); padding:14px 0; font-size:11px; }
+.tier-nav>div { display:flex; gap:28px; }
+.tier-nav>div>a { min-height:40px; display:flex; align-items:center; position:relative; color:var(--muted); }
+.tier-nav>div>a[aria-current] { color:var(--ink); }
+.tier-nav>div>a[aria-current]::after { content:""; position:absolute; height:1px; background:var(--ink); bottom:-14px; left:0; right:0; }
+.tier-eyebrow,.tier-purchase-label { color:var(--muted); font:400 12px/1.7 var(--sans); }
+.tier-hero { padding:54px 0 56px; }
+.tier-intro { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
+.tier-intro-copy { padding-top:10px; }
+.tier-intro h1 { font-size:clamp(40px,4.2vw,58px); line-height:1.2; margin-top:20px; letter-spacing:-.045em; }
+.tier-description { font-size:17px; color:var(--muted); line-height:1.8; margin-top:20px !important; }
+.tier-intro-purchase { width:100%; max-width:460px; justify-self:end; }
+.tier-intro-purchase .billing-controls { display:flex; justify-content:flex-start; align-items:center; gap:12px; margin-top:17px; }
+.tier-intro-purchase .billing-currency { border-left:0; padding-left:0; }
+.tier-hero-price { margin-top:23px; }
+.tier-hero-price .billing-price-note { margin-top:10px !important; }
+.tier-primary { display:inline-flex; align-items:center; justify-content:space-between; gap:45px; padding:14px 24px; min-height:50px; border-radius:28px; background:var(--ink); color:#fbf8f0; font-size:12px; font-weight:500; transition:background .2s; }
+.tier-primary:hover { background:#464035; }
+.tier-primary>span { transition:transform .25s; }
+.tier-primary:hover>span { transform:translate(3px,-3px); }
+.tier-intro-purchase>.tier-primary { margin-top:24px; min-width:235px; }
+.tier-tax { margin-top:12px !important; font-size:10px; line-height:1.7; color:var(--muted); }
+.tier-inclusions { display:grid; grid-template-columns:1fr 1fr; gap:80px; padding:48px 0 53px; border-top:1px solid var(--rule); }
+.tier-inclusions h2,.tier-comparison h2 { font-size:clamp(25px,2.5vw,33px); line-height:1.3; }
+.tier-inclusions ul { list-style:none; margin:0; padding:0; width:100%; max-width:460px; justify-self:end; }
+.tier-inclusions li { display:flex; gap:16px; align-items:baseline; font-size:15px; line-height:1.9; padding:12px 0; }
+.tier-inclusions li:first-child { padding-top:0; }
+.tier-inclusions li:last-child { padding-bottom:0; }
+.tier-inclusions li>span { color:#948267; font-size:12px; flex:none; }
+.tier-comparison { display:grid; grid-template-columns:1fr 2fr; gap:65px; padding:49px 0; border-top:1px solid var(--rule); }
+.tier-comparison h2 { margin-top:14px; }
+.tier-comparison header>a { display:inline-flex; gap:28px; align-items:center; min-height:44px; margin-top:20px; font-size:11px; }
+.tier-table-scroll { overflow-x:auto; }
+.tier-comparison table { width:100%; border-collapse:collapse; font-size:12px; min-width:550px; }
+.tier-comparison th,.tier-comparison td { text-align:left; padding:17px 14px; border-bottom:1px solid var(--rule); font-weight:400; }
+.tier-comparison th:first-child { padding-left:0; color:var(--muted); }
+.tier-comparison thead th { font-weight:500; }
+.tier-comparison [data-current=true] { background:#eeeadf; }
+.tier-comparison td { color:var(--muted); }
+.tier-comparison td[data-current=true] { color:var(--ink); }
+.tier-confidence { display:grid; grid-template-columns:1fr 1fr; gap:75px; padding:45px 0 51px; border-top:1px solid var(--rule); }
+.tier-confidence h2 { font-size:29px; line-height:1.25; }
+.tier-confidence p { font-size:13px; line-height:1.9; color:var(--muted); max-width:46ch; }
+.tier-confidence a { display:inline-flex; align-items:center; gap:24px; font-size:11px; min-height:44px; margin:16px 28px 0 0; }
+.tier-closing { display:flex; align-items:center; justify-content:space-between; gap:30px; padding:31px 0 55px; border-top:1px solid var(--rule); }
+.tier-closing h2 { margin-top:11px; font-size:25px; }
+.tier-closing .tier-primary { min-width:220px; }
+.tier-page :is(a,button):focus-visible { outline:2px solid var(--ember); outline-offset:5px; }
+@media(max-width:1050px) {
+ .tier-intro,.tier-inclusions { gap:45px; }
+ .tier-intro h1 { font-size:45px; }
+ .tier-comparison { grid-template-columns:1fr; gap:24px; }
+}
+@media(max-width:760px) {
+ .tier-page .site-top { padding-top:76px; }
+ .tier-nav { padding:12px 0; font-size:10px; gap:20px; }
+ .tier-nav>div { gap:19px; }
+ .tier-nav>div>a[aria-current]::after { bottom:-12px; }
+ .tier-hero { padding:35px 0 38px; }
+ .tier-intro { grid-template-columns:1fr; gap:34px; }
+ .tier-intro-copy { padding-top:0; }
+ .tier-intro h1 { font-size:39px; margin-top:16px; }
+ .tier-description { font-size:15px; margin-top:15px !important; }
+ .tier-intro-purchase { justify-self:start; max-width:none; }
+ .tier-intro-purchase .billing-controls { gap:9px 12px; }
+ .tier-hero-price { margin-top:21px; --billing-number-cap:59px; }
+ .tier-intro-purchase>.tier-primary { width:100%; margin-top:22px; }
+ .tier-inclusions { grid-template-columns:1fr; gap:25px; padding:35px 0 39px; }
+ .tier-inclusions ul { justify-self:start; max-width:none; }
+ .tier-inclusions li { font-size:14px; padding:11px 0; }
+ .tier-comparison { padding:33px 0 39px; gap:21px; }
+ .tier-comparison header>a { margin-top:14px; }
+ .tier-comparison table { min-width:520px; font-size:11px; }
+ .tier-comparison th,.tier-comparison td { padding:16px 12px; }
+ .tier-confidence { grid-template-columns:1fr; gap:23px; padding:32px 0 38px; }
+ .tier-confidence h2 { font-size:28px; }
+ .tier-confidence a { margin-top:14px; }
+ .tier-closing { display:block; padding:29px 0 42px; }
+ .tier-closing h2 { font-size:23px; }
+ .tier-closing .tier-primary { width:100%; margin-top:24px; }
+}
+@media(prefers-reduced-motion:reduce) { .tier-page *, .tier-page *::before,.tier-page *::after { animation:none !important; transition:none !important; } }

@@ -1,0 +1,31 @@
+/* XOS1 begins and ends on the site's warm paper. */
+.xp { --xp-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; --xp-serif: "Newsreader", Georgia, serif; font-family: var(--xp-sans); }
+.xp .ft { margin-top: 0; }
+.xp-wrap { max-width: var(--measure-site); margin: 0 auto; padding: 0 var(--gutter-site); }
+.xp-label { font-size: .9rem; font-weight: 500; color: var(--muted); }
+.xp-btn { display: inline-flex; align-items: center; min-height: 50px; padding: 0 26px; border-radius: 999px; background: var(--ink); color: var(--paper); font-size: .95rem; font-weight: 500; white-space: nowrap; transition: transform .3s var(--ease), opacity .2s; }
+.xp-btn:hover { transform: translateY(-2px); }
+
+/* Words rise out of their own masks. Room is left for italic overhang and
+   descenders; the gap trails each word, so a wrapped line starts flush. */
+.xp-rise { display: inline; }
+.xp-mask { display: inline-block; overflow: hidden; vertical-align: bottom; padding: 0 .14em .16em 0; margin: 0 calc(.26em - .14em) -.16em 0; }
+.xp-word { display: inline-block; will-change: transform; }
+
+/* "Say it. It's done.": the line at the width of the screen (welcome/SayIt.jsx). */
+.xp-hero-type { display: grid; }
+.xp-row { white-space: nowrap; line-height: .86; will-change: transform; color: var(--ink); }
+.xp-row-serif { padding-left: var(--gutter-site); font-family: var(--xp-serif); font-style: italic; font-weight: 400; font-size: clamp(5rem, 19vw, 19rem); letter-spacing: -.045em; }
+.xp-row-sans { padding-right: var(--gutter-site); text-align: right; font-weight: 600; font-size: clamp(4.4rem, 17vw, 17rem); letter-spacing: -.07em; }
+.xp-hero-foot { max-width: var(--measure-site); width: 100%; margin: 0 auto; padding: 26px var(--gutter-site) 0; border-top: 1px solid var(--rule); display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 40px; }
+.xp-hero-name { font-size: 1.05rem; font-weight: 600; letter-spacing: -.02em; color: var(--ink); }
+.xp-hero-name span { font-weight: 400; color: var(--muted); }
+.xp-hero-sub { max-width: 42ch; font-size: 1rem; line-height: 1.5; color: var(--text); }
+
+@media (max-width: 760px) {
+  .xp-hero-foot { grid-template-columns: 1fr; gap: 16px; }
+}
+@media (max-width:760px) {
+ .xp .nav-menu { width:44px; height:44px; }
+ .xp .nav-login { min-height:44px; padding-inline:12px; }
+}

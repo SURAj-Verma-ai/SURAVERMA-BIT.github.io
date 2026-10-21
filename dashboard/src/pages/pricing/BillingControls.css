@@ -1,0 +1,30 @@
+.billing-controls { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:12px 18px; margin-top:25px; font-size:11px; }
+.billing-period { display:grid; grid-template-columns:1fr 1fr; position:relative; isolation:isolate; padding:4px; background:#eae7df; border:1px solid #e0dcd3; border-radius:32px; }
+.billing-period button { display:flex; align-items:center; justify-content:center; gap:7px; min-height:44px; min-width:114px; padding:8px 12px; border-radius:24px; color:#625a4e; font-size:12px; position:relative; z-index:1; transition:color .2s; white-space:nowrap; }.billing-period button[aria-pressed=true] { color:#242620; }
+.billing-selection { position:absolute; left:4px; top:4px; bottom:4px; width:calc(50% - 4px); border-radius:24px; background:#fcfaf5; transform:translateX(0); transition:transform .32s cubic-bezier(.22,1,.36,1); }.billing-period[data-yearly=true] .billing-selection { transform:translateX(100%); }
+.billing-saving { color:#574c38; background:#ded6c6; padding:3px 5px; border-radius:12px; font-size:10px; line-height:1.4; }
+.billing-currency { display:flex; gap:4px; border-left:1px solid #d8d1c4; padding-left:12px; }
+.billing-currency button { min-width:44px; min-height:44px; padding:8px; border:1px solid transparent; border-radius:22px; color:#625a4e; font-size:12px; transition:background .2s,color .2s,border-color .2s; }
+.billing-currency button:hover { background:#e3ded4; border-color:#b9af9e; }
+.billing-currency button[aria-pressed=true] { color:#faf7ef; background:#292b28; border-color:#292b28; }
+/* Size against the available space and the longest supported price, never
+   against the selected currency. Currency switches retain the same metrics. */
+.billing-price { display:block; container-type:inline-size; --billing-number-cap:64px; }
+.billing-price-row { display:flex; align-items:baseline; gap:12px; white-space:nowrap; }
+.billing-price-number { display:inline-flex; align-items:flex-start; font:400 clamp(26px,calc((100cqi - 70px) / 5.4),var(--billing-number-cap))/1.12 var(--sans); letter-spacing:-.065em; font-variant-numeric:lining-nums tabular-nums; }
+.billing-symbol { font-size:.54em; padding-top:.19em; margin-right:4px; width:.72em; flex:0 0 .72em; letter-spacing:0; }
+.billing-price-period { font-size:12px; line-height:20px; color:#625a4e; }
+.billing-price-note { display:flex; align-items:baseline; gap:8px; width:100%; font-size:clamp(10px,4cqi,12px); color:#625a4e; margin-top:8px !important; line-height:1.6; min-height:23px; white-space:nowrap; }
+.billing-price-note strong { font-size:clamp(12px,5cqi,15px); font-weight:500; letter-spacing:-.025em; color:var(--ink); }
+@container (max-width:310px) {
+ .billing-price-row { display:grid; grid-template-columns:minmax(0,1fr); justify-items:start; gap:4px; }
+ .billing-price-number { font-size:clamp(26px,calc(100cqi / 5.4),var(--billing-number-cap)); }
+}
+.billing-price-digits { display:inline-flex; height:1.12em; }
+.billing-numeral,.billing-separator { display:inline-block; height:1.12em; overflow:hidden; }
+.billing-numeral { width:1ch; margin-right:-.065em; letter-spacing:0; }
+.billing-numeral-track { display:block; }
+.billing-numeral-row { display:block; height:1.12em; line-height:1.12; }
+.billing-controls button:focus-visible { outline:2px solid var(--ember); outline-offset:3px; }
+@media(max-width:760px) { .billing-controls { gap:12px; }.billing-currency { border-left:0; padding-left:0; } }
+@media(prefers-reduced-motion:reduce) { .billing-selection,.billing-controls button { transition:none; }.billing-price-number { animation:none; } }

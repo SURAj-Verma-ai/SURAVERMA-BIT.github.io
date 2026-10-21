@@ -1,0 +1,15 @@
+/* The ad scenes kept from the welcome trials (City, Spatial). */
+.wc .wl-cue { color: #8a8f9c; }
+
+/* City: the night sky behind the canvas, and the morning that ends it. */
+.wc-sky { position: absolute; inset: 0; background: linear-gradient(180deg, #03050a 0%, #070a12 38%, #141a27 62%, #141a27 100%); }
+.wc-morning { position: absolute; inset: 0; background: var(--paper); }
+.xp .wc .wk-title, .xp .wc .wk-line { color: #f4f1ec; }
+.wc .wk-title .wk-serif, .wc .wk-line .wk-serif { color: #e6dccd; }
+.wc-scrim { position: absolute; inset: 0 0 auto; height: 46svh; background: linear-gradient(180deg, rgba(2, 3, 8, .55), rgba(2, 3, 8, 0)); pointer-events: none; }
+
+/* Spatial: a bright space with depth. */
+.ws .wl-stage { background: #efeae1; }
+.ws-line { top: 42svh; }
+.ws .wk-head { top: 39svh; }
+.xp .ws .wk-title, .xp .ws-line { text-shadow: 0 0 28px #efeae1, 0 0 56px #efeae1, 0 0 90px rgba(243, 240, 234, .9); }

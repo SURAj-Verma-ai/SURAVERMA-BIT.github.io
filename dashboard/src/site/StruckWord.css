@@ -1,0 +1,8 @@
+/* The struck word: serif, a step under the section heading, one pen line through it. */
+.site .struck { margin: 0 0 16px; }
+.struck-sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+.site .struck-word { position: relative; display: inline-block; padding: 0 .06em; font-family: "TT Ramillas", var(--serif); font-size: clamp(1.6rem, 2.2vw, 2rem); font-weight: 400; line-height: 1.1; letter-spacing: -.02em; color: var(--ink); }
+.struck-ink { display: inline-block; }
+.struck-line { position: absolute; left: -2%; width: 104%; top: 0; height: 100%; overflow: visible; pointer-events: none; }
+.struck-line path { fill: none; stroke: var(--ember-lit); stroke-width: 4; stroke-linecap: round; }
+@media (prefers-reduced-motion: reduce) { .struck-ink { opacity: .6; } }

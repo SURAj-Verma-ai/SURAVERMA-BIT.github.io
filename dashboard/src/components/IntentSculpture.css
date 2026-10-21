@@ -1,0 +1,14 @@
+.intent-sculpture { position: relative; width: 100%; height: 100%; }
+.intent-sculpture canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity .65s ease; }
+.intent-sculpture.is-ready canvas { opacity: 1; }
+.intent-fallback { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; transition: opacity .65s ease; }
+.intent-sculpture.is-ready .intent-fallback { opacity: 0; }
+.intent-mode-portal .intent-fallback { visibility: hidden; transition: none; }
+.intent-mode-portal.is-unavailable .intent-fallback { visibility: visible; }
+.intent-fallback-voice { gap: .65%; padding: 18% 8%; }
+.intent-fallback-voice i { flex: 1; max-width: 10px; border-radius: 8px; background: linear-gradient(90deg,#776a5c,#f9f4e8 48%,#a79784); box-shadow: 3px 10px 8px #45351e15; }
+.intent-fallback-voice i:nth-child(n+18):nth-child(-n+22) { background: linear-gradient(90deg,#9b572c,#dcaa7d,#a26842); }
+.intent-fallback-portal { perspective: 900px; }
+.intent-fallback-portal span { position:relative; width:45%; height:70%; border:22px solid #c9c0af; border-bottom:0; box-shadow:inset 4px 3px #a46c47, 10px 0 #b7ae9e; transform:rotateY(-18deg); }
+.intent-fallback-portal i { display:block; width:100%; height:100%; background:linear-gradient(110deg,#dad9d3,#a5a49c); transform-origin:left; transform:rotateY(-65deg); box-shadow:4px 0 #827d70; }
+@media(prefers-reduced-motion:reduce) { .intent-sculpture canvas,.intent-fallback { transition:none; } }

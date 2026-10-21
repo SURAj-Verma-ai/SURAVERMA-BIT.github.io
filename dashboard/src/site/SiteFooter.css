@@ -1,0 +1,78 @@
+/* The footer (SiteFooter.jsx). A recessed band of the site's own paper,
+   ruled with hairlines, every edge on the site measure. */
+.ft { margin-top: 6rem; overflow: hidden; border-top: 1px solid var(--rule); background: var(--sunk); }
+.ft-in { margin: 0 auto; max-width: var(--measure-site); padding: 0 var(--gutter-site); }
+
+/* The company's line, and the two things most people came to do. */
+.ft-top { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem 3rem; padding: 5.5rem 0 4rem; border-bottom: 1px solid var(--rule); }
+.site .ft-line { max-width: 17ch; font-family: var(--serif); font-size: clamp(2.1rem, 3.9vw, 3.4rem); font-weight: 400; line-height: 1.06; letter-spacing: -.03em; color: var(--ink); }
+.ft-go { display: flex; flex: none; align-items: center; gap: 1.5rem; }
+.ft-pill { display: inline-flex; align-items: center; gap: 12px; min-height: 48px; padding: 0 22px; border-radius: 999px; background: var(--ink); color: var(--paper); font-size: .88rem; font-weight: 500; transition: transform .25s var(--ease), background-color .2s, color .2s; }
+.ft-pill span { display: inline-block; transition: transform .25s var(--ease); }
+.ft-pill:hover { transform: translateY(-2px); background: var(--hover); color: var(--hover-ink); }
+.ft-pill:hover span { transform: translateX(3px); }
+.ft-plain { font-size: .88rem; color: var(--ink); text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 6px; transition: text-decoration-color .2s; }
+.ft-plain:hover { text-decoration-color: var(--ink); }
+
+/* The index. */
+.ft-cols { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 2.5rem 2rem; padding: 3.5rem 0 4rem; }
+.ft-head { margin-bottom: 1.1rem; font-family: var(--site-mono); font-size: .66rem; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--subtle); }
+.ft-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .7rem; }
+.ft-link { font-size: .875rem; color: var(--muted); transition: color .2s; }
+.ft-link:hover { color: var(--ink); }
+.ft-social { display: inline-flex; align-items: center; gap: 10px; }
+.ft-social .sm { color: var(--subtle); transition: color .2s; }
+.ft-social:hover .sm { color: var(--ink); }
+
+/* Who and where. */
+.ft-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .75rem 2rem; padding: 1.5rem 0; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+.ft-meta address { font-style: normal; }
+.ft-base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .75rem 2rem; padding: 1.5rem 0 2rem; border-top: 1px solid var(--rule); font-size: .8rem; color: var(--muted); }
+.ft-base-links { display: flex; flex-wrap: wrap; align-items:center; gap: 1.5rem; }
+.ft-base-links :is(a,button) { display:inline-flex; align-items:center; min-height:32px; }
+@media(max-width:760px) { .ft-base-links :is(a,button) { min-height:44px; } }
+.ft-base .ft-link { font-size: .8rem; }
+
+/* The name, across the full width, run off the bottom edge. Sized to the
+   measure exactly: the word is 2.6em wide in this face at this tracking, so
+   1/2.62 of the width fills it with nothing forced apart.
+
+   Blind debossed, like the envelope's mark: the letters are the band's own
+   paper a shade deeper, with a shadow on the edge facing the light and a
+   highlight on the edge facing away. --lx / --ly point the light (default:
+   from above, as a room's would); SiteFooter.jsx turns it to the pointer. */
+@property --lx { syntax: "<length>"; inherits: true; initial-value: 0px; }
+@property --ly { syntax: "<length>"; inherits: true; initial-value: 2px; }
+.ft-word { --lx: 0px; --ly: 2px; container-type: inline-size; max-width: var(--measure-site); margin: 0 auto; padding: 0 var(--gutter-site); user-select: none; transition: --lx .9s var(--ease), --ly .9s var(--ease); }
+/* Room above for the i's dot and the A's apex: only the bottom edge cuts. */
+.ft-word-clip { padding-top: calc(100cqw / 2.62 * .1); height: calc(100cqw / 2.62 * .76); overflow: hidden; }
+.ft-word-in {
+  display: block; white-space: nowrap;
+  font-family: var(--serif); font-size: calc(100cqw / 2.62); font-weight: 400; line-height: .92; letter-spacing: -.04em;
+  color: #dbd2c3;
+  text-shadow:
+    calc(var(--lx) * -1.1) calc(var(--ly) * -1.1) 0 rgba(26, 23, 20, .24),
+    var(--lx) var(--ly) 0 rgba(255, 255, 255, .88),
+    calc(var(--lx) * -.8) calc(var(--ly) * -.8) 8px rgba(26, 23, 20, .1);
+}
+.ft-word:not(.is-seen) .ft-word-in { opacity: 0; transform: translateY(24%); }
+.ft-word.is-seen .ft-word-in { animation: ft-rise 1.5s var(--ease) both; }
+@keyframes ft-rise { from { opacity: 0; transform: translateY(24%); } to { opacity: 1; transform: none; } }
+
+@media (max-width: 1000px) {
+  .ft-cols { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 700px) {
+  .ft-in { padding: 0 var(--gutter-site); }
+  .ft-top { flex-direction: column; align-items: flex-start; padding: 3.5rem 0 2.75rem; }
+  .ft-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 2.5rem 0 3rem; }
+  .ft-follow { grid-column: 1 / -1; }
+  .ft-follow .ft-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ft-word { padding: 0 var(--gutter-site); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ft-word:not(.is-seen) .ft-word-in { opacity: 1; transform: none; }
+  .ft-word.is-seen .ft-word-in { animation: none; }
+  .ft-word { transition: none; }
+  .ft-pill, .ft-pill span { transition: none; }
+}

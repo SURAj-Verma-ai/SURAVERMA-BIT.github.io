@@ -1,19 +1,7 @@
-# Environment variables and secrets
+node_modules/
+dist/
+.static-render/
 .env
 .env.*
-*.env
-
-# Temp/draft folders
-temp template/
-temp/
-draft/
-
-# OS files
-.DS_Store
-Thumbs.db
-desktop.ini
-
-# Editor files
-.vscode/settings.json
-*.swp
-*.swo
+!.env.example
+*.log

@@ -1,0 +1,16 @@
+{
+  "id": "designing-for-conversation",
+  "category": "Design",
+  "title": "Designing for a conversation.",
+  "summary": "Making the interface follow the task, without losing clarity.",
+  "image": "/media/editorial/sketchbook-1200.webp",
+  "imageSmall": "/media/editorial/sketchbook-480.webp",
+  "alt": "An open sketchbook and pencils beside a keyboard",
+  "imageCredit": {"name":"Amanda Lawrence","url":"https://unsplash.com/photos/an-open-notebook-sitting-on-a-desk-next-to-a-keyboard-wcLnkIPm-Yc"},
+  "publishedAt": "2026-10-05",
+  "status": "preview",
+  "paragraphs": [
+    "A conversation can change direction. The interface needs to keep the work understandable as that happens.",
+    "This design preview looks at when to show information, when to ask a question, and how to make an action clear before it happens."
+  ]
+}

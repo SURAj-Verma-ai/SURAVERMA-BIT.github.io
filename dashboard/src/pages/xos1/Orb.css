@@ -1,0 +1,31 @@
+/* The XOS1 orb, ported 1:1 from the app (Orb.module.css). Values unchanged;
+   --orb-scale only sizes the whole body. */
+.xo-orb-stage { position: relative; width: calc(128px * var(--orb-scale, 1)); height: calc(128px * var(--orb-scale, 1)); }
+.xo-orb-float { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(var(--orb-scale, 1)); animation: xo-float 5s ease-in-out infinite; pointer-events: none; }
+.xo-orb { width: 128px; height: 128px; display: flex; transition: transform .8s cubic-bezier(.4, 0, .2, 1), filter .8s ease; filter: drop-shadow(0 0 35px rgba(224, 144, 95, .7)) drop-shadow(0 0 90px rgba(201, 116, 63, .4)); }
+.xo-orb-stage[data-active="true"] .xo-orb { transform: scale(1.18); filter: drop-shadow(0 0 60px rgba(224, 144, 95, .9)) drop-shadow(0 0 140px rgba(246, 196, 133, .6)); }
+.xo-orb-ball { display: flex; width: 128px; height: 128px; flex-shrink: 0; border-radius: 50%; position: relative; background: linear-gradient(45deg, #f3b06a, #d97a45, #f6c485, #c9743f); background-size: 300% 300%; animation: xo-wobble 4s ease-in-out infinite, xo-shift 6s ease infinite; }
+.xo-orb-lines { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 280px; height: 280px; border-radius: 50%; pointer-events: none; transition: opacity .6s ease; }
+.xo-orb-idle { background-image: radial-gradient(ellipse at center, rgba(255, 250, 240, .6) 10%, rgba(224, 144, 95, .3) 40%, transparent 75%); animation: xo-flare 4s ease-in-out infinite; opacity: 1; }
+.xo-orb-act { background-image: radial-gradient(ellipse at center, rgba(255, 255, 255, .8) 10%, rgba(246, 196, 133, .5) 40%, transparent 75%); animation: xo-flare-fast 1.5s ease-in-out infinite; opacity: 0; }
+.xo-orb-stage[data-active="true"] .xo-orb-idle { opacity: 0; }
+.xo-orb-stage[data-active="true"] .xo-orb-act { opacity: 1; }
+.xo-orb-rings { aspect-ratio: 1; border-radius: 50%; position: absolute; inset: 0; perspective: 16rem; }
+.xo-orb-rings::before, .xo-orb-rings::after {
+  content: ""; position: absolute; inset: 0; border-radius: 50%; border: 8px solid transparent;
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  background: linear-gradient(#fff6e6, #f0a85f, #c9743f, #e8b06a, #fff0d6) border-box;
+  mask-composite: exclude; -webkit-mask-composite: xor;
+}
+.xo-orb-rings::before { animation: xo-ring180 6s linear infinite; }
+.xo-orb-rings::after { animation: xo-ring90 6s linear infinite; }
+.xo-orb-filter { position: absolute; width: 0; height: 0; pointer-events: none; }
+@keyframes xo-float { 0%, 100% { transform: translate(-50%, -46%) scale(var(--orb-scale, 1)); } 50% { transform: translate(-50%, -58%) scale(var(--orb-scale, 1)); } }
+@keyframes xo-wobble { 0% { border-radius: 50%; } 25% { border-radius: 46% 54% 44% 56% / 54% 46% 56% 44%; } 50% { border-radius: 54% 46% 56% 44% / 46% 54% 44% 56%; } 75% { border-radius: 48% 52% 50% 50% / 52% 48% 50% 50%; } 100% { border-radius: 50%; } }
+@keyframes xo-flare { 0%, 100% { transform: translate(-50%, -50%) scale(.9); } 50% { transform: translate(-50%, -50%) scale(1.05); } }
+@keyframes xo-flare-fast { 0%, 100% { transform: translate(-50%, -50%) scale(.95); } 50% { transform: translate(-50%, -50%) scale(1.15); } }
+@keyframes xo-shift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+@keyframes xo-ring180 { 0% { transform: rotateY(180deg) rotateX(180deg) rotateZ(180deg); } 50% { transform: rotateY(360deg) rotateX(360deg) rotateZ(360deg) scale(1.12); } 100% { transform: rotateY(540deg) rotateX(540deg) rotateZ(540deg); } }
+@keyframes xo-ring90 { 0% { transform: rotateY(90deg) rotateX(90deg) rotateZ(90deg); } 50% { transform: rotateY(270deg) rotateX(270deg) rotateZ(270deg) scale(1.12); } 100% { transform: rotateY(450deg) rotateX(450deg) rotateZ(450deg); } }
+@media (prefers-reduced-motion: reduce) { .xo-orb-float, .xo-orb-ball, .xo-orb-lines, .xo-orb-rings::before, .xo-orb-rings::after { animation: none; } }
