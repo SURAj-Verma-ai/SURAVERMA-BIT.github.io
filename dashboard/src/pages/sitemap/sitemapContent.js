@@ -1,5 +1,4 @@
 import { desks, office, published, socials, site } from "../../site/content.js";
-import { getPosts } from "../editorial/catalog.js";
 
 const main = path => `${site.web}${path}`;
 const terminal = path => `${site.terminal}${path}`;
@@ -24,7 +23,6 @@ export function sitemapGroups(roles = []) {
       link(terminal("/join"), "Immediate hire"), link(terminal("/login"), "Work account and applicant sign in"), link(terminal("/console"), "Team workspace"),
       ...roles.map(role => link(terminal(`/careers/${role.id}`), role.title)),
     ] },
-    ...["news", "blog"].map(kind => ({ title: kind === "news" ? "News articles" : "Blog articles", links: getPosts(kind).map(post => link(main(`/${kind}/${post.id}/`), `${post.title}${post.status === "preview" ? " · Preview" : ""}`)) })),
     { title: "Trust", links: [link(main("/legal/security/"), "Security"), link(terminal("/contact?to=security"), "Report a vulnerability"), link(terminal("/contact?to=privacy"), "Privacy requests"), link(main("/legal/data-deletion/"), "Data deletion")] },
     { title: "Contact", links: [link(terminal("/contact"), "Contact XiteAI"), ...desks.map(desk => link(terminal(`/contact?to=${desk.id}`), desk.name)), { href: office.maps, label: "Headquarters on Maps", external: true }] },
     { title: "Legal", links: [link(main("/legal/"), "All policies"), ...published.map(doc => link(main(`/legal/${doc.slug}/`), doc.title))] },
