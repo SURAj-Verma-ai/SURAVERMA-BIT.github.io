@@ -1,43 +1,34 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { DEL, BOM, MAP_EXTENT, ROUTE, flightFrame, mapPoint, pointAt, project } from "./flightMath.js";
+import { DEL,BOM,ROUTE,at,flightState } from "./flightMath.js";
+import style from "./flight-map-style.json" with { type:"json" };
 
-const close = (actual,expected) => actual.forEach((value,i) => assert.ok(Math.abs(value-expected[i])<1e-8));
-
-test("route connects both airports and stays inside the bundled region",() => {
-  close(pointAt(0),project(DEL));
-  close(pointAt(1),project(BOM));
-  close(pointAt(-1),project(DEL));
-  close(pointAt(2),project(BOM));
-  for (const [x,y] of ROUTE) {
-    assert.ok(x>MAP_EXTENT.x && x<MAP_EXTENT.x+MAP_EXTENT.width);
-    assert.ok(y>MAP_EXTENT.y && y<MAP_EXTENT.y+MAP_EXTENT.height);
+const close=(actual,expected)=>actual.forEach((value,index)=>assert.ok(Math.abs(value-expected[index])<1e-8));
+test("detailed flight connects the original airports and requests only regional tiles",()=>{
+  close(at(0),DEL);close(at(1),BOM);close(at(-1),DEL);close(at(2),BOM);
+  for(const source of Object.values(style.sources)) assert.deepEqual(source.bounds,[60,8,92,36]);
+  for(const [longitude,latitude] of ROUTE) {
+    assert.ok(longitude>60&&longitude<92);assert.ok(latitude>8&&latitude<36);
   }
 });
-
-test("overview fits both airports on phones, tablets and laptops",() => {
-  for (const [width,height] of [[320,568],[390,844],[768,1024],[1366,768],[1920,1080]]) {
-    for (const progress of [0,.7,.98,1]) {
-      const frame=flightFrame(progress,width,height);
-      for (const [x,y] of [frame.delhi,frame.mumbai]) {
-        assert.ok(x>25 && x<width-25,`${width}x${height}: ${x}`);
-        assert.ok(y>70 && y<height-70,`${width}x${height}: ${y}`);
-      }
-    }
+test("the original camera and completed flight are restored in both orientations",()=>{
+  for(const portrait of [true,false]) {
+    const overview=flightState(.7,portrait),flight=flightState(.85,portrait);
+    close(overview.camera.center,[79,22]);assert.equal(overview.camera.pitch,0);
+    assert.equal(overview.camera.zoom,portrait?3.4:3.9);
+    close(flight.camera.center,flight.here);assert.equal(flight.camera.pitch,58);
+    assert.equal(flight.camera.bearing,208);assert.equal(flight.camera.zoom,portrait?5.6:6.3);
+    assert.equal(flightState(.98,portrait).progress,1);
   }
 });
-
-test("aircraft stays on the projected route through camera motion and reverse scrolling",() => {
-  for (const [width,height] of [[320,568],[390,844],[844,390],[1366,768],[1920,1080]]) {
+test("rapid and reverse scroll positions remain finite, monotone and deterministic",()=>{
+  for(const portrait of [true,false]) {
     let previous=0;
-    for (let i=0;i<=1000;i++) {
-      const value=i/1000,frame=flightFrame(value,width,height);
-      assert.ok(Object.values(frame).flat().every(Number.isFinite));
-      assert.ok(frame.progress>=previous);
-      previous=frame.progress;
-      close(frame.aircraft,mapPoint(frame.matrix,pointAt(frame.progress)));
-      assert.deepEqual(frame,flightFrame(value,width,height));
-      if (frame.dive===1) close(frame.aircraft,[width/2,height/2]);
+    for(let i=0;i<=1000;i++) {
+      const frame=flightState(i/1000,portrait);
+      assert.ok(frame.progress>=previous);previous=frame.progress;
+      assert.ok([frame.progress,...frame.here,...frame.before,...frame.after,...frame.camera.center,frame.camera.zoom,frame.camera.pitch,frame.camera.bearing].every(Number.isFinite));
+      assert.deepEqual(frame,flightState(i/1000,portrait));
     }
   }
 });
