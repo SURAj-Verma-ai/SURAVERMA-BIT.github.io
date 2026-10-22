@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, existsSync, readdirSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { resolve, join } from "node:path";
 import { routes, origin } from "./routes.mjs";
 import { canonicalUrl, canonicalLink, resolvePageSeo, serializeSchema } from "../src/site/pageSeo.js";
@@ -47,6 +48,27 @@ test("sitemap advertises only main-domain static pages and excludes previews",()
   assert.ok(!actual.some(url => /\/(contact|community|join|login|console|download)(?:\/|$)/.test(new URL(url).pathname)));
   assert.equal(readFileSync(join(dist,"CNAME"),"utf8").trim(),"xiteai.com");
   assert.ok(readFileSync(join(dist,"robots.txt"),"utf8").includes(`${origin}/sitemap.xml`));
+});
+
+test("every page carries a hash-based security policy and security.txt is current",() => {
+  const pages=readdirSync(dist,{recursive:true}).filter(name=>name.endsWith(".html"));
+  assert.ok(pages.length>30);
+  for(const name of pages) {
+    const html=readFileSync(join(dist,name),"utf8");
+    const policy=html.match(/<meta http-equiv="Content-Security-Policy" content="([^"]+)"/)?.[1];
+    assert.ok(policy,`${name} has no policy`);
+    assert.ok(html.indexOf("Content-Security-Policy")<html.indexOf("<script"),`${name} runs a script before its policy`);
+    const scripts=policy.match(/script-src ([^;]+)/)[1];
+    assert.ok(!scripts.includes("unsafe-inline") && !scripts.includes("unsafe-eval"),name);
+    for(const directive of ["default-src 'self'","object-src 'none'","base-uri 'self'","form-action 'self'"]) assert.ok(policy.includes(directive),`${name}: ${directive}`);
+    for(const [,body] of html.matchAll(/<script(?![^>]*\bsrc=)(?![^>]*type="application\/ld\+json")[^>]*>([\s\S]*?)<\/script>/g))
+      assert.ok(scripts.includes(`'sha256-${createHash("sha256").update(body).digest("base64")}'`),`${name} has an inline script the policy does not allow`);
+    assert.match(html,/<meta name="referrer" content="strict-origin-when-cross-origin"/);
+  }
+  const security=readFileSync(join(dist,".well-known","security.txt"),"utf8");
+  assert.match(security,/^Contact: mailto:security@xiteai\.com$/m);
+  assert.ok(Date.parse(security.match(/^Expires: (.+)$/m)[1])>Date.now()+30*24*3600*1000,"security.txt expires within a month; renew it");
+  assert.ok(!existsSync(join(dist,".vite")),"the bundler manifest must not be published");
 });
 
 test("AI crawlers are explicitly allowed and the llms files are published and honest",() => {

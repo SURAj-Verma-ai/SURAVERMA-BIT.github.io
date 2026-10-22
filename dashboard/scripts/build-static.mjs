@@ -1,4 +1,5 @@
 import { readFile, writeFile, mkdir, rm } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import { resolve, join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { build } from "vite";
@@ -9,6 +10,31 @@ import { canonicalUrl, canonicalLink, pageGraph, serializeSchema } from "../src/
 const root = resolve(import.meta.dirname,"..");
 const dist = join(root,"dist"), server = join(root,".static-render");
 const escape = value => String(value).replaceAll("&","&amp;").replaceAll('"',"&quot;").replaceAll("<","&lt;").replaceAll(">","&gt;");
+
+// GitHub Pages cannot send headers, so the policy travels in a meta tag at the
+// top of every page. Inline scripts are allowed by hash, never by 'unsafe-inline'.
+// Cloudflare injects its analytics beacon and email decoder; the map loads tiles
+// from OpenFreeMap. frame-ancestors only works as a header (set in Cloudflare).
+function contentSecurityPolicy(html) {
+  const hashes = [...html.matchAll(/<script(?![^>]*\bsrc=)(?![^>]*type="application\/ld\+json")[^>]*>([\s\S]*?)<\/script>/g)]
+    .map(([,body]) => `'sha256-${createHash("sha256").update(body).digest("base64")}'`);
+  return [
+    "default-src 'self'",
+    `script-src 'self' ${[...new Set(hashes)].join(" ")} https://static.cloudflareinsights.com`.replace("  "," "),
+    "style-src 'self' 'unsafe-inline'",
+    "img-src 'self' data: blob: https://tiles.openfreemap.org",
+    "font-src 'self' data:",
+    "connect-src 'self' https://tiles.openfreemap.org https://cloudflareinsights.com https://static.cloudflareinsights.com",
+    "worker-src 'self' blob:",
+    "media-src 'self' blob:",
+    "manifest-src 'self'",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "upgrade-insecure-requests",
+  ].join("; ");
+}
+const secure = html => html.replace(/<meta charset="utf-8"\s*\/?>/i,match => `${match}\n    <meta http-equiv="Content-Security-Policy" content="${contentSecurityPolicy(html)}" />\n    <meta name="referrer" content="strict-origin-when-cross-origin" />`);
 await build({root,configFile:false,plugins:[react()],logLevel:"error",build:{ssr:"scripts/staticServerEntry.jsx",outDir:server,emptyOutDir:true,rollupOptions:{output:{entryFileNames:"render.mjs"}}}});
 try {
   const {renderPage,faqStructuredData,serializeFaqSchema} = await import(pathToFileURL(join(server,"render.mjs")));
@@ -45,6 +71,7 @@ try {
     html = html.replace(/(<a\b[^>]*\bhref=")([^"<>]+)(")/g,(_match,before,href,after) => before+canonicalLink(href)+after);
     const file = page.path === "/" ? join(dist,"index.html") : join(dist,page.path.slice(1),"index.html");
     await mkdir(resolve(file,".."),{recursive:true});
+    html = secure(html);
     await writeFile(file,html);
     if(page.kind === "not-found") await writeFile(join(dist,"404.html"),html);
   }
@@ -57,17 +84,19 @@ try {
   await writeFile(join(dist,".nojekyll"),"");
   // Compatibility for the previous product route, including its anchors.
   await mkdir(join(dist,"xos1"),{recursive:true});
-  await writeFile(join(dist,"xos1/index.html"),`<!doctype html><html lang="en"><head><meta charset="utf-8"><title>XOS1 · XiteAI</title><link rel="canonical" href="${origin}/"><meta http-equiv="refresh" content="0;url=/"><script>location.replace('/'+location.search+location.hash)</script></head><body><a href="/">Explore XOS1</a></body></html>`);
+  await writeFile(join(dist,"xos1/index.html"),secure(`<!doctype html><html lang="en"><head><meta charset="utf-8"><title>XOS1 · XiteAI</title><link rel="canonical" href="${origin}/"><meta http-equiv="refresh" content="0;url=/"><script>location.replace('/'+location.search+location.hash)</script></head><body><a href="/">Explore XOS1</a></body></html>`));
   // Preserve the old main site's legal URLs on a host without HTTP redirects.
   const aliases = {"/company":"/about","/privacy-policy":"/legal/privacy","/terms-of-service":"/legal/terms"};
   for (const page of routes.filter(page => page.kind === "policy")) aliases[`/${page.slug}`]=page.path;
   for (const [from,to] of Object.entries(aliases)) {
     const destination=canonicalUrl(to), target=canonicalLink(to);
     await mkdir(join(dist,from.slice(1)),{recursive:true});
-    await writeFile(join(dist,from.slice(1),"index.html"),`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Page moved · XiteAI</title><link rel="canonical" href="${destination}"><meta http-equiv="refresh" content="0;url=${target}"><script>location.replace(${JSON.stringify(target)}+location.search+location.hash)</script></head><body><p>This page has moved to <a href="${target}">${destination}</a>.</p></body></html>`);
+    await writeFile(join(dist,from.slice(1),"index.html"),secure(`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Page moved · XiteAI</title><link rel="canonical" href="${destination}"><meta http-equiv="refresh" content="0;url=${target}"><script>location.replace(${JSON.stringify(target)}+location.search+location.hash)</script></head><body><p>This page has moved to <a href="${target}">${destination}</a>.</p></body></html>`));
   }
   const audit = routes.map(page => ({path:page.path,canonical:canonicalUrl(page.path),title:page.title,description:page.description,indexable:!page.noindex,structuredData:pageGraph(page)?.["@graph"].map(node=>node["@type"]) || []}));
   await writeFile(join(dist,"seo-audit.json"),JSON.stringify({pages:audit.length,indexable:audit.filter(page=>page.indexable).length,pagesDetail:audit},null,2)+"\n");
+  // The bundler's manifest is only needed above; don't publish source paths.
+  await rm(join(dist,".vite"),{recursive:true,force:true});
   console.log(`Generated ${routes.length} static pages, the XOS1 alias, sitemap.xml and robots.txt for ${origin}.`);
 } finally {
   await rm(server,{recursive:true,force:true});
