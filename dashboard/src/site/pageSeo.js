@@ -16,7 +16,7 @@ export function canonicalLink(to) {
 // Authored descriptions describe the actual page, including release limits.
 // There are no keyword lists, fabricated ratings or implied live checkout.
 export const pageSeo = {
-  "/": {title:"XOS1 — Voice, Memory & Computer Use AI | XiteAI",description:"Meet XOS1, XiteAI’s AI for Windows PCs. Explore natural conversation, personal memory, Lumen Visuals, computer use and privacy controls."},
+  "/": {title:"XOS1 by XiteAI | Say it. It's done.",description:"Talk to your PC and it does the work. XOS1 remembers what matters to you and keeps all of it on your machine instead of ours."},
   "/about": {title:"About XiteAI — The Company Building XOS1",description:"Discover XiteAI, the company developing XOS1. Explore our mission, working principles, progress and approach to human–computer interaction."},
   "/pricing": {title:"XOS1 Pricing — Compare Premium, Ultra & Max | XiteAI",description:"Compare planned XOS1 Premium, Ultra and Max subscriptions, model access, usage allowances and support, with monthly and yearly pricing in USD and INR."},
   "/pricing/premium": {title:"XOS1 Premium — Features & Planned Pricing | XiteAI",description:"Explore XOS1 Premium for personal use: voice and text, personal memory, computer actions and Lumen Visuals. Compare planned billing options and features."},
