@@ -50,7 +50,9 @@ try {
   }
   const urls = routes.filter(page => !page.noindex).map(page => `<url><loc>${escape(canonicalUrl(page.path))}</loc></url>`).join("\n");
   await writeFile(join(dist,"sitemap.xml"),`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`);
-  await writeFile(join(dist,"robots.txt"),`User-agent: *\nAllow: /\nSitemap: ${origin}/sitemap.xml\n`);
+  // Search and AI crawlers are named so the permission is explicit, not only implied by "*".
+  const aiCrawlers = ["GPTBot","OAI-SearchBot","ChatGPT-User","ClaudeBot","Claude-SearchBot","Claude-User","PerplexityBot","Perplexity-User","Google-Extended","Applebot-Extended","CCBot"];
+  await writeFile(join(dist,"robots.txt"),`User-agent: *\nAllow: /\n\n${aiCrawlers.map(name => `User-agent: ${name}\nAllow: /\n`).join("\n")}\nSitemap: ${origin}/sitemap.xml\n`);
   await writeFile(join(dist,"CNAME"),"xiteai.com\n");
   await writeFile(join(dist,".nojekyll"),"");
   // Compatibility for the previous product route, including its anchors.

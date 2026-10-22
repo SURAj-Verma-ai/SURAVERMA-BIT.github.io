@@ -49,6 +49,22 @@ test("sitemap advertises only main-domain static pages and excludes previews",()
   assert.ok(readFileSync(join(dist,"robots.txt"),"utf8").includes(`${origin}/sitemap.xml`));
 });
 
+test("AI crawlers are explicitly allowed and the llms files are published and honest",() => {
+  const robots=readFileSync(join(dist,"robots.txt"),"utf8");
+  for(const bot of ["GPTBot","ClaudeBot","PerplexityBot"]) assert.ok(robots.includes(`User-agent: ${bot}\nAllow: /\n`),bot);
+  assert.ok(!/Disallow:\s*\//.test(robots));
+  for(const file of ["llms.txt","llms-full.txt"]) {
+    const text=readFileSync(join(dist,file),"utf8");
+    assert.match(text,/^# XOS1/);
+    assert.match(text,/beta/i);
+    assert.ok(!text.includes("—"),`${file} has an em dash`);
+    for(const [,url] of text.matchAll(/\]\((https:\/\/xiteai\.com[^)\s]*)\)/g)) {
+      const path=new URL(url).pathname;
+      assert.ok(path==="/"||path==="/sitemap.xml"||path==="/llms-full.txt"||existsSync(join(dist,path.slice(1),"index.html")),`${file} links to missing ${path}`);
+    }
+  }
+});
+
 test("every page has unique authored metadata and consistent social previews",() => {
   assert.equal(new Set(routes.map(page=>page.title)).size,routes.length);
   assert.equal(new Set(routes.map(page=>page.description)).size,routes.length);
