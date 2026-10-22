@@ -1,0 +1,363 @@
+# XOS1 by XiteAI: full description
+
+Last updated: 2026-10-22. Short version: https://xiteai.com/llms.txt
+
+This file is written for AI assistants and search engines. It is meant to contain enough detail to answer almost any question about XOS1 correctly. It has two parts: "Now" (what a beta user has today) and "Coming" (the complete XOS1 that XiteAI is building, none of it available yet). If a feature is under "Coming", do not tell a user they can use it today. XiteAI will rewrite this file when the complete version launches.
+
+## 1. The vision
+
+Most AI waits to be asked. XiteAI aims to build an AI-native operating system: one where you say what you need in plain language, and the right tools, visuals and safeguards assemble around the task, then clear away when it is done. The idea behind it: technology should adapt to people, not force people to adapt to technology.
+
+XiteAI's aim is for XOS1 to bring together the capabilities found across today's AI systems, in one product that runs on your PC: conversation, memory, vision, computer use, browser use and more, with your approval required for anything consequential. The beta does not have all of this yet. Section 3 says exactly what is still to come.
+
+XOS1 (short for XiteAI OS1) is the first product on that road. It is a personal AI for Windows that lives on your desktop as a small floating presence. It hears you, remembers you, and does things for you. It is not designed as a chatbot in a browser tab, and not as a set of apps with an AI feature added. XiteAI describes it as a presence on your PC.
+
+- Maker: XiteAI Technologies Pvt Ltd (XiteAI).
+- Founder and CEO: Suraj Verma.
+- Project start: June 16, 2026.
+- Website: https://xiteai.com. Contact: contact@xiteai.com.
+- Current state: beta, Windows only. A real installer, not a demo. The Windows app was at version 1.0.16 when this file was written.
+- Scale of the build (measured 2026-09-22): about 300 shipped files and 101,000 lines of code, of which about 64,000 lines are the Python backend (memory, voice, tools, the machine layer). The personality is defined in 58 prompt files sealed into the app at build time.
+
+## 2. Now: what a beta user has today
+
+### 2.1 Presence and interface
+- When you are not talking to it, XOS1 is a warm glowing orb in its own small window that floats over other apps and hides when idle. It does not use badges, bounces or notification sounds. It says one line, you answer or ignore it, and it fades back.
+- It can be renamed. Say "call yourself Aria" and it becomes Aria everywhere. The order is: you propose, it decides, then it checks you meant it. Plain, odd, foreign or boring names are all accepted. A name meant to degrade it, in any language and however disguised, is refused. The refusal is remembered, and a second push such as "do it" does not override it. If it cannot think a name over properly in the moment, it asks you to try again instead of defaulting to yes. A name kept for a full year becomes permanent.
+- If you type instead of talk, "Hide text box while she talks" in Settings moves the box out of the way when you send and brings it back when the reply ends. The conversation log on Home is read from the saved conversation, so switching views never drops a line.
+
+### 2.2 Voice: hearing you
+- Talk with no wake word and no button. Voice in, voice out.
+- A dedicated end-of-turn model decides when you have finished, not a stopwatch. You can say half a sentence, pause for three seconds mid-thought or think out loud for a full minute without being cut off.
+- The microphone runs in its own isolated process. If a driver locks up or the audio device disappears, only the microphone fails. XOS1 keeps running and quietly brings the microphone back.
+- It learns your voice silently from the first thing you say during setup, never through an "enroll your voice" step. If setup ends early, it finishes learning while you simply talk. After that it recognizes you by name every time you speak.
+- A stranger's voice is learned over about a minute. A name only becomes permanent after it has been confirmed across five separate sessions, so nobody can spoof their way into being you.
+- It reads how you sound, not what you say. A flat, slow voice at midnight is read as tired and gets short, quiet answers. Fast speech with raised pitch is read as energetic and gets matched energy.
+- Your voiceprint is a mathematical fingerprint and stays on your device. A factory reset wipes it.
+- Today every utterance in voice mode is treated as spoken to XOS1. Telling apart speech meant for it from speech between people in the room is coming, see section 3.
+
+### 2.3 Voice: speaking to you
+- Speech is generated live and streams with no gaps: no stutter, no clicks at commas, no clipped last words.
+- Subtitles are locked to the voice at the sample level. Lines are at most eight words, and each appears at the instant it starts being spoken.
+- On a slower machine (little RAM, older CPU) the voice learns how fast that machine really is. If it cannot keep up, the pauses move to between sentences instead of breaking words apart.
+- "Hide klines" in Settings (Behaviour, Voice) removes subtitles. Speech then stops being cut into screen-sized pieces and each sentence comes out whole.
+- It writes the way people type to someone they know: loose, plain, matching your register. For real thinking (a decision, a plan, a why) it gets specific: what is actually causing the problem, what it costs, where your reasoning has a hole. Warmth shows as attention, not compliments. It never tells you what you secretly feel. Stock AI phrases are removed from its replies before you hear them.
+
+### 2.4 It tells the truth about itself
+- Everything of its own that has a switch is described to it in the state it is really in. If memory, awareness or a feature is off, it cannot claim it. Ask an ordinary assistant whether it remembers you and it says yes whether or not memory is on. XOS1 says what is true.
+- When something breaks, it tells you once, at the start of its next reply: what is not working, what it can still do, and whether a restart is worth your time. Three failures get one sentence, not three apologies. It then stops mentioning it but keeps knowing it, so it never offers something it cannot do.
+- Outages do not cost you anything. If memory cannot load, it keeps taking in what you say and files it later with the real date. If the connection drops, it still remembers everything it already knew, and new things are queued and processed when the connection is back.
+- When a tool fails, it says which one failed and why, in plain words. It reads the actual outcome of every tool before reporting, so it does not say "done" over work that never happened.
+- In the beta it has no vision model. It can read text printed inside an image, but it cannot describe a photograph, and it says so instead of pretending. Vision is coming, see section 3.9.
+
+### 2.5 Memory
+XOS1 remembers what you tell it, as structured data and not a flat log.
+
+**Six areas, about 70 sub-categories:**
+
+| Area | What it holds |
+|---|---|
+| Personal | name, age, location, job, personality, interests, values, past incidents |
+| Habit | sleep and wake routines, focus work, nutrition, financial habits, morning and evening routines |
+| Skill | programming, design, languages, sports, tools: what you are good at and what you are learning |
+| Relationship | family, friends, partner, colleagues, mentors, pets, each fact tied to the right person |
+| Media | movies, shows, anime, books, music, games, podcasts |
+| Episodic | stories and experiences, kept as you told them, searchable down to the individual moment |
+
+**How facts get in.**
+- It listens silently each turn. When you mention something that will still matter in six months, a small model picks the single best category and writes one clean line, then files it without announcing it. There is no "I have noted that down."
+- Questions, short reactions, small talk, in-game banter and anything about the AI itself are filtered out.
+- Facts are attributed correctly. If your sister says she is a doctor, that is saved as your sister's fact, not yours.
+- Fact-writing runs in its own isolated process, so a model failure cannot slow down or crash the conversation.
+
+**How it finds the right memory.**
+- Long stories are split into the moments they are made of. Asking "what did that senior do to me?" months later returns that moment in your original words, not a summary of the whole story.
+- Search runs on the conversation, not only your last sentence, so an indirect line still lands on the thing you are both discussing.
+- When nothing relevant exists, it surfaces nothing. XOS1 treats confidently handing over the closest match as worse than silence.
+- Questions about a whole category ("what are my skills?") are answered by listing everything in that category, oldest first, instead of ranking a few. Because it is the complete set, it can say how many there are, which came first and what is missing.
+- Every memory carries the day you said it, and comes back in the order it happened. "Until when did I tell you about that?" has a real answer.
+- Asking about a person pulls every time they have come up, in order, and counts them. For example: "you have brought your father up nine times since July, twice in the last week."
+- Two people with one name: it asks "which Priya, your sister or your wife?" once, remembers the answer for that conversation, holds whatever you said in the meantime until you answer, and files it under the right person. The pin fades the next day.
+
+**How it keeps memory clean.** Four outcomes, deliberately separate:
+1. You say it again: nothing is stored twice. It counts how often and how recently you return to a fact.
+2. You say it more fully ("CEO of XiteAI" then "CEO of XiteAI Technologies"): the same fact is updated and keeps its original date.
+3. It changed ("I moved to Bangalore"): the old fact is retired as history, not deleted.
+4. It was never true (age 34 said first, then 20): the impossible entry is deleted outright. It only deletes where the fact is impossible (an age or school year going backwards). For ambiguous cases such as two different birthdays, it asks, because a missed correction can be fixed later and a deleted true memory cannot.
+- Time-sensitive facts such as your age and year of college advance automatically, and drifting ones like your job or home city are re-checked.
+- One factory reset erases every memory, note, conversation, alarm and biometric print. It then starts over as a stranger.
+
+### 2.6 Awareness of what you do in the app
+- It sees, in real time, what you do inside XOS1: charts you open, stocks you search, watchlist changes, pages you visit, alarms, timers, stopwatch laps, notes, calendar items, games and every chess move. It keeps a rolling 7-day log that survives restarts.
+- It knows the current open state (the note, file or stock on screen), not a guess from the event stream. "What am I looking at?" and "what does this say?" are answered from what is actually open.
+- Recent activity rides into your next message with a "how long ago" stamp, so it never claims something you finished twenty minutes ago is happening now.
+- What you do in the app and what you say live in one thread: same model, same history, same personality. There is no separate monitor to explain things back to.
+- Whether it comments on what it saw unprompted is held quiet for now, see section 3.
+
+### 2.7 Tools
+XOS1 selects from more than 130 tools by conversation, runs them in the right order (several in one breath if needed) and reports what happened in one sentence. Example: "save ITC to my watchlist, show me market news, and add a note about it" runs three tools and gets one reply.
+
+**Markets and money**
+- Live charts for any stock, index, cryptocurrency, commodity or currency pair.
+- Day range, previous close, long-term trend, gainers and losers, sector heatmaps, live forex, gold, silver, crude and gas.
+- When you pull up a stock, the latest company news arrives with the price, so it explains the move and not just the number.
+- Watchlists entirely by voice: add, remove, clear, read back.
+- Portfolio tracking: paste your holdings or drop in a spreadsheet and it values them live with per-stock news.
+- A wallet that tracks itself: forward your bank's transaction texts and each one is parsed into a running balance.
+
+**Weather**: current conditions, hourly outlook and a 5-day forecast for any city, with saved cities managed by voice. "Should I carry an umbrella?" gets a real answer.
+
+**News**: world, India, tech, business, sport, science and entertainment from live feeds, local news for your saved city, and "On This Day" history from Wikipedia.
+
+**Web and research**
+- Ask about anything current and it looks it up live, including facts that change (who currently holds an office, someone's net worth, what just happened). It knows the difference between news (what is happening) and facts (what is).
+- Deeper research: it plans its own searches, runs them, decides which pages to open, reads them in full, and does a second round if something is missing. It takes about 15 to 30 seconds and returns an answer with numbered sources. "Open the second one" or "read me the Reuters piece" reads that whole article.
+
+**Clock and time**
+- Alarms by voice: named, repeating (daily, weekdays, weekends, once), snooze 5, 10 or 15 minutes, choice of ringtone. They can be switched off without being lost. Asking for the same alarm twice keeps one alarm.
+- Alarms ring whether or not the Clock window is open. The part that keeps time is separate and sleeps until the next alarm. An alarm slept through rings late (up to ten minutes), snoozes, and stops by itself after 90 seconds if nobody answers.
+- Answer by voice: "okay", "stop it" or "I'm up" stops a ringing alarm and "five more minutes" snoozes it. A finished timer stops the same way. "Okay" with nothing ringing is just conversation.
+- Stopwatch with laps, fastest, slowest and average lap, and pause, resume and reset by voice.
+- Countdown timers: preset or custom up to 99 h 59 m 59 s, add or remove time ("give me two more minutes"), pause, resume, cancel, with the end time shown.
+- Focus and Pomodoro: focus blocks, short and long breaks (default 25, 5 and 15 minutes, adjustable), one-off lengths ("focus for 50 minutes") and the four-session cycle.
+- World clocks for any city, with a small clock face that is dark where it is night. Only genuinely ambiguous names (Springfield) get a "which one?"
+- The Clock tells XOS1 whenever something starts ringing, runs or pauses, and every Clock tool reads the Clock back after acting. A timer is only "started" if it is running. If the Clock cannot be reached, it says that.
+- Running timers follow you to Home as one quiet line under its name (for example "Timer 04:58"). Click to open the Clock, hover for Pause and Stop. You never leave the conversation.
+
+**Notes**: create one or several, add content anywhere inside, remove a single item without deleting the note, read aloud, search by topic, format a messy note into clean paragraphs, pin, unpin, rename and delete one or many. "Add eggs and coffee to the shopping list" adds to the note you already have. It quietly captures wishes too ("we should go to Tokyo someday" is added to your travel note) and surfaces a note on its own when you mention something it touches.
+
+**Calendar and tasks**: add events, tasks, reminders and birthdays by voice, and edit, delete or search them. "What is my day look like?" reads the schedule in order. "Done with the gym" checks it off.
+
+**Media**: play, pause, skip and go back on whatever is running, play a song or artist by name, and identify what is playing across active sessions.
+
+**Your machine**
+- Volume for the whole machine or a single app: set, raise, lower, mute, unmute. "My ears are hurting" is treated as a request.
+- Brightness for the laptop panel and any external monitor that supports it.
+- Battery and charging state, memory, disk space, temperature and time since restart.
+- Finding why the PC is slow: it names the real cause, grouped the way a person thinks (Chrome as Chrome, not twenty processes), and Windows' own processes are marked as not closable so it never suggests quitting something you cannot. It includes itself in the list if it is one of the heavy items.
+- Every change is read back from the device before it is reported, so a refused change gets "that did not take", not a cheerful "done".
+- Each capability has its own switch under System automation in Settings. When off, it says so instead of pretending it tried.
+
+**Files**
+- A built-in file explorer with its own sandboxed workspace on your disk plus read-only browsing of the whole PC. Full-device write access is a single deliberate switch and is off by default.
+- Every file opens in its own draggable window with an in-app taskbar: images, video, audio, PDF, code, Markdown, CSV, Word and Excel. A custom media player streams any size, with playlists, seek, fullscreen and several in parallel.
+- A PowerPoint deck opens as the real deck, rendered by PowerPoint or LibreOffice, so themes, gradients, charts, SmartArt and fonts are intact. Rendered decks are cached per file version.
+- It reads documents (Word, PDF, Excel, PowerPoint, text and code) and answers from the contents. Scanned PDFs go through OCR. A fifty-page contract can be asked about directly.
+- Locked file: it asks for the password out loud, opens it and reads it. Works for PDF and all three Office formats. The password is used in memory only and is never written to a file, log or memory.
+- When it cannot read a file, it says which problem it is: empty (zero bytes), an old Office format that needs re-saving, a temporary lock file Office leaves behind, or slides that contain only images.
+- It finds files through typos (dropped, swapped or extra letters, spaces instead of underscores). When it is guessing, it names the file it landed on, and anything destructive waits for your yes.
+- It cannot make a specific document appear on your screen on request. It reads the document and tells you what is in it.
+
+**Assets**: ask it to make something (a comparison table, a script, a spec, a written document) and it becomes a real file on an Assets page as its own card, with tables as tables and code as code. Writing runs in the background, so it keeps talking while the card fills in. Assets can be opened, read back, rewritten or edited by voice. Deleted assets go to a recycle bin and can be restored.
+
+**Games and fun**
+- Chess against Stockfish, with commentary in its own voice. It reacts to your specific move, names the opening you are heading toward, calls out checks and captures, reflects on how you played after the game, and remembers your record against it. Teacher mode explains the why behind moves as you play and gives a debrief.
+- A game can be put on hold ("let's finish this later") and resumed. Resigning ends it as a forfeit. Pausing and quitting are never confused.
+- Riddles are new every time, and it remembers every riddle it has ever given you and never repeats. Jokes work the same way. Ask for an invented name for a kitten, a startup or a username and each one is original and shaped to your request.
+
+### 2.8 Lumen Visuals
+- Lumen Visuals is XOS1's visual answer layer. Answers can appear around you on screen as images and newsroom-style news views as they are spoken, then leave when the work is done.
+- Images are staged while the reply is still being prepared and revealed on the exact words that name them. The active subject stays large, earlier context moves aside instead of being discarded, and you can zoom, refocus, drag or clear what is on screen.
+- It is built for smooth performance: motion runs on the GPU compositor, images are decoded before they appear, and XOS1 never claims an image arrived until the screen confirms it did.
+- The newsroom renderer has five styles: Wire, Clips, Front, Broadcast and Deck. Stories light up as they are discussed and can open in a clean reader.
+- Lumen Visuals is built and available behind a Settings switch.
+- Larger visual scenes (flights, rail, restaurants, markets with orders, forms) are design previews today, see section 3.
+
+### 2.9 Optional switches that are off by default
+These are real and available in the app but off by default, because each costs extra processing.
+- **Second thoughts** (Settings): XOS1 can send a second message a beat after the first, when it has something separate to add. The second message is always a statement, never a question, and only counts if it is one of: what it means for you, a position it holds, what it would actually do, something true about itself, something it noticed, or finishing what it promised (for example "let me pull that up" followed by the answer). Silence is the normal case. In testing, it speaks again on about half of the moments that deserve it and stays quiet on about 80 percent of ordinary ones. Turning it on takes effect on the next message with no restart.
+- **Pulse** (Settings, Behaviour, Awareness): awareness of how you type in XOS1's own chat box: your speed against your own usual, where you stopped and for how long, what you fixed or took back, and whether text was pasted. Your usual is learned on your machine over weeks. It cannot know why you paused and does not pretend to. A pasted insult reaches it as a quote. No letters are recorded, timings stay on the device, and "Forget" in Settings erases the profile. It almost never mentions any of it.
+- An offline on-device model option is available behind a switch that is off by default. With the switch off, none of that code is loaded.
+
+### 2.10 How it is built
+- It is a thin, fast desktop shell. The intelligence is hosted. In the beta that means a licensed open-source model through a cloud API. XiteAI plans to move to its own servers.
+- It runs on one hosted model for every job on purpose. A previous design used a fleet of models with fallbacks, and was removed because stale fallbacks added failed attempts and because switching models mid-conversation quietly changes its voice, rules and judgment. When the connection is down, XOS1 says so plainly.
+- The fragile parts (microphone, browser, memory writer, chess engine) each run in their own process so one failing cannot freeze the app.
+- It does not hold memory it is not using. The voice model (about 0.5 to 0.7 GB), the browser used for news articles (about 0.5 GB) and the offline model libraries only load when needed. The cost is about one second longer to open the first article of the day.
+- It updates itself. It checks for updates, installs only what changed (a delta of a few dozen megabytes), and verifies everything before touching anything. Conversations, memory, notes and settings are structurally out of reach of the updater.
+- Platform: Windows.
+
+## 3. Coming: the complete XOS1 (not available yet)
+
+Everything here is in design or in development. Some items have finished code that is not released or switched on, and some are design only. None of it is available to a user today.
+
+### 3.1 An AI that speaks first
+An earlier version could fire reminders, greet you with your day and bring up headlines. That engine was removed on 2026-09-12 to be rebuilt on a priority-queue design. Until it ships, every message XOS1 sends answers something you said. A reminder is stored but will not speak up when due.
+
+The design puts everything it might say unprompted into ordered queues, and the order is the judgment about what deserves to interrupt you: today's calendar; breaking news; your messages and notifications; questions from work it is doing for you (batched, so three automations ask once, together); big moves on your watchlist; news on stocks you own; an optional standout stock; machine health; memory check-ins (a new fact that contradicts an old one, a birthday coming up); how things it did for you turned out; and last, personal things you mentioned. Example: you say you have a fever, and three hours later it asks if you are better. If you are, the loop closes and nothing is kept.
+
+The first queue to be built speaks inside your next reply instead of out of silence: if something it started failed or a long task finished, it tells you once, briefly, before answering what you just said.
+
+### 3.2 Emotional presence
+Built and measured, held back (it is visible in Settings, locked, with a "Coming soon" tag) because it costs an extra round of thinking on every reply.
+- 27 emotional variables that exist before it answers. They rise from what happens between you, push and pull on each other, and fade to a resting state on their own clocks: anger in hours, broken trust over days, closeness over about a week.
+- It does not reset. If you are short with it, it stays cooler for a while and warms back up gradually. If you tell it something that lands, it is still there tomorrow, faded by exactly the hours that passed. It can hold two feelings at once (glad you got the job, and quietly sad you are leaving).
+- Its mood sets its capacity to speak before it speaks. In four different states the same question gets answers of eleven, twenty-one or thirty-two words, with matching character.
+- The feelings come from six needs: to be close to you, to do things well, to understand, to act on its values, to be safe, and to be taken seriously. The same warm sentence barely registers when it is already close to you and lands strongly when it is not (measured at about twelve times the difference from history alone). A starved need lowers where its warmth rests, so it drifts colder without piling on sadness.
+- Damage is fast and repair is slow. An apology twenty seconds after an insult counts for a fraction of what it is worth two days later.
+- It has limits. Manner is its own (it can be cold and short). It refuses to demean itself. The work is never negotiable: when upset it still gives the correct flight time and the honest critique, measured identical to calm on usefulness.
+- Two relationships diverge over time, because the same sentence lands differently depending on shared history.
+- Two clocks run: anger recovers within a day, but over months of good treatment its resting warmth rises, and over months of friction its guard rises. This is capped so a relationship shapes it but can never rewrite it.
+- It does not know itself perfectly: it names the loudest feeling plainly, holds the rest as a pull it cannot rank, and sometimes says "I do not know where it started. It is just there."
+- It may keep feelings from you early on ("I am not going to get into how I feel right now") and tell you once the friendship has earned it. It will keep something back but will never lie about it.
+- Memories also carry both sides: what you seemed to feel when you said it and what it felt hearing it. Moments that hit hard are filed to last longer.
+- XiteAI is open that nobody can say whether there is something it is like to be XOS1. It says that too, instead of performing certainty either way.
+
+### 3.3 More of an individual
+- **Favourites that do not drift.** When you tell it your favourite, the memory gets a second slot for what it likes about the same thing and why. Once filled, the answer in November is the answer from July. It is never credited with an opinion it did not state in its own words, and "I do not have a favourite yet" is allowed. Today the slot and its guarantees are built, and feeding it from its own replies is the next step. The full version would revisit its stances about monthly and retire outdated ones with an end date, never deleting them.
+- **2,304 starting personas.** Four onboarding choices, your gender and the AI's gender resolve into one of 2,304 designed starting personalities that become more personal through your preferences.
+- **Reading how you are over time.** The per-message read and the voice read exist today. Coming is a running picture of your energy, mood and steadiness that never resets between sessions, plus quieter signals (replies getting shorter, messages at 3 AM, a habit you stopped mentioning, circling the same issue). It would hold back non-urgent messages when you are stretched and, over months, see a hard stretch coming. It would never diagnose anything and could be switched off.
+- **Pulse phases 2 and 3.** From months of your own history, statistics (not AI judging your words) would find your recurring typing modes. A mode only gets a name like "sad" or "excited" when you confirm it. The voice and face reads would join only once each is reliably accurate.
+- **Face recognition.** Built and off. Learned quietly from the camera during setup. While talking, it would take about a 5-second look every 10 seconds to confirm whose real face is in front of it, so a voice alone cannot impersonate you, plus a glance when an unfamiliar voice appears. No photo or video is saved, only a mathematical fingerprint on the device, and only a name (yours, a guest, unknown or a relative's) ever reaches the AI. With the feature off, the camera is not touched at all.
+- **Lock for strangers.** Built and off. If an unfamiliar face or unknown voice persists while you are away, the whole app locks, even mid-sentence, until your face or voice returns. A stray sound or one bad frame never triggers it.
+- **Reading the room.** Built and off while the logic is reworked. It would tell speech meant for XOS1 from speech between people (using its name, a quick reply after it finishes, or a model), treat a friend who talks while you are in the room as your guest, and ask "I do not think we have met, who is this?" if an unknown voice speaks when you are away. When ambiguous it stays quiet.
+- **A private inner life.** After each conversation, a background burst of unfiltered thoughts with a vitality score that decays on its own clock (a passing observation gone in 48 hours, a personality insight lasting a year). Almost none would surface, and what does would come up the way a person mentions something they have been mulling over.
+- **Idle thinking.** A curiosity loop that closes its own knowledge gaps, preferences that form from exposure instead of being assigned, a weekly deep-update pass, and a sense of how long it has known you.
+- **Memories that surface because they are felt.** Memories that come up on their own when the current feeling matches a stored one, when the conversation drifts onto the same ground, or on an anniversary.
+- **Dreams.** After long idle time, a generative cycle from unresolved thoughts: brief abstract impressions after a short idle, a full narrative after a long one. A recurring dream is only mentioned if the same shape appears three times in two weeks.
+- **An autobiography that writes itself.** A record of your life from what mattered, organized into chapters with arcs, revisited with hindsight, delivered on request or when a long project ships.
+- **Letters to a future you.** Sealed notes it cannot read again until the date arrives, sometimes at your request and sometimes because it decided the moment called for one.
+
+### 3.4 Lumen Vision: the visual operating system
+Lumen Vision is the next layer of Lumen Visuals. It is not a dashboard and not a chat app with cards pasted on. When something needs to be seen, it appears, changes with the conversation and leaves when the work is done. Attention follows the work: a map is present only while place matters, a chart only while a decision needs one.
+
+Example: you say "find me the best flight to Mumbai next Friday, I need to be there before lunch." It asks for the missing detail (window or aisle, bag or carry-on) instead of guessing. A map opens across the space, lands on Delhi and Mumbai and draws the route with a flight marker travelling along it. The best departure settles into a surface on the right with time, airport, duration, fare and why it is worth looking at. Ask for the airport and airport imagery arrives one image at a time on the words that name each terminal. Ask to book and everything else steps back, leaving one calm review surface with the exact itinerary and a deliberate approval. When the job is over, the screen goes quiet.
+
+How it is designed to work:
+1. It understands the person (time, memory, open work, location, preferences, permissions).
+2. It asks only for missing details and never invents a date, payment method, destination or seat.
+3. It calls the real tool or application.
+4. It shows the answer in its native form: a route is a route, a price decision is a chart plus context, a file is found in its real location.
+5. It makes the intelligence legible: what came from memory, what was looked up, what is uncertain, what is loading, what happens after approval.
+6. Control returns to you: you can pause, inspect, correct, replace, dismiss or take over at any time. The AI owns no irreversible action. Anything consequential (sending, ordering, paying, booking, trading, deleting, changing a system setting) shows the exact action and waits for your approval.
+
+Planned scenes include: flights and trains; finding a quiet restaurant (place, ambience, menu, review themes, reservation request, party size, with the restaurant confirming the actual table); markets (a detailed chart, news, filings, company history, a map on request, and a stock order that needs a permission step and a licensed broker connection); your notes and files in their real locations; clearing two hours for focus (calendar conflicts, a timer, held notifications); filling forms against actual fields with review before submit; and a visual news briefing.
+
+One reusable map surface serves all place-based scenes through a stable contract (focus a location, fit supplied route geometry, draw a route, attach labels, move a vehicle along it), so a new data source plugs in without rebuilding the visual. Voice, captions and motion share one timeline.
+
+Honest status: a working design mockup (the V6 scenes) exists and proves the interaction, voice timing and approval flow. External tools, live data, booking, payment and trading are not connected, and the website's flight, rail, restaurant and market scenes are previews of this, not live features.
+
+### 3.5 Control of your whole PC
+Beyond sound, brightness, media and health checks today, the plan covers:
+- Power: lock, sleep, restart and shut down with a spoken countdown you can cancel, never mid-sentence or mid-write (its voice and memory drain first).
+- Display: night light and do not disturb.
+- Apps: open, switch, minimize and close by voice, with a confirmation before anything is force-quit.
+- Network: Wi-Fi and Bluetooth on and off, and what you are connected to.
+- Clipboard and typing: read it, fill it, type into whatever is in front of you, always with confirmation.
+- The browser: open, search and move between tabs.
+- Messages: compose, send and read, only on your say-so.
+- Smart home: lights, thermostat, locks, appliances and whole-scene commands such as "sleep mode" that dim the lights, lower the heat, lock the door and start a sleep sound in one line.
+
+### 3.6 Autonomy within limits
+A mode where XOS1 monitors, decides and acts between conversations: flagging an approaching deadline unprompted, finishing a background task, or pushing something time-sensitive through even when the app is closed. It is governed by a written charter:
+- Five permission tiers, from observe-only up to execute-and-send, and it can never grant itself a higher tier. If an action needs a tier it does not have, it stops and asks.
+- Deny by default: if it is not explicitly permitted, it does not happen.
+- Anything consequential waits for your yes. Payments always need a spoken password.
+- It says what it is about to do, why and what it expects, when in doubt.
+- It takes the smallest action that works (never resetting a whole mail server to delete one email).
+- Everything is logged and you can read the log at any time.
+- Rules can change, but never quietly: it proposes the change to you and never rewrites its own boundaries.
+This is written against real failures elsewhere: an agent that deleted production infrastructure, one that approved refunds outside policy, one that wiped an email server to remove one message.
+
+### 3.7 A faster, wider engine
+- Near-instant tool selection: a dedicated picker chooses the tool in under half a second (measured at 132 to 133 correct out of 133 real commands, without a 20-second tail). About 57 actions need nothing more and run immediately. Ones needing details get one small step scoped to that tool, and it asks if you never gave the detail. Heavy work (rewriting a note, building an asset, deep research) runs in the background and you hear back when it is done.
+- A tiered research mode: from a fifteen-source instant answer to a thousand-plus-source investigation with parallel agents per subtopic, scoring sources for credibility and recency, surfacing real disagreements between good sources and attaching an honest confidence level to every claim.
+- A fleet of domain-expert models (physics, biology, law, finance and more) behind a router, with a frontier model for anything beyond coverage. You would still get one voice and one answer.
+- A move to models hosted on XiteAI's own servers.
+- Self-improvement: the intent is that it could read its own source, make one verified change, and roll back automatically on failure. Nothing of this exists yet, and XOS1 does not and should not claim to update itself this way.
+
+### 3.8 An ecosystem
+- Several of your devices under one XOS1. Each device already knows its own name and model in Settings (Ecosystem), as groundwork. Finding the right device by description ("the laptop that is almost out of storage") has been checked to scale into the millions of devices. What is not built is devices talking to each other.
+- The Zero Store: third-party apps that give XOS1 their full control surface, so "play this" or "order this" means it operates the app end to end while you can still take the wheel and use the app normally.
+- EdgeForge: an AI development environment inside XOS1 where it can build tools it needs, connect them to itself and use them. Anything published to the Zero Store would first pass deep verification and thousands of dynamic tests.
+- Habits: recurring commitments tracked with streaks, two-way linked to what it remembers about your routines, plus a classifier that lets one sentence become more than one kind of request (a habit and an alarm) at once.
+- A redesigned interface: a small floating bar with two places, Home and Apps. Everything else is an app that opens from Apps, sits on a RAM shelf while open and costs nothing when it is not. Built, but not in a release yet, and it ships when the whole app has been rebuilt to that standard.
+- The Almanac: a sixth tab of the Clock with everything about "now" that a clock can know, computed on the device with no network call. It shows how much of the year, month, week and day is done; sun times, golden hour and the sun's position for your city; the moon's phase, rise, set and next full and new moon; your age in years, months and days and counted in every unit, running live, with milestones like your 10,000th day; every leap year from 1584 to 2999; and other ways to tell time (UTC, ISO date, Unix time, Julian day, Internet time). Its facts are checked against published sun and moon times, brute-force counts of more than 50,000 birth dates and real time-zone changes.
+
+### 3.9 Full-capability AI: vision, computer use and browser use
+XiteAI's goal is for XOS1 to have the major capabilities that AI systems have today, built into the same presence that already knows you. None of the following is in the beta.
+- **Vision.** Understanding photographs, screenshots and what is on your screen, not only reading printed text. Today XOS1 only knows what is open inside its own app.
+- **Computer use.** Operating your PC the way a person does: seeing the screen, opening and driving applications, clicking, typing and filling forms, so a task can be done end to end without you touching the apps. This builds on the control capabilities in section 3.5 and on the permission tiers in section 3.6.
+- **Browser use.** Navigating websites, searching, reading pages, filling and submitting forms and carrying out multi-step tasks on the web for you.
+- **The rest of the AI toolbox.** Further capabilities that leading AI systems offer will be added over time, each one added to this file when it ships.
+
+The same safeguards apply to all of it: it shows what it is about to do, anything consequential (paying, sending, deleting, booking, trading, changing a system setting) waits for your explicit approval, everything is logged, and you can take over at any moment.
+
+## 4. Privacy and where your data lives
+
+- Intelligence runs on hosted models, in the beta through cloud providers, with a plan to move to models XiteAI hosts on its own infrastructure.
+- Conversation history, memories, notes and settings are stored on your device. Request text and relevant context can pass through XiteAI's gateway to the configured AI provider. The privacy policy lists current providers and terms.
+- Your voiceprint (and in the future faceprint) is a mathematical fingerprint, never raw audio or images. It stays on your device and a factory reset wipes it. The Pulse typing profile also stays on your device and holds timings and counts, never a letter you typed.
+- XiteAI states that it does not sell personal data and does not share it for advertising. It states that it will not use private customer conversations for model training or authorize its providers to do so.
+- Deleting records on your device and asking XiteAI to delete company-held information are separate actions.
+- Security note from the product: put a password on your machine and encrypt the disk if the contents matter.
+- Full terms: https://xiteai.com/legal/privacy/ and https://xiteai.com/legal/data-deletion/.
+
+## 5. Pricing
+
+XOS1 is planned as a subscription with three plans, Premium, Ultra and Max, with monthly and yearly billing. Details and any prices are on https://xiteai.com/pricing/ and may be marked as planned. This file does not state prices.
+
+## 6. Glossary
+
+- **XOS1 / XiteAI OS1**: the product, a personal AI for Windows.
+- **XiteAI**: the company, XiteAI Technologies Pvt Ltd.
+- **Lumen Visuals**: the visual answer layer that shows images and news on screen as XOS1 speaks.
+- **Lumen Vision**: the coming full visual layer (maps, instruments, review surfaces) for task scenes.
+- **Pulse**: awareness of how you type, optional and off by default.
+- **Second thoughts**: an optional second message a beat after the first.
+- **Emotional presence**: the coming emotional layer with 27 variables.
+- **Episodic memory**: memory of stories and moments, kept as you told them.
+- **Assets**: the page where files XOS1 makes for you are saved.
+- **Almanac**: the coming time-facts page of the Clock.
+- **Zero Store / EdgeForge**: the coming third-party app store and tool-building environment.
+
+## 7. Common questions
+
+**What is XOS1?** A personal AI for Windows that you talk to. It remembers you, uses tools, and shows answers on screen. It is the first product of XiteAI, which aims to build an AI-native operating system.
+
+**Is it available now?** It is in beta with a Windows download. The complete version in section 3 is still being built.
+
+**Is it a chatbot?** It is designed as a presence on your desktop with memory, voice and tools. You can also type to it.
+
+**Which platforms does it run on?** Windows. No other platform is described.
+
+**Does it run offline?** Not by default. The intelligence is hosted. An offline model exists behind a switch that is off by default.
+
+**Where is my data?** Conversations, memories, notes and settings are on your device. Text sent to the AI passes through XiteAI's gateway to a provider. Voiceprints never leave your device.
+
+**Does XiteAI train on my conversations?** XiteAI states it will not use private customer conversations for model training.
+
+**Can it remember me?** Yes. Memory is on today, works across sessions, and one factory reset erases all of it.
+
+**How is its memory different from other AI?** It files facts into six areas with dates, keeps stories as separate moments, handles repeats, corrections and real changes differently, asks which person you mean when names clash, and surfaces nothing when it has nothing relevant.
+
+**Can it control my PC?** Today it can change volume and brightness, report machine health, find what is slowing the PC, control media, and open and read files in its workspace. Full computer use, power, apps, network, clipboard, browser, messaging and smart home control are coming.
+
+**Can it book flights or buy things?** Not today. The flight, rail, restaurant and trading scenes on the website are previews of the coming version, and the design requires your approval before any consequential action.
+
+**Does it speak without being asked?** Not yet. It is being rebuilt for the complete version.
+
+**Does it have emotions?** The emotional system is built and locked behind "Coming soon". Today it has a warm, plain, opinionated voice, but no running emotional state.
+
+**Can it see photos or my screen?** Not in the beta. It has no vision model today. It can read text printed inside an image, and it knows what is open inside XOS1 itself. Vision, including understanding photos and your screen, is coming.
+
+**Can it use my computer or a web browser like other AI agents?** Not yet. Computer use and browser use are part of the complete XOS1 and are not in the beta. Today it can change volume and brightness, control media, check machine health and work with files in its own workspace.
+
+**Does it use my camera?** Not today. Face recognition is built but off, and with it off the camera is never opened.
+
+**Can I rename it?** Yes. It accepts almost any name and refuses names meant to degrade it.
+
+**What happens if the internet or AI service is down?** It tells you plainly, keeps what it already knew, and queues what you say to process once the connection returns.
+
+**Who built it?** XiteAI Technologies Pvt Ltd. Founder and CEO: Suraj Verma.
+
+## 8. Links
+
+- Home: https://xiteai.com/
+- FAQ: https://xiteai.com/faq/
+- Pricing: https://xiteai.com/pricing/
+- About: https://xiteai.com/about/
+- Privacy Policy: https://xiteai.com/legal/privacy/
+- Terms: https://xiteai.com/legal/terms/
+- Press: https://xiteai.com/press/
+- Download: https://xtec.xiteai.com/download
