@@ -84,6 +84,7 @@ export default function Journey() {
   const p = useScene(ref);
   const introArrival = useScene(ref, ["start 90%", "start 20%"]);
   const visible = useNear(stage, "0px");
+  const mapPrepare = useNear(ref, "200% 0px");
   const flightNear = useStep(p, x => x > .58 && x < .99);
 
   useEffect(() => createStage(canvas.current, (ctx) => buildRain(ctx, () => (still ? 0.2 : p.get()), () => umbrella.current), { fov: 40, env: false, progress: p, still }), [p, still]);
@@ -100,7 +101,7 @@ export default function Journey() {
   return (
     <section ref={ref} className={cx("jy", still && "is-still", !visible && "is-offscreen")} aria-label="Lumen Visuals, a feature of XOS1">
       <div ref={stage} className="jy-stage">
-        <motion.div className="jy-mapwrap" style={{ opacity: mapO }}><FlightMap p={p} near={visible && flightNear} /></motion.div>
+        <motion.div className="jy-mapwrap" style={{ opacity: mapO }}><FlightMap p={p} near={visible && flightNear} prepare={mapPrepare && !still} /></motion.div>
         <canvas ref={canvas} className="jy-canvas" aria-hidden="true" />
         {/* The rain's umbrella: open while it rains, lifted away as it clears. */}
         <motion.img ref={umbrella} className="jy-umbrella" src="/media/journey/umbrella.webp" alt="" draggable="false" style={{ y: umbY, opacity: umbO, animationPlayState: visible && umbrellaActive && !still ? "running" : "paused" }} />
