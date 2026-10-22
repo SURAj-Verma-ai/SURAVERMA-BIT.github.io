@@ -1,0 +1,6 @@
+Contact: mailto:security@xiteai.com
+Contact: https://xtec.xiteai.com/contact?to=security
+Expires: 2027-10-22T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://xiteai.com/.well-known/security.txt
+Policy: https://xiteai.com/legal/security/
