@@ -1,19 +1,10 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useMotionValueEvent } from "framer-motion";
-import regionalMap from "./india-flight-map.svg?url";
-import { flightFrame, MAP_EXTENT, project, ROUTE_PATH } from "./flightMath.js";
+import workerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?url";
+import mapStyle from "./flight-map-style.json";
+import { DEL, BOM, ROUTE, flightState } from "./flightMath.js";
 
-// The regional map stays mounted. Scroll changes two transforms and the
-// aircraft, without map tiles, a worker, WebGL or a continuous render loop.
-const PLACES = [
-  ["Jaipur",75.79,26.91], ["Ahmedabad",72.57,23.02],
-  ["Bhopal",77.41,23.26], ["Indore",75.86,22.72],
-  ["Surat",72.83,21.17], ["Pune",73.86,18.52],
-  ["Lucknow",80.95,26.85], ["Nagpur",79.09,21.15],
-  ["Jodhpur",73.02,26.24], ["Udaipur",73.68,24.59],
-].map(([name,lon,lat]) => ({ name, point: project([lon,lat]) }));
-const INITIAL = flightFrame(0,1280,720);
-const matrixStyle = frame => ({ transform: `matrix(${frame.matrix.join(",")})` });
+const loadRenderer = () => import("maplibre-gl");
 
 /* An A320-family airliner from directly above, nose up: true proportions,
    swept wings over the engines, the tailplane, and a cylinder's shading. */
@@ -55,87 +46,118 @@ function Airliner() {
   );
 }
 
-export default function FlightMap({ p, near }) {
-  const host = useRef(null), base = useRef(null), lines = useRef(null);
-  const world = useRef(null), route = useRef(null), names = useRef(null);
-  const trail = useRef(null), plane = useRef(null), shadow = useRef(null);
-  const delhi = useRef(null), mumbai = useRef(null);
-  const active = useRef(near), size = useRef([1280,720]), pending = useRef(0);
-  const drawRef = useRef(null);
-  active.current = near;
+export default function FlightMap({p,near,prepare=near}) {
+  const host=useRef(null),ghost=useRef(null),trail=useRef(null);
+  const plane=useRef(null),shadow=useRef(null),delhi=useRef(null),mumbai=useRef(null);
+  const state=useRef({map:null,ready:false,camera:null,drawn:null});
+  const active=useRef(near),sync=useRef(null),draw=useRef(null);
+  const [requested,setRequested]=useState(false),[status,setStatus]=useState("loading"),[attempt,setAttempt]=useState(0);
+  active.current=near;
+  useEffect(()=>{if(prepare)setRequested(true);},[prepare]);
 
-  drawRef.current = () => {
-    if (!world.current) return;
-    const frame = flightFrame(p.get(),...size.current);
-    const transform = `matrix(${frame.matrix.join(",")})`;
-    world.current.style.transform = transform;
-    route.current.style.transform = transform;
-    names.current.style.opacity = String(Math.max(0,1-frame.dive*3));
-    trail.current.style.strokeDashoffset = String(1-frame.progress);
-    const [x,y] = frame.aircraft, scale = frame.planeScale;
-    const flying = frame.progress>.001 && frame.progress<.999;
-    plane.current.style.opacity = flying ? "1" : "0";
-    shadow.current.style.opacity = flying ? ".22" : "0";
-    plane.current.style.transform = `translate3d(${x}px,${y}px,0) rotate(${frame.angle}deg) scale(${scale}) translate(-50%,-50%)`;
-    shadow.current.style.transform = `translate3d(${x+70*scale}px,${y+90*scale}px,0) rotate(${frame.angle}deg) scale(${scale*.94}) translate(-50%,-50%)`;
-    delhi.current.style.transform = `translate3d(${frame.delhi[0]}px,${frame.delhi[1]}px,0)`;
-    mumbai.current.style.transform = `translate3d(${frame.mumbai[0]}px,${frame.mumbai[1]}px,0)`;
+  sync.current=()=>{
+    const s=state.current;
+    if(!s.map || !active.current || document.hidden) return;
+    const next=flightState(p.get(),window.innerWidth<window.innerHeight);
+    const camera=JSON.stringify(next.camera);
+    if(s.camera!==camera) {
+      s.camera=camera;s.drawn=null;
+      s.map.jumpTo(next.camera);
+    }
   };
-  const schedule = () => {
-    if (!active.current || pending.current || document.hidden) return;
-    pending.current = requestAnimationFrame(() => {
-      pending.current = 0;
-      drawRef.current();
-    });
+  draw.current=()=>{
+    const s=state.current;
+    if(!s.ready || !active.current || document.hidden) return;
+    const next=flightState(p.get(),window.innerWidth<window.innerHeight);
+    const signature=s.camera+"|"+next.progress;
+    // Tile/font arrivals can render repeatedly with an unchanged camera.
+    // Reproject the route only when the camera or actual flight has changed.
+    if(signature===s.drawn) return;
+    s.drawn=signature;
+    const m=s.map;
+    const path=ROUTE.map((point,index)=>{
+      const q=m.project(point);return `${index?"L":"M"}${q.x.toFixed(1)} ${q.y.toFixed(1)}`;
+    }).join(" ");
+    ghost.current.setAttribute("d",path);trail.current.setAttribute("d",path);
+    trail.current.style.strokeDashoffset=String(1-next.progress);
+    const here=m.project(next.here),before=m.project(next.before),after=m.project(next.after);
+    const angle=Math.atan2(after.y-before.y,after.x-before.x)*180/Math.PI+90;
+    const scale=Math.pow(2,m.getZoom()-6.3)*.44,flying=next.progress>.001&&next.progress<.999;
+    plane.current.style.opacity=flying?"1":"0";shadow.current.style.opacity=flying?".22":"0";
+    plane.current.style.transform=`translate3d(${here.x}px,${here.y}px,0) rotate(${angle}deg) scale(${scale}) translate(-50%,-50%)`;
+    shadow.current.style.transform=`translate3d(${here.x+70*scale}px,${here.y+90*scale}px,0) rotate(${angle}deg) scale(${scale*.94}) translate(-50%,-50%)`;
+    for(const [element,point] of [[delhi.current,DEL],[mumbai.current,BOM]]) {
+      const q=m.project(point);element.style.transform=`translate3d(${q.x}px,${q.y}px,0)`;
+    }
   };
-  useMotionValueEvent(p,"change",schedule);
+  useMotionValueEvent(p,"change",()=>sync.current());
 
-  useEffect(() => {
-    const resize = new ResizeObserver(([entry]) => {
-      const { width,height } = entry.contentRect;
-      if (!width || !height) return;
-      size.current = [width,height];
-      base.current.setAttribute("viewBox",`0 0 ${width} ${height}`);
-      lines.current.setAttribute("viewBox",`0 0 ${width} ${height}`);
-      drawRef.current();
-    });
-    resize.observe(host.current);
-    document.addEventListener("visibilitychange",schedule);
-    return () => {
-      resize.disconnect();
-      document.removeEventListener("visibilitychange",schedule);
-      cancelAnimationFrame(pending.current);
-      pending.current = 0;
+  useEffect(()=>{
+    if(!requested) return undefined;
+    let disposed=false,instance,resize,idle=null;
+    const s=state.current;
+    s.ready=false;s.camera=null;s.drawn=null;
+    setStatus("loading");
+    const timeout=setTimeout(()=>{if(!disposed&&!s.ready)setStatus("error");},20000);
+    loadRenderer().then(({Map,setWorkerUrl,setWorkerCount})=>{
+      if(disposed) return;
+      const initialize=()=>{
+        idle=null;if(disposed)return;
+        try {
+          setWorkerUrl(workerUrl);setWorkerCount(1);
+          const initial=flightState(p.get(),window.innerWidth<window.innerHeight).camera;
+          instance=new Map({container:host.current,style:structuredClone(mapStyle),...initial,
+            interactive:false,attributionControl:false,antialias:false,
+            pixelRatio:Math.min(window.devicePixelRatio||1,1.5),maxPitch:70,fadeDuration:0,
+            renderWorldCopies:false,maxTileCacheSize:128,cancelPendingTileRequestsWhileZooming:true});
+          s.map=instance;s.camera=JSON.stringify(initial);
+          instance.on("render",()=>draw.current());
+          instance.once("load",()=>{
+            if(disposed)return;
+            clearTimeout(timeout);s.ready=true;setStatus("ready");sync.current();draw.current();
+          });
+          instance.on("error",()=>{if(!disposed&&!s.ready)setStatus("error");});
+          resize=new ResizeObserver(()=>{
+            instance.resize();s.camera=null;s.drawn=null;sync.current();
+          });
+          resize.observe(host.current);
+        } catch { if(!disposed)setStatus("error"); }
+      };
+      if(window.requestIdleCallback) idle=window.requestIdleCallback(initialize,{timeout:1000});
+      else initialize();
+    }).catch(()=>{if(!disposed)setStatus("error");});
+    return ()=>{
+      disposed=true;clearTimeout(timeout);
+      if(idle!==null)window.cancelIdleCallback?.(idle);
+      resize?.disconnect();instance?.remove();
+      if(s.map===instance)s.map=null;s.ready=false;
     };
-  },[]);
-  useEffect(() => {
-    if (near) schedule();
-    else { cancelAnimationFrame(pending.current); pending.current=0; }
+    // The instance survives scrolling away and returning. Only leaving the
+    // page or explicitly retrying tears it down.
+  },[requested,attempt]);
+  useEffect(()=>{
+    if(near){sync.current();draw.current();}
   },[near]);
+  useEffect(()=>{
+    const resume=()=>{if(!document.hidden){sync.current();draw.current();}};
+    document.addEventListener("visibilitychange",resume);
+    return()=>document.removeEventListener("visibilitychange",resume);
+  },[]);
 
-  return (
-    <div ref={host} className="fm is-ready">
-      <svg ref={base} className="fm-map" viewBox="0 0 1280 720" preserveAspectRatio="none" aria-hidden="true">
-        <g ref={world} className="fm-world" style={matrixStyle(INITIAL)}>
-          <image href={regionalMap} {...MAP_EXTENT} preserveAspectRatio="none" />
-          <g ref={names} className="fm-place-names">
-            {PLACES.map(({name,point:[x,y]}) => <g key={name} transform={`translate(${x},${y})`}>
-              <circle r="2" /><text x="7" y="3">{name}</text>
-            </g>)}
-          </g>
-        </g>
-      </svg>
-      <svg ref={lines} className="fm-lines" viewBox="0 0 1280 720" preserveAspectRatio="none" aria-hidden="true">
-        <g ref={route} className="fm-world" style={matrixStyle(INITIAL)}>
-          <path d={ROUTE_PATH} className="fm-ghost" vectorEffect="non-scaling-stroke" />
-          <path ref={trail} d={ROUTE_PATH} className="fm-trail" pathLength="1" vectorEffect="non-scaling-stroke" style={{strokeDashoffset:1}} />
-        </g>
-      </svg>
-      <div ref={delhi} className="fm-pin"><i /><b>Delhi</b><span>09:30</span></div>
-      <div ref={mumbai} className="fm-pin"><i /><b>Mumbai</b><span>11:40</span></div>
-      <div ref={shadow} className="fm-shadow"><Airliner /></div>
-      <div ref={plane} className="fm-plane"><Airliner /></div>
-      <p className="fm-credit">Map data: Natural Earth</p>
-    </div>
-  );
+  return <div className={`fm${status==="ready"?" is-ready":""}`}>
+    <div ref={host} className="fm-map" />
+    <svg className="fm-lines" aria-hidden="true">
+      <path ref={ghost} className="fm-ghost" />
+      <path ref={trail} className="fm-trail" pathLength="1" />
+    </svg>
+    <div ref={delhi} className="fm-pin"><i/><b>Delhi</b><span>09:30</span></div>
+    <div ref={mumbai} className="fm-pin"><i/><b>Mumbai</b><span>11:40</span></div>
+    <div ref={shadow} className="fm-shadow"><Airliner/></div>
+    <div ref={plane} className="fm-plane"><Airliner/></div>
+    {near&&status!=="ready"&&<div className="fm-message" role="status">
+      <span>{status==="error"?"The flight map couldn’t load.":"Loading flight map…"}</span>
+      {status==="error"&&<button type="button" onClick={()=>setAttempt(value=>value+1)}>Try again</button>}
+    </div>}
+    <p className="fm-credit">© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> · OpenFreeMap</p>
+  </div>;
 }
