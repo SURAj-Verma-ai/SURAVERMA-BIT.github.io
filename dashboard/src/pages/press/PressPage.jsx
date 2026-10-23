@@ -19,7 +19,7 @@ const seen = { variants: stagger, initial: "hidden", whileInView: "show", viewpo
 export default function PressPage() {
   usePageMeta({
     title: "Press · XiteAI",
-    description: "Press resources for XiteAI: the company in brief, key facts, logos, product images and the press contact.",
+    description: "Press resources for XiteAI: the startup in brief, key facts, logos, product images and the press contact.",
     path: "/press",
   });
   useEffect(() => { window.scrollTo(0, 0); }, []);
@@ -33,7 +33,7 @@ export default function PressPage() {
           <motion.p variants={rise} className="ct-kicker">Press</motion.p>
           <motion.h1 variants={rise}>XiteAI, on the record.</motion.h1>
           <motion.p variants={rise} className="ct-lede">
-            The company in brief, the facts, and assets cleared for publication. For interviews and inquiries, write to the Press desk.
+            The startup in brief, the facts, and assets cleared for publication. For interviews and inquiries, write to the Press desk.
           </motion.p>
           <motion.div variants={rise} className="ct-btns pr-ask">
             <Link className="ct-write" to="https://xtec.xiteai.com/contact?to=press">Write to Press <span aria-hidden="true">→</span></Link>
@@ -127,7 +127,7 @@ function Logos() {
 function Founder() {
   return (
     <div className="pr-part">
-      <Head title="Founder" about="Suraj Verma, Founder and CEO of XiteAI." zip={press.founder.zip} />
+      <Head title="Founder" about="Suraj Verma, founder of XiteAI." zip={press.founder.zip} />
       <motion.ul className="pr-portraits" role="list" {...seen}>
         {press.founder.photos.map((f, n) => (
           <motion.li key={f.file} variants={rise}>

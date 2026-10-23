@@ -28,9 +28,9 @@ export default function Terms() {
   return (
     <LegalLayout slug="terms" rail={rail}>
       <Clause n="1" id="t1" title="The agreement">
-        <p>These terms apply to {site.name} ({site.shortName}), provided by {company.legalName}. Installing or using XOS1 means you accept them. If you do not, do not install it.</p>
+        <p>These terms apply to {site.name} ({site.shortName}), provided under the {company.name} brand. Installing or using XOS1 means you accept them. If you do not, do not install it.</p>
         <p>{betaLaunchAvailability} The <a href="/legal/beta-terms">Beta Terms</a> explain what to expect during this release stage and apply alongside these terms.</p>
-        <p>{company.legalName} is a company incorporated in India (CIN {company.cin}). Its registered office is at {company.registeredOffice}. For questions about these terms, contact <a href={`mailto:${site.contact.legal}`}>{site.contact.legal}</a>.</p>
+        <p>{company.identity} For questions about these terms, contact <a href={`mailto:${site.contact.legal}`}>{site.contact.legal}</a>.</p>
         <p>{productAgeEligibility} If you cannot legally enter this agreement yourself, a parent or legal guardian must accept it on your behalf where required. Use remains subject to applicable law, including sanctions and export restrictions.</p>
         <p>The <a href="/legal/minors-policy">Minors Policy</a> describes the intended experiences for users under 13, users aged 13–17 and adults. {ageControlsReleaseStatus}</p>
         <p>Accepting this agreement does not replace any separate consent required for a child’s personal information. The <a href="/legal/privacy">Privacy Policy</a> explains guardian requests, optional parental visibility and data handling.</p>

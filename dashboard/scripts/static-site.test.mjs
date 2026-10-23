@@ -9,6 +9,24 @@ import { canonicalUrl, canonicalLink, resolvePageSeo, serializeSchema } from "..
 const root = resolve(import.meta.dirname,".."), dist = join(root,"dist");
 const htmlFor = page => readFileSync(page.path === "/" ? join(dist,"index.html") : join(dist,page.path.slice(1),"index.html"),"utf8");
 
+test("public identity describes the startup accurately and every page shares the same footer",() => {
+  const forbidden = /XiteAI Technologies (?:Pvt\.?\s*Ltd\.?|Private Limited)|U72900UP2026PTC000000|Amity|Sector 125|201313|Corporate Identity Number|registered office/i;
+  const files = readdirSync(dist,{recursive:true}).filter(name => /\.(html|js|txt|json|xml|svg)$/.test(name));
+  for(const file of files) assert.doesNotMatch(readFileSync(join(dist,file),"utf8"),forbidden,file);
+  const footer = htmlFor(routes[0]).match(/<footer class="ft">[\s\S]*?<\/footer>/)?.[0];
+  assert.ok(footer);
+  assert.match(footer.replace(/<!--.*?-->/g,""),/XiteAI\. All rights reserved\./);
+  assert.match(footer,/<address>Noida, India<\/address>/);
+  for(const page of routes) assert.equal(htmlFor(page).match(/<footer class="ft">[\s\S]*?<\/footer>/)?.[0],footer,page.path);
+  for(const path of ["/legal/terms","/legal/privacy"]) {
+    const html = htmlFor(routes.find(page => page.path === path));
+    assert.match(html,/XiteAI is an early-stage startup founded by Suraj Verma/);
+    assert.match(html,/currently operates as an unregistered startup/);
+  }
+  for(const path of ["/about","/press"]) assert.match(htmlFor(routes.find(page => page.path === path)),/XiteAI is an early-stage startup/);
+  for(const file of ["llms.txt","llms-full.txt"]) assert.match(readFileSync(join(dist,file),"utf8"),/Registration status: currently an unregistered startup/);
+});
+
 test("detailed flight renderer stays deferred and the replaced regional image is absent",() => {
   const assets=readdirSync(join(dist,"assets"));
   const engine=assets.find(name=>/^maplibre-gl-.*\.js$/.test(name));

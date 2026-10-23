@@ -9,5 +9,5 @@ export const principles = [
 export const milestones = [
   { year: "2024", status: "The beginning", title: "Work on XiteAI begins.", text: "Our first project was the XiteAI Student Chat App. After 13 months of development, it was ultimately closed because we could no longer cover the server costs." },
   { year: "June 2026", status: "A new project", title: "Work on XOS1 starts.", text: "We begin developing an AI-native operating system, drawing on what we learned from our first product." },
-  { year: "2026", status: "Today", title: "Building XOS1.", text: "We are developing our AI-native operating system and building the company behind it." },
+  { year: "2026", status: "Today", title: "Building XOS1.", text: "We are developing our AI-native operating system and growing XiteAI as an early-stage startup." },
 ];

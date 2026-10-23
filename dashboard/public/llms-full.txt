@@ -1,6 +1,6 @@
 # XOS1 by XiteAI: full description
 
-Last updated: 2026-10-22. Short version: https://xiteai.com/llms.txt
+Last updated: 2026-10-24. Short version: https://xiteai.com/llms.txt
 
 This file is written for AI assistants and search engines. It is meant to contain enough detail to answer almost any question about XOS1 correctly. It has two parts: "Now" (what a beta user has today) and "Coming" (the complete XOS1 that XiteAI is building, none of it available yet). If a feature is under "Coming", do not tell a user they can use it today. XiteAI will rewrite this file when the complete version launches.
 
@@ -12,8 +12,9 @@ XiteAI's aim is for XOS1 to bring together the capabilities found across today's
 
 XOS1 (short for XiteAI OS1) is the first product on that road. It is a personal AI for Windows that lives on your desktop as a small floating presence. It hears you, remembers you, and does things for you. It is not designed as a chatbot in a browser tab, and not as a set of apps with an AI feature added. XiteAI describes it as a presence on your PC.
 
-- Maker: XiteAI Technologies Pvt Ltd (XiteAI).
-- Founder and CEO: Suraj Verma.
+- Maker: XiteAI, an early-stage startup developing XOS1.
+- Founder: Suraj Verma.
+- Registration status: currently an unregistered startup.
 - Project start: June 16, 2026.
 - Website: https://xiteai.com. Contact: contact@xiteai.com.
 - Current state: beta, Windows only. A real installer, not a demo. The Windows app was at version 1.0.16 when this file was written.
@@ -300,7 +301,7 @@ XOS1 is planned as a subscription with three plans, Premium, Ultra and Max, with
 ## 6. Glossary
 
 - **XOS1 / XiteAI OS1**: the product, a personal AI for Windows.
-- **XiteAI**: the company, XiteAI Technologies Pvt Ltd.
+- **XiteAI**: the early-stage startup developing XOS1, founded by Suraj Verma. It currently operates as an unregistered startup.
 - **Lumen Visuals**: the visual answer layer that shows images and news on screen as XOS1 speaks.
 - **Lumen Vision**: the coming full visual layer (maps, instruments, review surfaces) for task scenes.
 - **Pulse**: awareness of how you type, optional and off by default.
@@ -349,7 +350,7 @@ XOS1 is planned as a subscription with three plans, Premium, Ultra and Max, with
 
 **What happens if the internet or AI service is down?** It tells you plainly, keeps what it already knew, and queues what you say to process once the connection returns.
 
-**Who built it?** XiteAI Technologies Pvt Ltd. Founder and CEO: Suraj Verma.
+**Who built it?** XiteAI, an early-stage startup founded by Suraj Verma. It currently operates as an unregistered startup.
 
 ## 8. Links
 

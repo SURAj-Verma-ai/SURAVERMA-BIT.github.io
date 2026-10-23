@@ -17,7 +17,7 @@ export function canonicalLink(to) {
 // There are no keyword lists, fabricated ratings or implied live checkout.
 export const pageSeo = {
   "/": {title:"XOS1 by XiteAI | Say it. It's done.",description:"Talk to your PC and it does the work. XOS1 remembers what matters to you and keeps all of it on your machine instead of ours."},
-  "/about": {title:"About XiteAI — The Company Building XOS1",description:"Discover XiteAI, the company developing XOS1. Explore our mission, working principles, progress and approach to human–computer interaction."},
+  "/about": {title:"About XiteAI — The Startup Building XOS1",description:"Meet XiteAI, an early-stage startup developing XOS1 in Noida, India. Explore our mission, founder, working principles and approach to personal computing."},
   "/pricing": {title:"XOS1 Pricing — Compare Premium, Ultra & Max | XiteAI",description:"Compare planned XOS1 Premium, Ultra and Max subscriptions, model access, usage allowances and support, with monthly and yearly pricing in USD and INR."},
   "/pricing/premium": {title:"XOS1 Premium — Features & Planned Pricing | XiteAI",description:"Explore XOS1 Premium for personal use: voice and text, personal memory, computer actions and Lumen Visuals. Compare planned billing options and features."},
   "/pricing/ultra": {title:"XOS1 Ultra — Advanced Access & Pricing | XiteAI",description:"Explore XOS1 Ultra for demanding work, with advanced model access, expanded usage and priority support. Compare planned monthly and yearly subscriptions."},
@@ -26,7 +26,7 @@ export const pageSeo = {
   "/news": {title:"XiteAI News — XOS1 & Company Announcements",description:"Explore XiteAI’s News page for company and XOS1 product announcements. Current editorial previews are clearly marked as sample content and dates."},
   "/blog": {title:"XiteAI Blog — AI, Memory & Interface Design",description:"Explore engineering, design and ideas behind XOS1 on the XiteAI Blog. Current essays are editorial previews with sample content and dates."},
   "/careers": {title:"Careers at XiteAI — Help Build XOS1",description:"Learn about working at XiteAI, our principles and interview process. Explore open roles on the Terminal or find information for invited candidates."},
-  "/press": {title:"XiteAI Press Kit — Company Facts, Logos & Media",description:"Find XiteAI company information, official logos, XOS1 brand assets and founder photographs. Download press resources and contact the media desk."},
+  "/press": {title:"XiteAI Press Kit — Startup Facts, Logos & Media",description:"Find facts about XiteAI, the early-stage startup behind XOS1, plus official logos, brand assets and founder photographs. Contact the media desk."},
   "/legal": {title:"XiteAI Legal — XOS1 Terms, Privacy & Policies",description:"Read XiteAI’s published company, service, privacy, security and support policies for XOS1 and the Terminal. See which policies are still unpublished."},
   "/sitemap": {title:"XiteAI Sitemap — XOS1, Company & Legal Pages",description:"Browse the XiteAI website by page: XOS1, subscriptions, FAQ, company, careers, press, editorial previews and every published legal policy."},
   "/legal/company-policy": {title:"XiteAI Company Policy — Principles & Working Practices",description:"Read the XiteAI Code, company principles, published policies and proposed working practices. Find the right contact for questions and concerns."},
@@ -55,7 +55,7 @@ export function pageGraph(meta) {
   if (pagePath(meta.path) === "/404") return null;
   const url = canonicalUrl(meta.path);
   const type = meta.path === "/about" ? "AboutPage" : ["/news","/blog","/pricing","/legal","/sitemap"].includes(meta.path) ? "CollectionPage" : "WebPage";
-  const organization = {"@type":"Organization","@id":organizationId,name:"XiteAI",url:`${SEO_ORIGIN}/`,logo:{"@type":"ImageObject",url:`${SEO_ORIGIN}/brand/xiteai.png`},email:"contact@xiteai.com",sameAs:["https://www.linkedin.com/company/xiteai-technologies","https://x.com/XiteAI","https://www.instagram.com/xiteai/","https://www.threads.com/@xiteai","https://www.facebook.com/people/Xiteai/61579296371742/","https://www.producthunt.com/@xiteai"]};
+  const organization = {"@type":"Organization","@id":organizationId,name:"XiteAI",description:"XiteAI is an early-stage startup founded by Suraj Verma, developing XOS1 in Noida, India. It currently operates as an unregistered startup.",url:`${SEO_ORIGIN}/`,logo:{"@type":"ImageObject",url:`${SEO_ORIGIN}/brand/xiteai.png`},email:"contact@xiteai.com",sameAs:["https://www.linkedin.com/company/xiteai-technologies","https://x.com/XiteAI","https://www.instagram.com/xiteai/","https://www.threads.com/@xiteai","https://www.facebook.com/people/Xiteai/61579296371742/","https://www.producthunt.com/@xiteai"]};
   const website = {"@type":"WebSite","@id":websiteId,url:`${SEO_ORIGIN}/`,name:"XiteAI",alternateName:"XiteAI Technologies",publisher:{"@id":organizationId},inLanguage:"en"};
   const webpage = {"@type":type,"@id":`${url}#webpage`,url,name:meta.title,description:meta.description,isPartOf:{"@id":websiteId},publisher:{"@id":organizationId},inLanguage:"en",primaryImageOfPage:{"@type":"ImageObject",url:meta.image.startsWith("/") ? SEO_ORIGIN+meta.image : meta.image}};
   const graph = [organization,website,webpage];

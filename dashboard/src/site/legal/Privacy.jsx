@@ -1,7 +1,7 @@
 import { Clause, DocTable } from "./prose.jsx";
 import LegalLayout from "./LegalLayout.jsx";
 import { productAgeEligibility, productAgeBands, ageControlsReleaseStatus, consentAndControls, guardianAccess, ageDataUse, ageTransitionLimits } from "../agePolicy.js";
-import { company, site, showCompany, staysLocal, leavesDevice } from "../content.js";
+import { company, site, staysLocal, leavesDevice } from "../content.js";
 
 // Shared ledger data and founder-confirmed operator information. Provider
 // contracts and account controls must be verified before stronger promises are added.
@@ -69,8 +69,7 @@ export default function Privacy() {
 
       <Clause n="1" id="p1" title="Who we are">
         <p>
-          {site.name} ({site.shortName}) is provided by {company.legalName} (CIN {company.cin}),
-          whose registered office is at {company.registeredOffice}.
+          {site.name} ({site.shortName}) is provided under the {company.name} brand. {company.identity}{" "}
           For privacy questions, contact <a href={`mailto:${site.contact.privacy}`}>{site.contact.privacy}</a>.
         </p>
       </Clause>
@@ -174,9 +173,7 @@ export default function Privacy() {
 
       <Clause n="11" id="p11" title="Contact, and changes">
         <p>For privacy requests or complaints, contact <a href={`mailto:${site.contact.privacy}`}>{site.contact.privacy}</a>.{" "}
-          {showCompany
-            ? <>Our {company.grievance.designation} is {company.grievance.name}, reachable at <a href={`mailto:${company.grievance.email}`}>{company.grievance.email}</a>.</>
-            : "A grievance officer has not yet been appointed."}</p>
+          Our {company.grievance.designation} is {company.grievance.name}, reachable at <a href={`mailto:${company.grievance.email}`}>{company.grievance.email}</a>.</p>
         <p>No EU or UK representative has been appointed. This policy does not claim that representative requirements, where applicable, have been satisfied.</p>
         <p>We will explain material changes through an appropriate notice before new processing begins and obtain fresh consent where required. Continuing to use XOS1 or browse this website does not by itself provide consent to a new data-processing purpose. An updated notice does not substitute for the controls required in the release.</p>
       </Clause>

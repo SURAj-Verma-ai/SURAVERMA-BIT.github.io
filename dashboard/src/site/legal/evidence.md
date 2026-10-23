@@ -23,7 +23,7 @@ Reviewed 6 October 2026. These are implementation notes, not a claim of counsel 
 
 ## Founder-confirmed decisions
 
-- Unincorporated XiteAI Technologies; correspondence address and contact inboxes in `site/content.js`.
+- Reconfirmed 24 October 2026: XiteAI is an unregistered startup. Public branding describes an early-stage startup; no corporate suffix or registration identifier is claimed. The founder requested removal of the Amity address and affiliation. Only Noida, India remains as the public location; contact inboxes are in `site/content.js`.
 - USD/INR; taxes shown at checkout.
 - No voluntary-cancellation refunds except mandatory rights; all verified duplicate/error charges refunded.
 - Paid-service discontinuation refunds 100/75/50/25 percent by elapsed quarters of **every** billing period.

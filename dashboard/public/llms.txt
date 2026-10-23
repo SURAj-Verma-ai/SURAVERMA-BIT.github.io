@@ -2,11 +2,12 @@
 
 > XiteAI aims to build an AI-native operating system. XOS1 is its first product: an AI for Windows PCs that you talk to, that remembers you, and that does the work for you. XOS1 is in beta today, and the complete version is still being built.
 
-Last updated: 2026-10-22. This file is updated at each release. Anything listed under "Coming" is not available yet. Full detail: [llms-full.txt](https://xiteai.com/llms-full.txt).
+Last updated: 2026-10-24. This file is updated at each release. Anything listed under "Coming" is not available yet. Full detail: [llms-full.txt](https://xiteai.com/llms-full.txt).
 
 ## XOS1 in brief
 
-- Maker: XiteAI Technologies Pvt Ltd. Founder and CEO: Suraj Verma. Contact: contact@xiteai.com.
+- Maker: XiteAI, an early-stage startup developing XOS1. Founder: Suraj Verma. Contact: contact@xiteai.com.
+- Registration status: currently an unregistered startup.
 - Platform: Windows desktop app. Status: beta. Subscriptions (Premium, Ultra, Max) are planned.
 - Now: voice and text conversation, memory that lasts across sessions, recognition of your voice, more than 130 tools (markets, weather, news, research, clock, notes, calendar, media, files, system controls), and Lumen Visuals, which shows images and news on screen as it speaks.
 - Coming: vision (understanding photos and your screen), computer use and browser use, an AI that speaks up first, emotional presence, face recognition, full visual scenes for travel, food and markets with approval before any action, voice control of the whole PC, smart home control, autonomous work within limits you set, and a store of apps it can operate for you. XiteAI's goal is for XOS1 to have the major capabilities of today's AI systems. None of these are in the beta.

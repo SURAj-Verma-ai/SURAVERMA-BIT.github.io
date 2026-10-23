@@ -20,7 +20,7 @@ function Reveal({children,className="",delay=0}) {
 }
 
 export default function AboutPage() {
-  usePageMeta({title:"About XiteAI · The company behind XOS1",description:"XiteAI is building an AI-native operating system. Our mission, work, founder and path forward.",path:"/about"});
+  usePageMeta({title:"About XiteAI · The startup behind XOS1",description:"XiteAI is an early-stage startup building an AI-native operating system. Our mission, work, founder and path forward.",path:"/about"});
   useEffect(() => { window.scrollTo(0,0); },[]);
   return <div className="site ab-page">
     <SiteNav />
@@ -29,7 +29,7 @@ export default function AboutPage() {
         <Reveal className="ab-hero-top"><p className="ab-label">About XiteAI</p><p className="ab-location">Noida, India <span aria-hidden="true">↗</span></p></Reveal>
         <div className="ab-hero-body">
           <Reveal><h1 id="ab-title">Building the intelligence every computer will run on.</h1></Reveal>
-          <Reveal className="ab-hero-copy" delay={.12}><p>XiteAI is building XOS1, an AI-native operating system that brings voice, memory and action into the same conversation.</p><p>We want people to spend less of their lives operating a computer, and more on what they want to do.</p><div className="ab-actions"><Link className="ab-button" to="/">Explore XOS1 <span aria-hidden="true">↗</span></Link><Link className="ab-text-link" to="/careers">Join XiteAI <span aria-hidden="true">↗</span></Link></div></Reveal>
+          <Reveal className="ab-hero-copy" delay={.12}><p>XiteAI is an early-stage startup building XOS1, an AI-native operating system that brings voice, memory and action into the same conversation.</p><p>We want people to spend less of their lives operating a computer, and more on what they want to do.</p><div className="ab-actions"><Link className="ab-button" to="/">Explore XOS1 <span aria-hidden="true">↗</span></Link><Link className="ab-text-link" to="/careers">Join XiteAI <span aria-hidden="true">↗</span></Link></div></Reveal>
         </div>
         <nav className="ab-index" aria-label="On this page">{[["mission","Mission"],["work","Our work"],["values","Values"],["safeguards","Safeguards"],["founder","Founder"],["progress","Progress"]].map(([id,label]) => <a href={`#${id}`} key={id}>{label}<span aria-hidden="true">↓</span></a>)}</nav>
       </section>
@@ -64,7 +64,7 @@ export default function AboutPage() {
       <section id="founder" className="ab-founder ab-frame ab-section" aria-labelledby="ab-founder-title">
         <Reveal className="ab-founder-heading"><p className="ab-label ab-section-label">Founder</p></Reveal>
         <div className="ab-founder-layout">
-          <Reveal className="ab-founder-portrait"><img src="/brand/press/previews/founder.jpg" width="900" height="824" alt="Suraj Verma" loading="lazy" decoding="async" /><div className="ab-founder-name"><h2 id="ab-founder-title">Suraj Verma</h2><p>Founder & CEO</p></div></Reveal>
+          <Reveal className="ab-founder-portrait"><img src="/brand/press/previews/founder.jpg" width="900" height="824" alt="Suraj Verma" loading="lazy" decoding="async" /><div className="ab-founder-name"><h2 id="ab-founder-title">Suraj Verma</h2><p>Founder</p></div></Reveal>
           <Reveal className="ab-founder-copy"><blockquote>“Honestly? I just wanted to build something. XiteAI is what came out of it.”</blockquote><p className="ab-founder-bio">Suraj started working on XiteAI in 2024 with the Student Chat App. He now leads the development of XOS1.</p><Link className="ab-text-link" to="/press">Press resources <span aria-hidden="true">↗</span></Link></Reveal>
         </div>
       </section>

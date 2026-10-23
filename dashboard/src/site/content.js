@@ -9,18 +9,17 @@
 import publishedSlugs from "./legal/published.json";
 import { productAgePolicy } from "./agePolicy.js";
 
-/* The office, line by line. The contact page sets it as an address block; the
-   policies run it together as one sentence (`site.companyAddress`). */
+/* Public location only. No street address or incubation affiliation is claimed. */
 export const office = {
-  lines: ["Amity Incubation Centre", "M Block, Amity University", "Sector 125, Noida", "Uttar Pradesh 201313", "India"],
+  lines: ["Noida", "India"],
   timeZone: "Asia/Kolkata",
-  maps: "https://www.google.com/maps/search/?api=1&query=Amity+Incubation+Centre%2C+M+Block%2C+Amity+University%2C+Sector+125%2C+Noida",
+  maps: "https://www.google.com/maps/search/?api=1&query=Noida%2C+India",
 };
 
 export const site = {
   name: "XiteAI Operating System One",
   shortName: "XOS1",
-  company: "XiteAI Technologies Pvt Ltd",
+  company: "XiteAI",
   companyAddress: office.lines.join(", "),
   // The marketing site. Pages that only exist there are linked absolutely, so
   // the footer never points at a route this app does not serve.
@@ -79,33 +78,23 @@ export const socials = [
   { name: "Product Hunt", handle: "@xiteai", href: "https://www.producthunt.com/@xiteai" },
 ];
 
-/* The legal identity Indian rules ask a company's website to show: name,
-   registered office, CIN and a grievance officer (Companies (Incorporation)
-   Rules 2014, rule 26; Consumer Protection (E-Commerce) Rules 2020, rule 4).
-
-   The grievance officer is real: the founder holds the role. The CIN is still a
-   PLACEHOLDER until incorporation, and LAUNCH.md lists it. It is shown, because
-   the site goes live only once the company is registered; replace it before it
-   does. Setting `placeholder: true` would hide both everywhere outside development. */
+/* Founder-confirmed status, 24 October 2026. XiteAI is the startup's brand;
+   do not add a corporate suffix, registration number or registered office. */
 export const company = {
-  placeholder: false,
-  legalName: "XiteAI Technologies Private Limited",
-  cin: "U72900UP2026PTC000000",
-  registeredOffice: office.lines.join(", "),
+  name: "XiteAI",
+  status: "Early-stage startup",
+  identity: "XiteAI is an early-stage startup founded by Suraj Verma. It currently operates as an unregistered startup.",
   grievance: { name: "Suraj Verma", designation: "Grievance Officer", email: "grievance@xiteai.com" },
 };
-export const showCompany = !company.placeholder || Boolean(import.meta.env?.DEV);
 
-/* The press page (pages/press). The boilerplate and the founding year are
-   still to be approved (LAUNCH.md); the files in the kit are the real ones,
-   in dashboard/public/brand/press/. */
+/* Press facts describe the startup. The kit contains the supplied brand assets. */
 export const press = {
-  boilerplate: "XiteAI Technologies Pvt Ltd builds the intelligence every computer will run on. Its operating system, XOS1, gives the personal computer a voice, a memory and the ability to act, with speech and identity processed on the machine itself. XiteAI is headquartered in Noida, India.",
+  boilerplate: "XiteAI is an early-stage startup founded by Suraj Verma in Noida, India. It is developing XOS1, an AI-native operating system that brings voice, memory and computer actions into one experience, with speech and identity processed on the user's machine.",
   facts: [
-    ["Company", "XiteAI Technologies Pvt Ltd"],
-    ["Founder and CEO", "Suraj Verma"],
-    ["Headquarters", "Noida, India"],
-    ["Founded", "2025"],
+    ["Startup", company.name],
+    ["Founder", "Suraj Verma"],
+    ["Based in", "Noida, India"],
+    ["Stage", company.status],
     ["Product", "XOS1, the XiteAI Operating System One"],
     ["Press contact", "press@xiteai.com"],
   ],

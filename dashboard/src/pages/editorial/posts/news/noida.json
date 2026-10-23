@@ -2,7 +2,7 @@
   "id": "noida",
   "category": "Company",
   "title": "Our work in Noida.",
-  "summary": "XiteAI at the Amity Incubation Centre.",
+  "summary": "Building XOS1 from Noida, India.",
   "image": "/media/editorial/architecture-1200.webp",
   "imageSmall": "/media/editorial/architecture-480.webp",
   "alt": "White architectural planes against a blue sky, an illustrative photograph",
@@ -10,7 +10,7 @@
   "publishedAt": "2026-10-09",
   "status": "preview",
   "paragraphs": [
-    "XiteAI's office is at the Amity Incubation Centre, M Block, Amity University, Noida.",
+    "XiteAI is an early-stage startup based in Noida, India, developing XOS1.",
     "This is a sample company News entry. The final announcement will include the confirmed story, photographs and publication date."
   ]
 }
