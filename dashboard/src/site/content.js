@@ -83,13 +83,13 @@ export const socials = [
 export const company = {
   name: "XiteAI",
   status: "Early-stage startup",
-  identity: "XiteAI is an early-stage startup founded by Suraj Verma. It currently operates as an unregistered startup.",
+  identity: "XiteAI is an early-stage startup. It currently operates as an unregistered startup.",
   grievance: { name: "Suraj Verma", designation: "Grievance Officer", email: "grievance@xiteai.com" },
 };
 
 /* Press facts describe the startup. The kit contains the supplied brand assets. */
 export const press = {
-  boilerplate: "XiteAI is an early-stage startup founded by Suraj Verma in Noida, India. It is developing XOS1, an AI-native operating system that brings voice, memory and computer actions into one experience, with speech and identity processed on the user's machine.",
+  boilerplate: "XiteAI is an early-stage startup based in Noida, India. It is developing XOS1, an AI-native operating system that brings voice, memory and computer actions into one experience, with speech and identity processed on the user's machine.",
   facts: [
     ["Startup", company.name],
     ["Founder", "Suraj Verma"],

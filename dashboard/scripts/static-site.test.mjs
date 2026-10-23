@@ -20,7 +20,7 @@ test("public identity describes the startup accurately and every page shares the
   for(const page of routes) assert.equal(htmlFor(page).match(/<footer class="ft">[\s\S]*?<\/footer>/)?.[0],footer,page.path);
   for(const path of ["/legal/terms","/legal/privacy"]) {
     const html = htmlFor(routes.find(page => page.path === path));
-    assert.match(html,/XiteAI is an early-stage startup founded by Suraj Verma/);
+    assert.match(html,/XiteAI is an early-stage startup\./);
     assert.match(html,/currently operates as an unregistered startup/);
   }
   for(const path of ["/about","/press"]) assert.match(htmlFor(routes.find(page => page.path === path)),/XiteAI is an early-stage startup/);

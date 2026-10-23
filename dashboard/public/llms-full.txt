@@ -301,7 +301,7 @@ XOS1 is planned as a subscription with three plans, Premium, Ultra and Max, with
 ## 6. Glossary
 
 - **XOS1 / XiteAI OS1**: the product, a personal AI for Windows.
-- **XiteAI**: the early-stage startup developing XOS1, founded by Suraj Verma. It currently operates as an unregistered startup.
+- **XiteAI**: the early-stage startup developing XOS1. It currently operates as an unregistered startup.
 - **Lumen Visuals**: the visual answer layer that shows images and news on screen as XOS1 speaks.
 - **Lumen Vision**: the coming full visual layer (maps, instruments, review surfaces) for task scenes.
 - **Pulse**: awareness of how you type, optional and off by default.
@@ -350,7 +350,7 @@ XOS1 is planned as a subscription with three plans, Premium, Ultra and Max, with
 
 **What happens if the internet or AI service is down?** It tells you plainly, keeps what it already knew, and queues what you say to process once the connection returns.
 
-**Who built it?** XiteAI, an early-stage startup founded by Suraj Verma. It currently operates as an unregistered startup.
+**Who built it?** XiteAI, an early-stage startup developing XOS1. It currently operates as an unregistered startup.
 
 ## 8. Links
 
