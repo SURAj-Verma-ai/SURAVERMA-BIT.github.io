@@ -16,8 +16,8 @@ export function canonicalLink(to) {
 // Authored descriptions describe the actual page, including release limits.
 // There are no keyword lists, fabricated ratings or implied live checkout.
 export const pageSeo = {
-  "/": {title:"XOS1 by XiteAI | Say it. It's done.",description:"Talk to your PC and it does the work. XOS1 remembers what matters to you and keeps all of it on your machine instead of ours."},
   "/about": {title:"About XiteAI — The Startup Building XOS1",description:"Meet XiteAI, an early-stage startup developing XOS1 in Noida, India. Explore our mission, founder, working principles and approach to personal computing."},
+  "/": {title:"XOS1 by XiteAI | An AI Operating Layer for Windows",description:"XOS1 combines hands-free voice, persistent on-device memory, 130+ tools, built-in apps and supported PC controls. Lumen Visuals is complete and in testing for launch."},
   "/pricing": {title:"XOS1 Pricing — Compare Premium, Ultra & Max | XiteAI",description:"Compare planned XOS1 Premium, Ultra and Max subscriptions, model access, usage allowances and support, with monthly and yearly pricing in USD and INR."},
   "/pricing/premium": {title:"XOS1 Premium — Features & Planned Pricing | XiteAI",description:"Explore XOS1 Premium for personal use: voice and text, personal memory, computer actions and Lumen Visuals. Compare planned billing options and features."},
   "/pricing/ultra": {title:"XOS1 Ultra — Advanced Access & Pricing | XiteAI",description:"Explore XOS1 Ultra for demanding work, with advanced model access, expanded usage and priority support. Compare planned monthly and yearly subscriptions."},

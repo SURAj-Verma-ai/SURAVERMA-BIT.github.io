@@ -1,16 +1,23 @@
 # XOS1 by XiteAI
 
-> XiteAI aims to build an AI-native operating system. XOS1 is its first product: an AI for Windows PCs that you talk to, that remembers you, and that does the work for you. XOS1 is in beta today, and the complete version is still being built.
+> XOS1 is in beta as an AI operating layer on Windows. Its direction is a bare-metal AI-native operating system where AI is the system and apps are integrated into it. Today's beta capabilities are listed separately from launch and future direction.
 
-Last updated: 2026-10-24. This file is updated at each release. Anything listed under "Coming" is not available yet. Full detail: [llms-full.txt](https://xiteai.com/llms-full.txt).
+Last updated: 2026-10-26. This file is updated at each release. Availability is labeled: beta, launch work, built but gated, or longer-term concept. Full detail: [llms-full.txt](https://xiteai.com/llms-full.txt).
 
 ## XOS1 in brief
 
+- Product thesis: XOS1 currently operates as an AI layer on Windows, connecting conversation, personal memory, in-app context, tools and PC actions in one system. Its direction is a bare-metal AI-native OS where AI is the system and apps are integrated into it, rather than AI added to a conventional OS.
 - Maker: XiteAI, an early-stage startup developing XOS1. Founder: Suraj Verma. Contact: contact@xiteai.com.
 - Registration status: currently an unregistered startup.
 - Platform: Windows desktop app. Status: beta. Subscriptions (Premium, Ultra, Max) are planned.
-- Now: voice and text conversation, memory that lasts across sessions, recognition of your voice, more than 130 tools (markets, weather, news, research, clock, notes, calendar, media, files, system controls), and Lumen Visuals, which shows images and news on screen as it speaks.
-- Coming: vision (understanding photos and your screen), computer use and browser use, an AI that speaks up first, emotional presence, face recognition, full visual scenes for travel, food and markets with approval before any action, voice control of the whole PC, smart home control, autonomous work within limits you set, and a store of apps it can operate for you. XiteAI's goal is for XOS1 to have the major capabilities of today's AI systems. None of these are in the beta.
+- Available in the beta: voice and text conversation, memory that lasts across sessions, voice recognition, more than 130 tools (markets, weather, news, research, clock, notes, calendar, media, files and supported system controls), plus built-in app experiences.
+- Complete and in testing: Lumen Visuals, the visual answer layer that stages relevant images and news in sync with the assistant's speech. It is not enabled in the current beta and is expected to launch soon; no exact date is announced here.
+- Core XOS1 features include Pulse typing awareness, which reads timing and editing patterns in XOS1's own chat box, and Second thoughts, which adds a relevant follow-up message when there is something worth adding.
+- Built but unavailable in the current beta: Emotional Presence, face recognition, stranger protection and speech-address awareness.
+- What makes that combination powerful: one ongoing assistant uses personal context to choose from its toolset, work across built-in app experiences, control supported parts of the PC and carry the results back into the conversation.
+- Memory is a core part of XOS1: it is designed to remember a person's life across six areas: personal details, habits, skills, relationships, media and episodic stories. It handles repetition, clarification, real-life changes and mistakes differently. Old true facts can remain as history; temporary context expires; deleted memories are removed. It can search for a specific story or detail and should say nothing when it cannot find a good match. The full description explains the safeguards and current limits.
+- It also has a separate, optional Self-knowledge memory for the assistant's own stated preferences, choices, nicknames and speech requests. The deeper review cycle for those opinions is planned and on hold; it is not active.
+- Public capability status: the beta features and Lumen Visuals launch target are described above. Other prototypes and mockups are not available beta capabilities or launch commitments.
 - Privacy: conversation history and memories are stored on your device. Request text passes through XiteAI's gateway to an AI provider. Voiceprints stay on your device. XiteAI says it does not sell personal data and does not use private customer conversations for model training.
 
 ## Product

@@ -29,7 +29,7 @@ export default function AboutPage() {
         <Reveal className="ab-hero-top"><p className="ab-label">About XiteAI</p><p className="ab-location">Noida, India <span aria-hidden="true">↗</span></p></Reveal>
         <div className="ab-hero-body">
           <Reveal><h1 id="ab-title">Building the intelligence every computer will run on.</h1></Reveal>
-          <Reveal className="ab-hero-copy" delay={.12}><p>XiteAI is an early-stage startup building XOS1, an AI-native operating system that brings voice, memory and action into the same conversation.</p><p>We want people to spend less of their lives operating a computer, and more on what they want to do.</p><div className="ab-actions"><Link className="ab-button" to="/">Explore XOS1 <span aria-hidden="true">↗</span></Link><Link className="ab-text-link" to="/careers">Join XiteAI <span aria-hidden="true">↗</span></Link></div></Reveal>
+          <Reveal className="ab-hero-copy" delay={.12}><p>XiteAI is an early-stage startup building XOS1, which is arriving first as an AI operating layer on Windows. Its direction is a bare-metal AI-native operating system where AI is the system and apps are integrated into it.</p><p>We want people to spend less of their lives operating a computer, and more on what they want to do.</p><div className="ab-actions"><Link className="ab-button" to="/">Explore XOS1 <span aria-hidden="true">↗</span></Link><Link className="ab-text-link" to="/careers">Join XiteAI <span aria-hidden="true">↗</span></Link></div></Reveal>
         </div>
         <nav className="ab-index" aria-label="On this page">{[["mission","Mission"],["work","Our work"],["values","Values"],["safeguards","Safeguards"],["founder","Founder"],["progress","Progress"]].map(([id,label]) => <a href={`#${id}`} key={id}>{label}<span aria-hidden="true">↓</span></a>)}</nav>
       </section>
@@ -41,7 +41,7 @@ export default function AboutPage() {
       </section>
 
       <section id="work" className="ab-work ab-frame ab-section" aria-labelledby="ab-work-title">
-        <Reveal className="ab-work-intro"><p className="ab-label ab-section-label">What we do</p><h2 id="ab-work-title">We build XOS1.</h2><p>We are creating an AI-native operating system. Our goal is a computer people can talk to and work with directly.</p><Link className="ab-text-link" to="/">Meet XOS1 <span aria-hidden="true">↗</span></Link></Reveal>
+        <Reveal className="ab-work-intro"><p className="ab-label ab-section-label">What we do</p><h2 id="ab-work-title">AI as the operating system.</h2><p>XOS1 starts as an AI operating layer on Windows and is being developed toward a bare-metal AI-native OS, with apps integrated into the AI system.</p><Link className="ab-text-link" to="/">Meet XOS1 <span aria-hidden="true">↗</span></Link></Reveal>
         <Reveal className="ab-company-purpose"><p>Good technology should be useful in everyday life.</p><p>That means making it understandable, being honest about its limits and taking care with the information people entrust to it.</p><p>Those standards guide what we build and how we work.</p></Reveal>
       </section>
 

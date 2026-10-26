@@ -20,7 +20,7 @@ export const CHAPTERS = [
     ],
   },
   {
-    id: "lumen", title: "Lumen", line: "Answers you can see, arranged in space.",
+    id: "lumen", title: "Lumen", line: "Complete and in testing for launch.",
     items: [
       ["Pictures on the word", "Images arrive the moment they're named."],
       ["The subject forward", "What matters now comes close; the rest steps back."],
