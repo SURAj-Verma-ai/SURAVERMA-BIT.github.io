@@ -109,14 +109,6 @@ export const press = {
       { name: "XOS1 mark", edition: "White", ground: "ink", src: "/brand/press/logos/xos1/xos1-mark-white.png", format: "PNG" },
     ],
   },
-  founder: {
-    zip: "/brand/press/suraj-verma-portraits.zip",
-    photos: [
-      { preview: "/brand/press/previews/founder.jpg", file: "/brand/press/founder/suraj-verma-founder-ceo-1.jpg", size: "1180 × 1080" },
-      { preview: "/brand/press/previews/founder-2.jpg", file: "/brand/press/founder/suraj-verma-founder-ceo-2.jpg", size: "1600 × 1600" },
-      { preview: "/brand/press/previews/founder-3.jpg", file: "/brand/press/founder/suraj-verma-founder-ceo-3.jpg", size: "892 × 924" },
-    ],
-  },
 };
 
 /** Local processing/storage. Relevant text can separately enter an AI request. */

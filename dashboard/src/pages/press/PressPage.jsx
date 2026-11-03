@@ -10,9 +10,8 @@ import "../shared/ContactFrame.css";
 import "./Press.css";
 
 /* Press. What a journalist needs, in the order they need it: who to ask, the
-   company in a paragraph they can lift whole, the facts, and the files. The
-   kit shows every file as itself before it is taken: each mark on the ground
-   it was made for, the portraits at full height. */
+   company in a paragraph they can lift whole, the facts, and the brand files.
+   The kit shows every mark on the ground it was made for. */
 
 const seen = { variants: stagger, initial: "hidden", whileInView: "show", viewport: { once: true, margin: "-60px" } };
 
@@ -61,7 +60,6 @@ export default function PressPage() {
         <section className="pr-kitsec" aria-labelledby="pr-kit">
           <motion.h2 id="pr-kit" {...whenSeen}>Press kit</motion.h2>
           <Logos />
-          <Founder />
           <motion.p className="pr-use" {...whenSeen}>
             Use the marks as supplied, on a clear background. Do not alter their proportions, colours or orientation, or set them
             beside other marks. For anything else, write to <a href={`mailto:${site.contact.press}`}>{site.contact.press}</a>.
@@ -117,24 +115,6 @@ function Logos() {
               <span className="pr-swatch-go">{l.format} <span aria-hidden="true">↓</span></span>
             </a>
             <p className="pr-label"><b>{l.name}</b><span>{l.edition}</span></p>
-          </motion.li>
-        ))}
-      </motion.ul>
-    </div>
-  );
-}
-
-function Founder() {
-  return (
-    <div className="pr-part">
-      <Head title="Founder" about="Suraj Verma, founder of XiteAI." zip={press.founder.zip} />
-      <motion.ul className="pr-portraits" role="list" {...seen}>
-        {press.founder.photos.map((f, n) => (
-          <motion.li key={f.file} variants={rise}>
-            <a className="pr-portrait" href={f.file} download>
-              <img src={f.preview} alt={`Suraj Verma, portrait ${n + 1}`} loading="lazy" decoding="async" />
-            </a>
-            <p className="pr-label"><b>Portrait {n + 1}</b><span>JPG, {f.size}</span></p>
           </motion.li>
         ))}
       </motion.ul>
