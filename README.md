@@ -119,6 +119,6 @@ off, its origin can be removed from `contentSecurityPolicy`.
 `/connectors/` is a standalone public document styled like the legal policies,
 with no site navbar or footer. It is listed only in the HTML sitemap and
 generated XML sitemap, not the homepage, main navigation or policy manifest.
-It describes current connector preferences separately from planned Gmail
-sign-in, read-only mail access and summaries. Its metadata is shared between
+It explains the connector permission and account-authorisation process,
+read-only Gmail access, data use and account controls. Its metadata is shared between
 the static routes and client page; all content is prerendered without sign-in.

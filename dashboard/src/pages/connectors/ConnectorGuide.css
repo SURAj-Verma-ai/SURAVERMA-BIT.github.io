@@ -7,11 +7,7 @@
 .connector-guide .ld-article { padding-bottom: 0; }
 .connector-guide .cl { scroll-margin-top: 32px; }
 .connector-guide .ld-rail { top: 24px; max-height: calc(100vh - 48px); }
-.connector-guide .cg-intro { margin-top: 28px; }
-.connector-guide .cg-status { border: 1px solid var(--rule); border-left: 3px solid var(--ember); border-radius: 0 10px 10px 0; padding: 20px 24px; background: var(--raise); }
-.connector-guide .cg-status p:last-child { margin-bottom: 0; }
-.connector-guide .cg-status-label { display: flex; align-items: center; gap: 8px; font-family: var(--site-mono); font-size: .7rem; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
-.connector-guide .cg-status-label span { flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--ember); }
+.connector-guide .cg-intro { margin-top: 0; }
 .connector-guide .cg-steps { list-style: decimal-leading-zero; margin: 20px 0 24px; padding-left: 28px; }
 .connector-guide .cg-steps li { padding: 14px 0 14px 8px; border-bottom: 1px solid var(--rule); }
 .connector-guide .cg-steps li::marker { font-family: var(--site-mono); font-size: .75rem; color: var(--muted); }
@@ -27,7 +23,6 @@
 .connector-guide a:focus-visible { outline: 2px solid var(--steel); outline-offset: 4px; }
 @media (max-width: 640px) {
   .connector-guide .cg-head { padding-bottom: 24px; }
-  .connector-guide .cg-status { padding: 18px; }
   .connector-guide .cg-permissions > div { grid-template-columns: 1fr; gap: 8px; }
 }
 @media print {
@@ -35,5 +30,4 @@
   .connector-guide .cg-main { max-width: none; padding: 0; }
   .connector-guide .ld-rail { display: none; }
   .connector-guide .ld-body { display: block; }
-  .connector-guide .cg-status { break-inside: avoid; }
 }

@@ -196,7 +196,7 @@ test("connector guide is a standalone document discoverable only through the sit
   const guide = htmlFor(route);
   assert.match(guide, /<h1>How Connectors Work<\/h1>/);
   assert.doesNotMatch(guide, /<footer\b|class="nav(?: |")|aria-label="Main navigation"/);
-  assert.match(guide, /Gmail sign-in is in development/);
+  assert.doesNotMatch(guide, /cg-status|Current connector status/);
   for (const path of ["/legal/privacy/#google-accounts", "/legal/terms/", "/legal/acceptable-use-policy/"]) assert.ok(guide.includes(`href="${path}"`), path);
   const ids = new Set([...guide.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]));
   for (const [, id] of guide.matchAll(/href="#([^"]+)"/g)) assert.ok(ids.has(id), `Missing guide section: ${id}`);
