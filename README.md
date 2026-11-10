@@ -45,9 +45,9 @@ rules and structured entity graph. The same data is used in generated HTML
 and browser navigation. Internal page links, canonical tags and sitemap URLs
 use trailing slashes to match GitHub Pages directory URLs.
 
-Every build validates all 34 pages and emits `seo-audit.json` with their titles,
+Every build validates all 35 pages and emits `seo-audit.json` with their titles,
 descriptions, canonical URLs, indexing eligibility and schema types. The eight
-editorial previews and the error page are noindex; the other 25 pages are in
+editorial previews and the error page are noindex; the other 26 pages are in
 `sitemap.xml`. An article gets publication schema only after its JSON metadata
 is marked `published`; keep its dates and content accurate. Custom article
 bodies are rendered into HTML during the build, without adding them to the
@@ -113,3 +113,12 @@ dashboard for xiteai.com:
 Check the result with `curl -sI https://xiteai.com/`. Cloudflare's analytics
 beacon and email obfuscation are allowed by the policy; if either is turned
 off, its origin can be removed from `contentSecurityPolicy`.
+
+## Connector guide
+
+`/connectors/` is a standalone public document styled like the legal policies,
+with no site navbar or footer. It is listed only in the HTML sitemap and
+generated XML sitemap, not the homepage, main navigation or policy manifest.
+It describes current connector preferences separately from planned Gmail
+sign-in, read-only mail access and summaries. Its metadata is shared between
+the static routes and client page; all content is prerendered without sign-in.

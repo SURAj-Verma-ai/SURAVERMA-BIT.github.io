@@ -11,7 +11,7 @@ export function sitemapGroups(roles = []) {
       link(main("/"), "Main website home"), link(terminal("/"), "Terminal home"),
       ...[["about", "About XiteAI"], ["news", "News"], ["blog", "Blog"], ["careers", "Careers"], ["press", "Press"], ["faq", "FAQ"]].map(([path, label]) => link(main(`/${path}/`), label)),
     ] },
-    { title: "XOS1", links: [link(main("/"), "Overview"), link(main("/pricing/"), "Pricing"),
+    { title: "XOS1", links: [link(main("/"), "Overview"), link(main("/pricing/"), "Pricing"), link(main("/connectors/"), "How Connectors Work"),
       ...["premium", "ultra", "max"].map(id => link(main(`/pricing/${id}/`), `XOS1 ${id[0].toUpperCase() + id.slice(1)}`)),
       link(terminal("/download"), "Download"), link(terminal("/#help"), "Help desk and request tracking"),
     ] },

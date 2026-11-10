@@ -25,6 +25,7 @@ const loaders = {
   careers:() => import("./pages/careers/CareersPage.jsx"),
   press:() => import("./pages/press/PressPage.jsx"),
   sitemap:() => import("./pages/sitemap/SitemapPage.jsx"),
+  connectors:() => import("./pages/connectors/ConnectorGuide.jsx"),
   legal:() => import("./site/legal/LegalHub.jsx"),
   privacy:() => import("./site/legal/Privacy.jsx"),
   terms:() => import("./site/legal/Terms.jsx"),
@@ -34,7 +35,7 @@ const loaders = {
 };
 async function mount() {
   const path = window.location.pathname.replace(/\/+$/,"") || "/";
-  const exact = {"/":"home","/xos1":"home","/about":"about","/faq":"faq","/pricing":"pricing","/careers":"careers","/press":"press","/sitemap":"sitemap","/legal":"legal","/legal/privacy":"privacy","/legal/terms":"terms","/legal/company-policy":"company"};
+  const exact = {"/":"home","/xos1":"home","/about":"about","/faq":"faq","/pricing":"pricing","/careers":"careers","/press":"press","/sitemap":"sitemap","/connectors":"connectors","/legal":"legal","/legal/privacy":"privacy","/legal/terms":"terms","/legal/company-policy":"company"};
   const kind = exact[path] || (/^\/pricing\/(premium|ultra|max)$/.test(path) ? "plan" : /^\/(news|blog)(\/|$)/.test(path) ? "editorial" : path.startsWith("/legal/") ? "policy" : "notFound");
   const { default: InitialPage } = await loaders[kind]();
   ReactDOM.createRoot(document.getElementById("root")).render(

@@ -43,7 +43,7 @@ try {
   const css = [...new Set(Object.values(manifest).flatMap(chunk => chunk.css || []))];
   // Preserve the original CSS order: shared styles, then the current page's.
   const entryFor = {
-    home:"src/pages/xos1/XosPage.jsx",about:"src/pages/about/AboutPage.jsx",pricing:"src/pages/pricing/PricingPage.jsx",plan:"src/pages/pricing/PlanPage.jsx",faq:"src/pages/faq/FaqPage.jsx",news:"src/pages/editorial/EditorialPage.jsx",blog:"src/pages/editorial/EditorialPage.jsx",careers:"src/pages/careers/CareersPage.jsx",press:"src/pages/press/PressPage.jsx",sitemap:"src/pages/sitemap/SitemapPage.jsx",legal:"src/site/legal/LegalHub.jsx","not-found":"src/pages/not-found/NotFoundPage.jsx",
+    home:"src/pages/xos1/XosPage.jsx",about:"src/pages/about/AboutPage.jsx",pricing:"src/pages/pricing/PricingPage.jsx",plan:"src/pages/pricing/PlanPage.jsx",faq:"src/pages/faq/FaqPage.jsx",news:"src/pages/editorial/EditorialPage.jsx",blog:"src/pages/editorial/EditorialPage.jsx",careers:"src/pages/careers/CareersPage.jsx",press:"src/pages/press/PressPage.jsx",sitemap:"src/pages/sitemap/SitemapPage.jsx",connectors:"src/pages/connectors/ConnectorGuide.jsx",legal:"src/site/legal/LegalHub.jsx","not-found":"src/pages/not-found/NotFoundPage.jsx",
   };
   for (const page of routes) {
     const canonical = canonicalUrl(page.path);

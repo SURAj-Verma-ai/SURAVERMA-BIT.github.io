@@ -10,6 +10,7 @@ import EditorialPage from "../src/pages/editorial/EditorialPage.jsx";
 import CareersPage from "../src/pages/careers/CareersPage.jsx";
 import PressPage from "../src/pages/press/PressPage.jsx";
 import SitemapPage from "../src/pages/sitemap/SitemapPage.jsx";
+import ConnectorGuide from "../src/pages/connectors/ConnectorGuide.jsx";
 import LegalHub from "../src/site/legal/LegalHub.jsx";
 import Privacy from "../src/site/legal/Privacy.jsx";
 import Terms from "../src/site/legal/Terms.jsx";
@@ -20,7 +21,7 @@ export { faqStructuredData, serializeFaqSchema } from "../src/pages/faq/faqSeo.j
 const articleBodies = import.meta.glob("../src/pages/editorial/posts/*/*.jsx",{eager:true,import:"default"});
 
 export function renderPage(page) {
-  const components = {home:XosPage,about:AboutPage,pricing:PricingPage,plan:PlanPage,faq:FaqPage,careers:CareersPage,press:PressPage,sitemap:SitemapPage,legal:LegalHub,"not-found":NotFoundPage};
+  const components = {home:XosPage,about:AboutPage,pricing:PricingPage,plan:PlanPage,faq:FaqPage,careers:CareersPage,press:PressPage,sitemap:SitemapPage,connectors:ConnectorGuide,legal:LegalHub,"not-found":NotFoundPage};
   let element, routePath = page.path;
   if (page.kind === "policy") {
     const Component = page.slug === "privacy" ? Privacy : page.slug === "terms" ? Terms : page.slug === "company-policy" ? CompanyPolicyPage : PolicyPage;

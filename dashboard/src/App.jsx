@@ -16,6 +16,7 @@ const EditorialPage = lazy(() => import("./pages/editorial/EditorialPage.jsx"));
 const CareersPage = lazy(() => import("./pages/careers/CareersPage.jsx"));
 const PressPage = lazy(() => import("./pages/press/PressPage.jsx"));
 const SitemapPage = lazy(() => import("./pages/sitemap/SitemapPage.jsx"));
+const ConnectorGuide = lazy(() => import("./pages/connectors/ConnectorGuide.jsx"));
 const LegalHub = lazy(() => import("./site/legal/LegalHub.jsx"));
 const Privacy = lazy(() => import("./site/legal/Privacy.jsx"));
 const Terms = lazy(() => import("./site/legal/Terms.jsx"));
@@ -37,6 +38,7 @@ export default function App({ initialPages = {} }) {
   const Careers = initialPages.careers || CareersPage;
   const Press = initialPages.press || PressPage;
   const Sitemap = initialPages.sitemap || SitemapPage;
+  const Connectors = initialPages.connectors || ConnectorGuide;
   const Legal = initialPages.legal || LegalHub;
   const PrivacyPolicy = initialPages.privacy || Privacy;
   const TermsPolicy = initialPages.terms || Terms;
@@ -60,6 +62,7 @@ export default function App({ initialPages = {} }) {
         <Route path="/careers" element={<Careers />} />
         <Route path="/press" element={<Press />} />
         <Route path="/sitemap" element={<Sitemap />} />
+        <Route path="/connectors" element={<Connectors />} />
         <Route path="/legal" element={<Legal />} />
         {published.map(doc => <Route key={doc.slug} path={`/legal/${doc.slug}`} element={
           doc.slug === "privacy" ? <PrivacyPolicy /> : doc.slug === "terms" ? <TermsPolicy /> : doc.slug === "company-policy" ? <CompanyPolicy /> : <Policy slug={doc.slug} />

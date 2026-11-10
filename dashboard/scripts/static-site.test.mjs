@@ -9,7 +9,7 @@ import { canonicalUrl, canonicalLink, resolvePageSeo, serializeSchema } from "..
 const root = resolve(import.meta.dirname,".."), dist = join(root,"dist");
 const htmlFor = page => readFileSync(page.path === "/" ? join(dist,"index.html") : join(dist,page.path.slice(1),"index.html"),"utf8");
 
-test("public identity describes the startup accurately and every page shares the same footer",() => {
+test("public identity is accurate and standard pages share the same footer",() => {
   const forbidden = /XiteAI Technologies (?:Pvt\.?\s*Ltd\.?|Private Limited)|U72900UP2026PTC000000|Amity|Sector 125|201313|Corporate Identity Number|registered office/i;
   const files = readdirSync(dist,{recursive:true}).filter(name => /\.(html|js|txt|json|xml|svg)$/.test(name));
   for(const file of files) assert.doesNotMatch(readFileSync(join(dist,file),"utf8"),forbidden,file);
@@ -17,7 +17,7 @@ test("public identity describes the startup accurately and every page shares the
   assert.ok(footer);
   assert.match(footer.replace(/<!--.*?-->/g,""),/XiteAI\. All rights reserved\./);
   assert.match(footer,/<address>Noida, India<\/address>/);
-  for(const page of routes) assert.equal(htmlFor(page).match(/<footer class="ft">[\s\S]*?<\/footer>/)?.[0],footer,page.path);
+  for(const page of routes.filter(page => page.kind !== "connectors")) assert.equal(htmlFor(page).match(/<footer class="ft">[\s\S]*?<\/footer>/)?.[0],footer,page.path);
   for(const path of ["/legal/terms","/legal/privacy"]) {
     const html = htmlFor(routes.find(page => page.path === path));
     assert.match(html,/XiteAI is an early-stage startup\./);
@@ -188,4 +188,21 @@ test("Gmail privacy disclosures are publicly rendered in policy documentation", 
   assert.match(privacy, /Google API Services User Data Policy/);
   assert.match(privacy, /https:\/\/myaccount.google.com\/connections/);
   assert.match(policy, /AI-generated non-consensual intimate imagery/);
+});
+
+test("connector guide is a standalone document discoverable only through the sitemaps", () => {
+  const route = routes.find(page => page.path === "/connectors");
+  assert.ok(route && !route.noindex);
+  const guide = htmlFor(route);
+  assert.match(guide, /<h1>How Connectors Work<\/h1>/);
+  assert.doesNotMatch(guide, /<footer\b|class="nav(?: |")|aria-label="Main navigation"/);
+  assert.match(guide, /Gmail sign-in is in development/);
+  for (const path of ["/legal/privacy/#google-accounts", "/legal/terms/", "/legal/acceptable-use-policy/"]) assert.ok(guide.includes(`href="${path}"`), path);
+  const ids = new Set([...guide.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]));
+  for (const [, id] of guide.matchAll(/href="#([^"]+)"/g)) assert.ok(ids.has(id), `Missing guide section: ${id}`);
+  assert.ok(readFileSync(join(dist,"sitemap.xml"),"utf8").includes(`<loc>${canonicalUrl(route.path)}</loc>`));
+  assert.ok(htmlFor(routes.find(page => page.path === "/sitemap")).includes(`href="${canonicalUrl(route.path)}"`));
+  for (const page of routes.filter(page => !["/sitemap", "/connectors"].includes(page.path))) {
+    assert.doesNotMatch(htmlFor(page), /href="(?:https:\/\/xiteai.com)?\/connectors\/?(?:#.*?)?"/, page.path);
+  }
 });

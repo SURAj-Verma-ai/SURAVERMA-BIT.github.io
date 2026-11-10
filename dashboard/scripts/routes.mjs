@@ -1,5 +1,6 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { resolvePageSeo } from "../src/site/pageSeo.js";
+import { connectorGuideMeta } from "../src/pages/connectors/connectorGuideMeta.js";
 
 export const origin = "https://xiteai.com";
 const source = new URL("../src/", import.meta.url);
@@ -21,6 +22,7 @@ export const routes = [
   page("/news","News","news"),page("/blog","Blog","blog"),
   page("/careers","Careers","careers"),page("/press","Press","press"),
   page("/legal","Legal","legal"),page("/sitemap","Sitemap","sitemap"),
+  page(connectorGuideMeta.path,"How Connectors Work","connectors",connectorGuideMeta),
   ...readJSON("site/legal/published.json").map(slug => page(`/legal/${slug}`,legalTitles[slug] || slug,"policy",{slug})),
   ...["news","blog"].flatMap(kind => readdirSync(new URL(`pages/editorial/posts/${kind}/`,source))
     .filter(file => file.endsWith(".json"))
