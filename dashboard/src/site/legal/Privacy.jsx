@@ -13,6 +13,7 @@ const rail = [
       { href: "#ledger", label: "Where your data goes" },
       { href: "#p1", label: "1 · Who we are" },
       { href: "#p2", label: "2 · What we collect" },
+      { href: "#google-accounts", label: "2a · Google accounts & Gmail" },
       { href: "#p3", label: "3 · Voice & face" },
       { href: "#p4", label: "4 · Emotional state" },
       { href: "#p5", label: "5 · Who else sees it" },
@@ -83,6 +84,21 @@ export default function Privacy() {
         <p><strong>Information you submit.</strong> Support requests contain the contact details, install code and message you provide. Careers applications can include your contact and address details, date of birth, photograph, education, experience, skills, work samples, links, application answers and emergency-contact details. Company accounts also generate authentication and security records. These are company-held records, not an automatic upload of your XOS1 conversation history.</p>
         <p>Search terms, market symbols and location queries are sent to the relevant external services when used. The reviewed desktop release does not send raw microphone audio, camera frames or biometric templates through its AI gateway.</p>
         <p><strong>Age and guardian information.</strong> {ageDataUse} Guardian contact details, consent evidence and activity-access records are not represented here as data already collected by a released parental-control feature.</p>
+      </Clause>
+
+      <Clause n="2a" id="google-accounts" title="Google accounts and Gmail">
+        <p><strong>In development.</strong> The current XOS1 build has connector settings and permission controls, but Google sign-in and Gmail reading are not available. It stores connector preferences and any account display metadata locally; it does not obtain Google access tokens or read your mailbox. Turning on a connector preference does not grant access to a Google account.</p>
+        <p><strong>Purpose and permissions.</strong> The planned optional Gmail connection will identify important messages received today and relevant messages from yesterday that the assistant has not already covered, then present short summaries. You will choose the Google account and authorise access through Google before XOS1 can read it.</p>
+        <DocTable head={["Permission", "Information and purpose"]} rows={[
+          ["Google sign-in (openid)", "Identify the Google account you authorised."],
+          ["Account details (userinfo.email and userinfo.profile)", "Your email address, name and profile photo, to identify and display the account in Connectors."],
+          ["Read-only Gmail (gmail.readonly)", "Message headers, labels and message content as needed to understand important requests, deadlines and changes and prepare mail summaries."],
+        ]} />
+        <p>The planned connection will not send, modify or delete your email, change your Gmail settings, or access Google Drive or Calendar. Any future capability requiring additional Google permissions will need a separate explanation and authorisation.</p>
+        <p><strong>AI processing and sharing.</strong> Mail summaries may require selected message content to pass through XiteAI’s gateway to a configured AI provider. This is not an entirely on-device feature. Before enabling that processing, we will identify the recipients, purposes and applicable retention terms and obtain the required permission. The general provider list below is not approval to send Gmail data to every listed service. Gmail access and AI processing are not enabled in the current build.</p>
+        <p><strong>Storage, security and deletion.</strong> No Gmail messages or Google account credentials are currently collected by this connector. Before mailbox access becomes available, we will document how credentials are protected, where any cached messages, summaries and notification records are kept, how long each is retained and how to delete it. Working pause, disconnect and deletion controls must be provided before launch. We do not promise that a future local deletion will erase provider-held records or exported copies.</p>
+        <p><strong>Your choice.</strong> Connecting Gmail will be optional and separate from general connector preferences. Once a connection exists, you can revoke Google access from your <a href="https://myaccount.google.com/connections" target="_blank" rel="noreferrer">Google Account connections</a>. Revocation stops future authorised access; it does not itself erase information already processed. For privacy or deletion questions, contact <a href={`mailto:${site.contact.privacy}`}>{site.contact.privacy}</a>.</p>
+        <p><strong>Limited Use.</strong> XOS1’s use and transfer of information received from Google APIs will comply with the <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noreferrer">Google API Services User Data Policy</a>, including its Limited Use requirements, and the <a href="https://developers.google.com/workspace/workspace-api-user-data-developer-policy" target="_blank" rel="noreferrer">Google Workspace user data policy</a>. Google user data will only be used for the disclosed, user-facing connection features. It will not be sold, used for advertising or credit decisions, or used to train general-purpose AI models. Any transfer or human access must be within the exceptions those policies permit. These commitments do not represent Google verification or approval of XOS1.</p>
       </Clause>
 
       <Clause n="3" id="p3" title="Voice and face recognition">

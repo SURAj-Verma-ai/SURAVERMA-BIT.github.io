@@ -169,7 +169,7 @@ export const legalDocs = [
   },
   {
     slug: "acceptable-use-policy",
-    updated: "13 October 2026",
+    updated: "10 November 2026",
     title: "Acceptable Use Policy",
     group: "Terms & Usage",
     summary: "What XOS1 must not be used for, including enrolling another person's voice without telling them.",
@@ -203,9 +203,9 @@ export const legalDocs = [
     slug: "privacy", path: "privacy-policy",
     title: "Privacy Policy",
     group: "Privacy & Data",
-    summary: "What stays on your computer, what leaves it, and who receives it.",
+    summary: "What stays on your computer, what leaves it, and who receives it, including our planned Google account connection.",
     status: "drafted",
-    updated: "13 October 2026",
+    updated: "10 November 2026",
     version: "0.1 draft",
   },
   {

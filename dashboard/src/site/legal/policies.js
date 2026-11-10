@@ -28,6 +28,7 @@ export const policies = {
       { id: "prohibited", title: "Prohibited activity", bullets: [
         "Illegal activity, fraud, impersonation, harassment, exploitation or threats of violence.",
         "Sexual content involving children, or material promoting their exploitation or abuse.",
+        "Creating, obtaining or distributing intimate or sexual imagery of a person without their consent, including AI-generated non-consensual intimate imagery and sexual deepfakes. Google API data must never be used for these purposes.",
         "Unauthorised access, malware, credential theft, attacks on systems, or attempts to bypass access controls, subscription restrictions or service limits.",
         "Uploading or processing material you have no right to use, including other people’s confidential information or personal data without a lawful basis.",
         "Enrolling another person’s voice or face without informing them and obtaining the permission required by law.",

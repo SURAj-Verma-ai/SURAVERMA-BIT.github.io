@@ -179,3 +179,13 @@ test("homepage preserves the footer and routes working service actions to Termin
   assert.match(readFileSync(join(dist,"404.html"),"utf8"),/This page/);
   assert.match(readFileSync(join(dist,"xos1/index.html"),"utf8"),/location\.replace/);
 });
+
+test("Gmail privacy disclosures are publicly rendered in policy documentation", () => {
+  const privacy = htmlFor(routes.find(page => page.path === "/legal/privacy"));
+  const policy = htmlFor(routes.find(page => page.path === "/legal/acceptable-use-policy"));
+  assert.match(privacy, /<section id="google-accounts"/);
+  for (const scope of ["openid", "userinfo.email", "userinfo.profile", "gmail.readonly"]) assert.ok(privacy.includes(scope), scope);
+  assert.match(privacy, /Google API Services User Data Policy/);
+  assert.match(privacy, /https:\/\/myaccount.google.com\/connections/);
+  assert.match(policy, /AI-generated non-consensual intimate imagery/);
+});

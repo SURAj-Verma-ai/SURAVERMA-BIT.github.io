@@ -2,9 +2,11 @@
 
 > XOS1 is in beta as an AI operating layer on Windows. Its direction is a bare-metal AI-native operating system where AI is the system and apps are integrated into it. Today's beta capabilities are listed separately from launch and future direction.
 
-Last updated: 2026-10-26. This file is updated at each release. Availability is labeled: beta, launch work, built but gated, or longer-term concept. Full detail: [llms-full.txt](https://xiteai.com/llms-full.txt).
+Last updated: 2026-11-10. This file is updated at each release. Availability is labeled: beta, launch work, built but gated, or longer-term concept. Full detail: [llms-full.txt](https://xiteai.com/llms-full.txt).
 
 ## XOS1 in brief
+
+- Gmail connection is in development. The desktop app currently has connector preferences only; Google sign-in, mailbox access and mail summaries are not available. The planned read-only feature covers important mail from today and relevant mail from yesterday not already covered. Planned Google account identity access supplies the account email, name and photo. Read [Google account privacy details](https://xiteai.com/legal/privacy/#google-accounts) for permissions and the AI-processing, retention and disconnection work required before this feature is enabled.
 
 - Product thesis: XOS1 currently operates as an AI layer on Windows, connecting conversation, personal memory, in-app context, tools and PC actions in one system. Its direction is a bare-metal AI-native OS where AI is the system and apps are integrated into it, rather than AI added to a conventional OS.
 - Maker: XiteAI, an early-stage startup developing XOS1. Founder: Suraj Verma. Contact: contact@xiteai.com.
