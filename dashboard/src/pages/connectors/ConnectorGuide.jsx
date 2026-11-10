@@ -39,7 +39,7 @@ export default function ConnectorGuide() {
             <Clause n="02" id="sign-in" title="Connecting an account">
               <p>A Gmail connection has three permission steps:</p>
               <ol className="cg-steps">
-                <li><strong>Choose Gmail.</strong><span>Enable the provider and select Add mail in Connectors.</span></li>
+                <li><strong>Choose Gmail.</strong><span>Enable Gmail and select Sign in with Google. Choose your account in the browser; no email or account-name entry is needed in XOS1 before sign-in.</span></li>
                 <li><strong>Choose your Google account.</strong><span>Sign in on Google’s page in your browser and review the requested access. XOS1 does not need your Google password.</span></li>
                 <li><strong>Review the connection.</strong><span>The account’s name, photo and email identify which account you are authorising. A cancelled or unsuccessful sign-in does not authorise a connection.</span></li>
               </ol>
