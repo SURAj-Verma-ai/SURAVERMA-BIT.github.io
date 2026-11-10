@@ -203,9 +203,9 @@ export const legalDocs = [
     slug: "privacy", path: "privacy-policy",
     title: "Privacy Policy",
     group: "Privacy & Data",
-    summary: "What stays on your computer, what leaves it, and who receives it, including our planned Google account connection.",
+    summary: "What stays on your computer, what leaves it, and who receives it, including optional Google account connections.",
     status: "drafted",
-    updated: "10 November 2026",
+    updated: "11 November 2026",
     version: "0.1 draft",
   },
   {

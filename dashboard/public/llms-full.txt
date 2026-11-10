@@ -1,12 +1,12 @@
 # XOS1 by XiteAI: an AI operating system for Windows
 
-Last updated: 2026-11-10. Short version: https://xiteai.com/llms.txt
+Last updated: 2026-11-11. Short version: https://xiteai.com/llms.txt
 
 This file is written for AI assistants and search engines. It distinguishes what is available in the XOS1 beta, what is already built but gated, what XiteAI is finishing for launch, and longer-term concepts. Do not describe a gated or planned capability as available in the beta.
 
 ## Gmail connection status
 
-- Gmail connection is in development. The desktop app currently has connector preferences only; Google sign-in, mailbox access and mail summaries are not available. The planned read-only feature covers important mail from today and relevant mail from yesterday not already covered. Planned Google account identity access supplies the account email, name and photo. Read [Google account privacy details](https://xiteai.com/legal/privacy/#google-accounts) for permissions and the AI-processing, retention and disconnection work required before this feature is enabled.
+- Gmail connectors use Google account authorisation for identity and read-only mail access. Account controls support up to five accounts, optional names and a main-mail choice. The explicit recent-mail view reads messages from today and yesterday, with no mailbox archive or model call. Credentials use Windows user protection; pause and disconnect are separate controls. AI mail summaries and priority notifications are separate work. Read [Google account privacy details](https://xiteai.com/legal/privacy/#google-accounts).
 
 ## 1. The vision
 

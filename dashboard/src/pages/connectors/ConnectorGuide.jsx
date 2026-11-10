@@ -25,7 +25,7 @@ export default function ConnectorGuide() {
           <p className="cg-eyebrow">XOS1 / Documentation</p>
           <h1>How Connectors Work</h1>
           <p className="ld-sum">Your accounts, connected with your permission. A guide to what you allow, what the assistant can read and the controls that keep the choice yours.</p>
-          <p className="ld-updated">Last updated <time dateTime="2026-11-10">10 November 2026</time></p>
+          <p className="ld-updated">Last updated <time dateTime="2026-11-11">11 November 2026</time></p>
         </header>
         <div className="ld-body">
           <article className="prose-legal ld-article">
@@ -47,7 +47,7 @@ export default function ConnectorGuide() {
             </Clause>
 
             <Clause n="03" id="gmail" title="What Gmail access is for">
-              <p>Gmail access is requested to identify important messages received today and relevant mail from yesterday that the assistant has not already covered, and to prepare short summaries from the accounts you authorise.</p>
+              <p>Gmail access lets you read recent messages from the accounts you authorise. Read recent mail shows the latest messages from today and yesterday. Select a message to read its text in the temporary mail view.</p>
               <dl className="cg-permissions">
                 <div><dt>Account identity</dt><dd>Google sign-in (<code>openid</code>) identifies the account you authorised. Your email address, name and photo (<code>userinfo.email</code> and <code>userinfo.profile</code>) identify and display it in Connectors.</dd></div>
                 <div><dt>Read-only mail</dt><dd><code>gmail.readonly</code> permits reading message headers, labels and content. Message content can be needed to understand a request, deadline or change that the subject line alone does not explain.</dd></div>
@@ -61,14 +61,14 @@ export default function ConnectorGuide() {
             </Clause>
 
             <Clause n="05" id="data" title="Where information goes">
-              <p>Connector permission choices, provider preferences and account display metadata are saved locally. Allowing a provider is separate from authorising an account and from any processing of its messages.</p>
-              <p>Preparing a mail summary can require selected message content to pass through XiteAI’s gateway to a configured AI provider. Account access and AI processing are separate decisions. Any processing must be explained through the in-app notice and Privacy Policy, including its recipients, purposes, retention and required permission.</p>
+              <p>Connector preferences and account identity are saved locally. Account credentials are stored separately, protected by Windows for your user account on this device. Credentials are excluded from Ecosystem sync and portable exports.</p>
+              <p>The mail reader fetches messages directly from Google into a temporary view. It makes no AI requests and does not save a mailbox archive. Account access and any additional AI processing are separate decisions, each requiring an appropriate explanation and permission.</p>
               <p>Google account data will be used for the disclosed connector features. It will not be sold, used for advertising or credit decisions, or used to train general-purpose AI models. Its use and transfer must follow Google’s <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noreferrer">User Data Policy</a>, including Limited Use, and the <a href="https://developers.google.com/workspace/workspace-api-user-data-developer-policy" target="_blank" rel="noreferrer">Workspace user data policy</a>.</p>
               <p>Permission to read email does not authorise unrelated uses of its contents. Review the Privacy Policy’s Google accounts section for storage, processing and deletion information.</p>
             </Clause>
 
             <Clause n="06" id="control" title="Pausing and disconnecting">
-              <p>Pausing and disconnecting serve different purposes. A pause suspends account activity while retaining the connection. Disconnecting ends the connection and requires removal of stored credentials and a request to revoke the provider’s authorisation.</p>
+              <p>Pausing suspends account activity while retaining the protected connection. Disconnecting removes the account’s credentials and preferences from the device and requests Google revocation. If Google cannot be reached, XOS1 tells you to review access in your Google Account connections.</p>
               <p>Once a Google connection exists, you can also revoke its access from your <a href="https://myaccount.google.com/connections" target="_blank" rel="noreferrer">Google Account connections</a>. Revocation stops future authorised access; it does not itself erase information already processed or exported.</p>
             </Clause>
 
